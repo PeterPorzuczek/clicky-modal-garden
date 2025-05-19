@@ -1,5 +1,5 @@
 import React from 'react';
-import PriceSummary from '../order/PriceSummary.js';
+import PriceSummary from '../order/PriceSummary.jsx';
 
 export default function OrderInformationStep({
   orderInfo = {},
