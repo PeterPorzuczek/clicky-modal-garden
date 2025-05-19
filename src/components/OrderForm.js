@@ -1,0 +1,86 @@
+          "data-component-path": "src/components/OrderForm.tsx",
+          "data-component-line": "288",
+          "data-component-file": "OrderForm.tsx",
+          "data-component-name": "div",
+          "data-component-content":
+            "%7B%22className%22%3A%22max-h-full%20overflow-auto%22%7D",
+          ref: t,
+          className: "max-h-full overflow-auto",
+          children: d.jsx(HE, {
+            "data-lov-id": "src/components/OrderForm.tsx:289:8",
+            "data-lov-name": "ConfirmationStep",
+            "data-component-path": "src/components/OrderForm.tsx",
+            "data-component-line": "289",
+            "data-component-file": "OrderForm.tsx",
+            "data-component-name": "ConfirmationStep",
+            "data-component-content": "%7B%7D",
+            resetForm: P,
+            products: g,
+          }),
+        })
+      : d.jsxs("div", {
+          "data-lov-id": "src/components/OrderForm.tsx:298:4",
+          "data-lov-name": "div",
+          "data-component-path": "src/components/OrderForm.tsx",
+          "data-component-line": "298",
+          "data-component-file": "OrderForm.tsx",
+          "data-component-name": "div",
+          "data-component-content":
+            "%7B%22className%22%3A%22p-6%20max-h-full%20overflow-auto%22%7D",
+          className: "p-6 max-h-full overflow-auto",
+          ref: t,
+          children: [
+            n === 0 &&
+              d.jsx(WE, {
+                "data-lov-id": "src/components/OrderForm.tsx:300:8",
+                "data-lov-name": "ProductSelectionStep",
+                "data-component-path": "src/components/OrderForm.tsx",
+                "data-component-line": "300",
+                "data-component-file": "OrderForm.tsx",
+                "data-component-name": "ProductSelectionStep",
+                "data-component-content": "%7B%7D",
+                products: g,
+                setProducts: v,
+                quantity: r,
+                setQuantity: a,
+                isProductFormValid: l,
+                nextStep: I,
+                validationErrors: x,
+                touchedFields: E,
+                onFieldBlur: M,
+              }),
+            n === 1 &&
+              d.jsx(GE, {
+                "data-lov-id": "src/components/OrderForm.tsx:314:8",
+                "data-lov-name": "OrderInformationStep",
+                "data-component-path": "src/components/OrderForm.tsx",
+                "data-component-line": "314",
+                "data-component-file": "OrderForm.tsx",
+                "data-component-name": "OrderInformationStep",
+                "data-component-content": "%7B%7D",
+                orderInfo: w,
+                products: g,
+                termsAccepted: s,
+                setTermsAccepted: i,
+                handleOrderInfoChange: U,
+                handleBillingToPickupChange: q,
+                useBillingAddressForPickup: D,
+                isOrderInfoFormValid: u,
+                prevStep: R,
+                nextStep: I,
+                validationErrors: b,
+                touchedFields: E,
+                onFieldBlur: M,
+              }),
+          ],
+        });
+  },
+  qE = ({ prefilledData: e = null, onOpenChange: t, isOpen: n }) => {
+    const [o, r] = rn.useState(!1),
+      a = n !== void 0 ? n : o,
+      s = () => {
+        n === void 0 && r(!0), t && t(!0);
+      };
+    return d.jsxs("div", {
+      "data-lov-id": "src/components/Banner.tsx:35:9",
+      "data-lov-name": "div",
