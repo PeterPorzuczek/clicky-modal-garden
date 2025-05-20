@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import InstructionMessage from './InstructionMessage';
-import WholeProductList from './WholeProductList';
-import MarkerButtons from './MarkerButtons';
-import GarmentView from './GarmentView';
+import InstructionMessage from './InstructionMessage.jsx';
+import WholeProductList from './WholeProductList.jsx';
+import MarkerButtons from './MarkerButton.jsx';
+import GarmentView from './GarmentView.jsx';
 
 export default function GarmentDamageMarker({
   product,
