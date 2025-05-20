@@ -38,7 +38,12 @@ export default function ProductSelectionStep({
   };
 
   const updateProduct = (id, field, value) => {
-    setProducts(products.map(p => (p.id === id ? { ...p, [field]: value } : p)));
+    // Use functional updates so multiple updates in quick
+    // succession don't overwrite each other by using stale
+    // state snapshots.
+    setProducts(prev =>
+      prev.map(p => (p.id === id ? { ...p, [field]: value } : p))
+    );
   };
 
   return (
