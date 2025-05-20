@@ -1,9 +1,7 @@
 import React from 'react';
 
 const OPTIONS = [
-  { value: 'undertröja', label: 'Undertröja' },
-  { value: 'tröja', label: 'Tröja' },
-  { value: 'ytterplagg', label: 'Ytterplagg' },
+  { value: 'overdel', label: 'Överdel' },
   { value: 'nederdel', label: 'Nederdel' },
   { value: 'skor', label: 'Skor' },
 ];

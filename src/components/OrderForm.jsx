@@ -12,6 +12,7 @@ const createEmptyProduct = (id) => ({
   otherIssues: {},
   defectDetails: {},
   defectLabels: {},
+  images: null,
   isEmployeeOwned: false,
   employeeName: '',
   employeeDepartment: '',

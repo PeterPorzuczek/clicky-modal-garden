@@ -5,6 +5,8 @@ import DamageSelector from './DamageSelector';
 import DefectsSection from './DefectsSection';
 import EmployeeOwnershipFields from './EmployeeOwnershipFields';
 import GarmentDamageMarker from './damage-marker/GarmentDamageMarker';
+import upperBodyImg from '../../../assets/Plagg-overdelar1.jpg';
+import lowerBodyImg from '../../../assets/Plagg-Nederdel.jpg';
 
 const DAMAGE_OPTIONS = [
   { value: 'tear', label: 'Reva' },
@@ -16,6 +18,12 @@ const DEFECT_OPTIONS = [
   { id: 'zipper', label: 'Trasig dragkedja' },
   { id: 'button', label: 'Saknar knapp' },
 ];
+
+const typeImages = {
+  overdel: { front: upperBodyImg },
+  nederdel: { front: lowerBodyImg },
+  skor: null,
+};
 
 export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
@@ -80,7 +88,10 @@ export default function ProductCard({ product, onUpdate }) {
       <div className="space-y-6">
         <ProductTypeSelector
           productType={product.type}
-          onTypeChange={(v) => updateField('type', v)}
+          onTypeChange={(v) => {
+            updateField('type', v);
+            updateField('images', typeImages[v] || null);
+          }}
           error={product.typeError}
         />
         {product.type && (
