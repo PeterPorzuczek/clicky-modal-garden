@@ -34,7 +34,9 @@ export default function ProductSelectionStep({
   };
 
   const updateProduct = (id, field, value) => {
-    setProducts(products.map(p => (p.id === id ? { ...p, [field]: value } : p)));
+    setProducts(prev =>
+      prev.map(p => (p.id === id ? { ...p, [field]: value } : p))
+    );
   };
 
   return (

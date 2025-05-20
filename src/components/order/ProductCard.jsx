@@ -19,8 +19,13 @@ const DEFECT_OPTIONS = [
   { id: 'button', label: 'Saknar knapp' },
 ];
 
+// Map each selectable product type to the image set used when
+// marking damages. Multiple options share the same image based on
+// the garment category.
 const typeImages = {
-  overdel: { front: upperBodyImg },
+  undertröja: { front: upperBodyImg },
+  tröja: { front: upperBodyImg },
+  ytterplagg: { front: upperBodyImg },
   nederdel: { front: lowerBodyImg },
   skor: null,
 };
