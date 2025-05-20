@@ -1,7 +1,14 @@
 import React from 'react';
 
+// Available garment options. These are more fine grained than the
+// categories used internally when displaying the garment images.
+// "Undertröja", "Tröja" and "Ytterplagg" should all be treated as
+// upper body garments, "Nederdel" as a lower body garment and
+// "Skor" represents footwear.
 const OPTIONS = [
-  { value: 'overdel', label: 'Överdel' },
+  { value: 'undertröja', label: 'Undertröja' },
+  { value: 'tröja', label: 'Tröja' },
+  { value: 'ytterplagg', label: 'Ytterplagg' },
   { value: 'nederdel', label: 'Nederdel' },
   { value: 'skor', label: 'Skor' },
 ];
