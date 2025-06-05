@@ -23,6 +23,7 @@ export default function ProductSelectionStep({
         otherIssues: {},
         defectDetails: {},
         defectLabels: {},
+        images: null,
         isEmployeeOwned: false,
         employeeName: '',
         employeeDepartment: '',

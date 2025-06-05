@@ -1,12 +1,10 @@
 import React from 'react';
+import config from '../../config.js';
 
-const OPTIONS = [
-  { value: 'undertröja', label: 'Undertröja' },
-  { value: 'tröja', label: 'Tröja' },
-  { value: 'ytterplagg', label: 'Ytterplagg' },
-  { value: 'nederdel', label: 'Nederdel' },
-  { value: 'skor', label: 'Skor' },
-];
+const OPTIONS = config.productCategories.map((cat) => ({
+  value: cat.id,
+  label: cat.name.sv || cat.name.en,
+}));
 
 export default function ProductTypeSelector({ productType, onTypeChange, onOpenChange, error }) {
   const handleChange = (e) => {
