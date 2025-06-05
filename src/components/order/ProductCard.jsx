@@ -43,6 +43,16 @@ export default function ProductCard({ product, onUpdate }) {
     const details = { ...(product.damageDetails || {}) };
     details[`damage-${idx}`] = { optionId: '' };
     updateField('damageDetails', details);
+    const damageObj = category?.damages.find((d) => d.id === val);
+    if (damageObj && damageObj.picturesToBeMarked?.length) {
+      const pics = damageObj.picturesToBeMarked;
+      updateField('images', {
+        front: pics[0] || null,
+        back: pics[1] || pics[0] || null,
+        left: pics[2] || pics[0] || null,
+        right: pics[3] || pics[0] || null,
+      });
+    }
   };
 
   const updateDamageDetail = (idx, detail) => {
