@@ -36,6 +36,24 @@ export default function ProductCard({ product, onUpdate }) {
     }
   }, [product.damageCount]);
 
+  // When the product type changes ensure a default image is available so
+  // the user can start marking damages immediately. We use the first
+  // damage's picture set as a fallback if no specific image has been
+  // selected yet.
+  useEffect(() => {
+    if (!product.images && category && category.damages.length > 0) {
+      const pics = category.damages[0].picturesToBeMarked || [];
+      if (pics.length) {
+        updateField('images', {
+          front: pics[0] || null,
+          back: pics[1] || pics[0] || null,
+          left: pics[2] || pics[0] || null,
+          right: pics[3] || pics[0] || null,
+        });
+      }
+    }
+  }, [product.type]);
+
   const updateDamageType = (idx, val) => {
     const arr = [...(product.damages || [])];
     arr[idx] = val;
