@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../config.js';
+import config from '../../config.js';
 
 const getPrice = (pricing = {}, count) => {
   if (count >= 6) return pricing['10'] || 0;

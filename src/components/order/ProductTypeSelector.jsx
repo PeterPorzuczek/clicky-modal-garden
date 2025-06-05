@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../config.js';
+import config from '../../config.js';
 
 const OPTIONS = config.productCategories.map((cat) => ({
   value: cat.id,
