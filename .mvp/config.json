@@ -1,0 +1,1806 @@
+{
+  "texts": {
+    "firstStep": {
+      "title": {
+        "en": "Order repair & restoration of workwear",
+        "se": "Beställ reparation & restaurering av arbetskläder",
+        "no": "Bestill reparasjon og restaurering av arbeidstøy"
+      },
+      "instruction": {
+        "en": "Here you can easily order repairs & restoration of your work products. Follow the steps below to register your damage and send the garments in.",
+        "se": "Här kan du enkelt beställa reparationer & restaurering av dina arbetsprodukter. Följ stegen nedan för att registrera din skada och skicka in plaggen.",
+        "no": "Her kan du enkelt bestille reparasjon og restaurering av arbeidsproduktene dine. Følg trinnene nedenfor for å registrere skaden din og sende inn plaggene."
+      },
+      "reminder": {
+        "en": "Remember not to send classified protective clothing and safety shoes (e.g. class 1,2,3)",
+        "se": "Kom ihåg att inte skicka klassificerade skyddskläder och skyddsskor (t.ex. klass 1,2,3)",
+        "no": "Husk å ikke sende klassifisert vernetøy og vernesko (f.eks. klasse 1,2,3)"
+      },
+      "selectNumberOfProducts": {
+        "en": "Select number of products",
+        "se": "Välj antal produkter",
+        "no": "Velg antall produkter"
+      },
+      "product": {
+        "en": "Product",
+        "se": "Produkt",
+        "no": "Produkt"
+      },
+      "selectTypeOfProduct": {
+        "en": "Select type of product",
+        "se": "Välj produkttyp",
+        "no": "Velg produkttype"
+      },
+      "select": {
+        "en": "Select",
+        "se": "Välj",
+        "no": "Velg"
+      },
+      "next": {
+        "en": "Next",
+        "se": "Nästa",
+        "no": "Neste"
+      }
+    },
+    "secondStep": {
+      "title": {
+        "en": "Order repair & restoration of workwear",
+        "se": "Beställ reparation & restaurering av arbetskläder",
+        "no": "Bestill reparasjon og restaurering av arbeidstøy"
+      },
+      "instruction": {
+        "en": "Here you can easily order repairs & restoration of your work products. Follow the steps below to register your damage and send the garments in.",
+        "se": "Här kan du enkelt beställa reparationer & restaurering av dina arbetsprodukter. Följ stegen nedan för att registrera din skada och skicka in plaggen.",
+        "no": "Her kan du enkelt bestille reparasjon og restaurering av arbeidsproduktene dine. Følg trinnene nedenfor for å registrere skaden og sende inn plaggene."
+      },
+      "reminder": {
+        "en": "Remember not to send classified protective clothing and safety shoes (e.g. class 1,2,3)",
+        "se": "Kom ihåg att inte skicka klassificerade skyddskläder och skyddsskor (t.ex. klass 1,2,3)",
+        "no": "Husk å ikke sende klassifisert vernetøy og vernesko (f.eks. klasse 1,2,3)"
+      },
+      "selectNumberOfProducts": {
+        "en": "Select number of products",
+        "se": "Välj antal produkter",
+        "no": "Velg antall produkter"
+      },
+      "product": {
+        "en": "Product",
+        "se": "Produkt",
+        "no": "Produkt"
+      },
+      "selectTypeOfProduct": {
+        "en": "Select type of product",
+        "se": "Välj produkttyp",
+        "no": "Velg produkttype"
+      },
+      "numberOfDamages": {
+        "en": "Number of damages",
+        "se": "Antal skador",
+        "no": "Antall skader"
+      },
+      "typeOfDamage": {
+        "en": "Type of damage",
+        "se": "Typ av skada",
+        "no": "Type skade"
+      },
+      "damage": {
+        "en": "Damage",
+        "se": "Skada",
+        "no": "Skade"
+      },
+      "repairInfo": {
+        "en": "Repair with sewing etc etc",
+        "se": "Lagning med sömnad hösta jada jag",
+        "no": "Reparasjon med søm osv osv"
+      },
+      "defects": {
+        "en": "Defects",
+        "se": "Defekter",
+        "no": "Defekter"
+      },
+      "markDamageBelow": {
+        "en": "Mark the damage in the image below",
+        "se": "Markera skadan på bilden nedan",
+        "no": "Marker skaden på bildet nedenfor"
+      },
+      "infoMarkOnImage": {
+        "en": "Click on the image below where the selected Damage/defects are located on the product. You can drag the selection to a different position if you need to adjust them.",
+        "se": "Klicka på bilden nedan där vald skada/defekt finns på produkten. Du kan dra markeringen till en annan plats om du behöver justera den.",
+        "no": "Klikk på bildet under der den valgte skaden/defekten er på produktet. Du kan dra markeringen til en annen posisjon hvis du trenger å justere den."
+      },
+      "appliesToEntireProduct": {
+        "en": "Applies to the entire product",
+        "se": "Gäller hela produkten",
+        "no": "Gjelder hele produktet"
+      },
+      "front": {
+        "en": "Front",
+        "se": "Fram",
+        "no": "Foran"
+      },
+      "left": {
+        "en": "Left",
+        "se": "Vänster",
+        "no": "Venstre"
+      },
+      "back": {
+        "en": "Back",
+        "se": "Bak",
+        "no": "Bak"
+      },
+      "right": {
+        "en": "Right",
+        "se": "Höger",
+        "no": "Høyre"
+      },
+      "belongsToEmployee": {
+        "en": "Product belongs to employee",
+        "se": "Produkten tillhör anställd",
+        "no": "Produktet tilhører ansatt"
+      },
+      "summary": {
+        "en": "Summary",
+        "se": "Sammanfattning",
+        "no": "Sammendrag"
+      },
+      "total": {
+        "en": "Total",
+        "se": "Totalt",
+        "no": "Totalt"
+      },
+      "next": {
+        "en": "Next",
+        "se": "Nästa",
+        "no": "Neste"
+      }
+    },
+    "thirdStep": {
+      "title": {
+        "en": "Order repair & restoration of workwear",
+        "se": "Beställ reparation & restaurering av arbetskläder",
+        "no": "Bestill reparasjon og restaurering av arbeidstøy"
+      },
+      "back": {
+        "en": "Back",
+        "se": "Tillbaka",
+        "no": "Tilbake"
+      },
+      "orderInformation": {
+        "en": "Order information",
+        "se": "Orderinformation",
+        "no": "Bestillingsinformasjon"
+      },
+      "customerNumber": {
+        "en": "Customer number",
+        "se": "Kundnummer",
+        "no": "Kundenummer"
+      },
+      "enterCustomerNumber": {
+        "en": "Enter customer number",
+        "se": "Ange kundnummer",
+        "no": "Skriv inn kundenummer"
+      },
+      "companyName": {
+        "en": "Company name",
+        "se": "Företagsnamn",
+        "no": "Firmanavn"
+      },
+      "enterCompanyName": {
+        "en": "Enter company name",
+        "se": "Ange företagsnamn",
+        "no": "Skriv inn firmanavn"
+      },
+      "ordererName": {
+        "en": "Name of orderer",
+        "se": "Namn på beställare",
+        "no": "Navn på bestiller"
+      },
+      "enterOrdererName": {
+        "en": "Enter orderer name",
+        "se": "Ange beställare",
+        "no": "Skriv inn bestillers navn"
+      },
+      "phone": {
+        "en": "Phone",
+        "se": "Telefon",
+        "no": "Telefon"
+      },
+      "enterPhone": {
+        "en": "Enter phone",
+        "se": "Ange telefon",
+        "no": "Skriv inn telefon"
+      },
+      "email": {
+        "en": "E-mail",
+        "se": "E-post",
+        "no": "E-post"
+      },
+      "enterEmail": {
+        "en": "Enter e-mail",
+        "se": "Ange e-post",
+        "no": "Skriv inn e-post"
+      },
+      "billingAddress": {
+        "en": "Billing address",
+        "se": "Faktureringsadress",
+        "no": "Fakturaadresse"
+      },
+      "streetAddress": {
+        "en": "Street address",
+        "se": "Gatuadress",
+        "no": "Gateadresse"
+      },
+      "enterStreetAddress": {
+        "en": "Enter street address",
+        "se": "Ange beställare",
+        "no": "Skriv inn gateadresse"
+      },
+      "postalCode": {
+        "en": "Postal code",
+        "se": "Postnummer",
+        "no": "Postnummer"
+      },
+      "enterPostalCode": {
+        "en": "Enter postal code",
+        "se": "Ange telefon",
+        "no": "Skriv inn postnummer"
+      },
+      "city": {
+        "en": "City",
+        "se": "Ort",
+        "no": "Sted"
+      },
+      "enterCity": {
+        "en": "Enter city",
+        "se": "Ange ort",
+        "no": "Skriv inn sted"
+      },
+      "pickupAddress": {
+        "en": "Pickup address",
+        "se": "Upphämtningsadress",
+        "no": "Hentingsadresse"
+      },
+      "deliveryAddress": {
+        "en": "Delivery address",
+        "se": "Leveransadress",
+        "no": "Leveringsadresse"
+      },
+      "sameAsPickup": {
+        "en": "Same as pickup address",
+        "se": "Samma som upphämtningsadress",
+        "no": "Samme som hentingsadresse"
+      },
+      "summary": {
+        "en": "Summary",
+        "se": "Summary",
+        "no": "Sammendrag"
+      },
+      "total": {
+        "en": "Total",
+        "se": "Totalt",
+        "no": "Totalt"
+      },
+      "acceptTerms": {
+        "en": "I have read and accept the terms",
+        "se": "Jag har läst och godkänner villkoren",
+        "no": "Jeg har lest og godtar vilkårene"
+      },
+      "terms": {
+        "en": "terms",
+        "se": "villkoren",
+        "no": "vilkårene"
+      },
+      "order": {
+        "en": "Order",
+        "se": "Beställ",
+        "no": "Bestill"
+      }
+    },
+    "fourthStep": {
+      "thankYouTitle": {
+        "en": "Thank you for your order!",
+        "se": "Tack för din beställning!",
+        "no": "Takk for din bestilling!"
+      },
+      "orderReceivedMsg": {
+        "en": "Your order has been received and we have sent a confirmation to your email address.",
+        "se": "Din beställning är nu mottagen och vi har skickat en bekräftelse till din e-postadress.",
+        "no": "Bestillingen din er mottatt, og vi har sendt en bekreftelse til din e-postadresse."
+      },
+      "instructionsTitle": {
+        "en": "Follow the steps below to prepare your garments for repair & restoration:",
+        "se": "Följ stegen nedan för att förbereda dina plagg för reparation & återställning:",
+        "no": "Følg trinnene nedenfor for å forberede plaggene dine for reparasjon og restaurering:"
+      },
+      "step1": {
+        "en": "Receive order confirmation and accompanying garment labels (one per garment) and shipping label.",
+        "se": "Mottag orderbekräftelse och medföljande plaggetiketter (en per plagg) samt fraktsedel.",
+        "no": "Motta ordrebekreftelse og medfølgende plaggmerker (ett per plagg) samt fraktetikett."
+      },
+      "step2": {
+        "en": "Print garment labels and shipping label.",
+        "se": "Skriv ut plaggetiketter och fraktsedel.",
+        "no": "Skriv ut plaggmerkene og fraktetiketten."
+      },
+      "step3": {
+        "en": "Attach the garment labels securely to each garment. These are important for linking the garment to your order!",
+        "se": "Fäst plaggetiketterna ordentligt på varje plagg. Dessa är viktiga för att koppla plagget till din beställning!",
+        "no": "Fest plaggmerkene godt på hvert plagg. Disse er viktige for å knytte plagget til bestillingen din!"
+      },
+      "step4": {
+        "en": "Pack your clothes in a suitable package.",
+        "se": "Packa dina kläder i ett lämpligt paket.",
+        "no": "Pakk klærne dine i en egnet pakke."
+      },
+      "step5": {
+        "en": "Attach the shipping label to the package.",
+        "se": "Klistra fast fraktsedeln på paketet.",
+        "no": "Fest fraktetiketten på pakken."
+      },
+      "step6": {
+        "en": "Send the package according to the instructions on the shipping label.",
+        "se": "Skicka paketet enligt anvisningarna på fraktsedeln.",
+        "no": "Send pakken i henhold til instruksjonene på fraktetiketten."
+      },
+      "additionalOrder": {
+        "en": "Additional order",
+        "se": "Ytterligare beställning",
+        "no": "Ytterligere bestilling"
+      },
+      "close": {
+        "en": "Close",
+        "se": "Stäng",
+        "no": "Lukk"
+      }
+    }
+  },
+  "productCategories": [
+    {
+      "id": "tshirt_polo",
+      "articleNumber": "",
+      "name": {
+        "en": "T-shirt/Polo",
+        "sv": "T-shirt/Piké",
+        "no": "T-skjorte/Polo"
+      },
+      "damages": [
+        {
+          "id": "tear",
+          "name": {
+            "en": "Tear",
+            "sv": "Reva",
+            "no": "Rift"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "large_sewing",
+              "name": {
+                "en": "16cm+ (Sewing repair)",
+                "sv": "16cm+ (Sömnadslagning)",
+                "no": "16cm+ (Søm reparasjon)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 369,
+                "2": 664,
+                "3": 940,
+                "5": 1476,
+                "10": 2767
+              }
+            },
+            {
+              "id": "small_sewing",
+              "name": {
+                "en": "Max 15cm (Sewing repair)",
+                "sv": "Max 15cm (Sömnadslagning)",
+                "no": "Maks 15cm (Søm reparasjon)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 339,
+                "2": 610,
+                "3": 864,
+                "5": 1356,
+                "10": 2542
+              }
+            },
+            {
+              "id": "small_patch",
+              "name": {
+                "en": "Max 15cm (Patch)",
+                "sv": "Max 15cm (Patchlagning)",
+                "no": "Maks 15cm (Lapp)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 199,
+                "2": 358,
+                "3": 507,
+                "5": 796,
+                "10": 1492
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "elastic_replacement",
+          "name": {
+            "en": "Elastic replacement",
+            "sv": "Byte resår",
+            "no": "Strikk utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [],
+          "markedOnPicture": true,
+          "pricing": {
+            "1": 299,
+            "2": 538,
+            "3": 762,
+            "5": 1196,
+            "10": 2242
+          }
+        },
+        {
+          "id": "button_replacement",
+          "name": {
+            "en": "Button replacement",
+            "sv": "Byte knapp",
+            "no": "Knapp utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "2_4_pcs",
+              "name": {
+                "en": "2-4 pcs",
+                "sv": "2-4 st",
+                "no": "2-4 stk"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 299,
+                "2": 538,
+                "3": 762,
+                "5": 1196,
+                "10": 2242
+              }
+            },
+            {
+              "id": "3_pcs",
+              "name": {
+                "en": "3 pcs",
+                "sv": "1 st",
+                "no": "3 stk"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 209,
+                "2": 376,
+                "3": 532,
+                "5": 836,
+                "10": 1567
+              }
+            }
+          ],
+          "markedOnPicture": true
+        }
+      ],
+      "defects": [
+        {
+          "id": "wash_tough_stains",
+          "name": {
+            "en": "Wash tough stains (asphalt, oil, blood)",
+            "sv": "Tvätt svåra fläckar (Asfalt, olja, blod)",
+            "no": "Vask hardnakkede flekker (asfalt, olje, blod)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 229,
+            "2": 412,
+            "3": 583,
+            "5": 916,
+            "10": 1717
+          }
+        },
+        {
+          "id": "pilling",
+          "name": {
+            "en": "Pilling",
+            "sv": "Noppor",
+            "no": "Noping"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 139,
+            "2": 250,
+            "3": 354,
+            "5": 556,
+            "10": 1042
+          }
+        },
+        {
+          "id": "wash_and_refresh",
+          "name": {
+            "en": "Wash and Refresh (including odor removal)",
+            "sv": "Tvätt och Uppfräschning (inkl. dålig lukt)",
+            "no": "Vask og oppfriskning (inkludert luktfjerning)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 119,
+            "2": 214,
+            "3": 303,
+            "5": 476,
+            "10": 892
+          }
+        }
+      ]
+    },
+    {
+      "id": "sweater",
+      "articleNumber": "",
+      "name": {
+        "en": "Sweater",
+        "sv": "Tröja",
+        "no": "Genser"
+      },
+      "damages": [
+        {
+          "id": "zipper_replacement",
+          "name": {
+            "en": "Zipper replacement",
+            "sv": "Byte dragkedja",
+            "no": "Glidelås utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
+          ],
+          "options": [
+            {
+              "id": "long_original",
+              "name": {
+                "en": "Long Original 25-90 cm",
+                "sv": "Lång Original 25-90 cm",
+                "no": "Lang Original 25-90 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 799,
+                "2": 1438,
+                "3": 2037,
+                "5": 3196,
+                "10": 5992
+              }
+            },
+            {
+              "id": "long_basic",
+              "name": {
+                "en": "Long Basic replacement 25-90 cm",
+                "sv": "Lång Förenklad lagning 25-90 cm",
+                "no": "Lang Basic utskifting 25-90 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 525,
+                "2": 945,
+                "3": 1338,
+                "5": 2100,
+                "10": 3937
+              }
+            },
+            {
+              "id": "short_original",
+              "name": {
+                "en": "Short Original Max. 25 cm",
+                "sv": "Kort Original Max. 25 cm",
+                "no": "Kort Original Maks. 25 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 425,
+                "2": 765,
+                "3": 1083,
+                "5": 1700,
+                "10": 3187
+              }
+            },
+            {
+              "id": "short_basic",
+              "name": {
+                "en": "Short Basic replacement Max. 25 cm",
+                "sv": "Kort Förenklad lagning Max 25 cm",
+                "no": "Kort Basic utskifting Maks. 25 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 299,
+                "2": 538,
+                "3": 762,
+                "5": 1196,
+                "10": 2242
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "velcro_replacement",
+          "name": {
+            "en": "Velcro replacement",
+            "sv": "Byte kardborrband",
+            "no": "Borrelås utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [],
+          "markedOnPicture": true,
+          "pricing": {
+            "1": 289,
+            "2": 520,
+            "3": 736,
+            "5": 1156,
+            "10": 2167
+          }
+        },
+        {
+          "id": "tear",
+          "name": {
+            "en": "Tear",
+            "sv": "Reva",
+            "no": "Rift"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "large_sewing",
+              "name": {
+                "en": "16cm+ (Sewing repair)",
+                "sv": "16cm+ (Sömnadslagning)",
+                "no": "16cm+ (Søm reparasjon)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 369,
+                "2": 664,
+                "3": 940,
+                "5": 1476,
+                "10": 2767
+              }
+            },
+            {
+              "id": "small_sewing",
+              "name": {
+                "en": "Max 15cm (Sewing repair)",
+                "sv": "Max 15 cm (Sömnadslagning)",
+                "no": "Maks 15cm (Søm reparasjon)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 339,
+                "2": 610,
+                "3": 864,
+                "5": 1356,
+                "10": 2542
+              }
+            },
+            {
+              "id": "small_patch",
+              "name": {
+                "en": "Max 15cm (Patch)",
+                "sv": "Max 15cm (Patchlagning)",
+                "no": "Maks 15cm (Lapp)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 199,
+                "2": 358,
+                "3": 507,
+                "5": 796,
+                "10": 1492
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "elastic_replacement",
+          "name": {
+            "en": "Elastic replacement",
+            "sv": "Byte resår",
+            "no": "Strikk utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [],
+          "markedOnPicture": true,
+          "pricing": {
+            "1": 299,
+            "2": 538,
+            "3": 762,
+            "5": 1196,
+            "10": 2242
+          }
+        },
+        {
+          "id": "button_replacement",
+          "name": {
+            "en": "Button replacement",
+            "sv": "Byte knapp",
+            "no": "Knapp utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "2_4_pcs",
+              "name": {
+                "en": "2-4 pcs",
+                "sv": "2-4 st",
+                "no": "2-4 stk"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 299,
+                "2": 538,
+                "3": 762,
+                "5": 1196,
+                "10": 2242
+              }
+            },
+            {
+              "id": "2_pcs",
+              "name": {
+                "en": "2 pcs",
+                "sv": "1 st",
+                "no": "2 stk"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 209,
+                "2": 376,
+                "3": 532,
+                "5": 836,
+                "10": 1567
+              }
+            }
+          ],
+          "markedOnPicture": true
+        }
+      ],
+      "defects": [
+        {
+          "id": "wash_water_repellent",
+          "name": {
+            "en": "Wash+Water repellent treatment",
+            "sv": "Tvätt + Impregnering",
+            "no": "Vask+Vannavstøtende behandling"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 245,
+            "2": 441,
+            "3": 624,
+            "5": 980,
+            "10": 1837
+          }
+        },
+        {
+          "id": "wash_tough_stains",
+          "name": {
+            "en": "Wash tough stains (asphalt, oil, blood)",
+            "sv": "Tvätt svåra fläckar (Asfalt, olja, blod)",
+            "no": "Vask hardnakkede flekker (asfalt, olje, blod)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 259,
+            "2": 466,
+            "3": 660,
+            "5": 1036,
+            "10": 1942
+          }
+        },
+        {
+          "id": "wash_and_refresh",
+          "name": {
+            "en": "Wash and Refresh (including odor removal)",
+            "sv": "Tvätt och Uppfräschning (inkl. dålig lukt)",
+            "no": "Vask og oppfriskning (inkludert luktfjerning)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 149,
+            "2": 268,
+            "3": 379,
+            "5": 596,
+            "10": 1117
+          }
+        },
+        {
+          "id": "pilling",
+          "name": {
+            "en": "Pilling",
+            "sv": "Noppor",
+            "no": "Noping"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 139,
+            "2": 250,
+            "3": 354,
+            "5": 556,
+            "10": 1042
+          }
+        }
+      ]
+    },
+    {
+      "id": "jacket",
+      "articleNumber": "",
+      "name": {
+        "en": "Jacket",
+        "sv": "Jacka",
+        "no": "Jakke"
+      },
+      "damages": [
+        {
+          "id": "zipper_replacement",
+          "name": {
+            "en": "Zipper replacement",
+            "sv": "Byte dragkedja",
+            "no": "Glidelås utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
+          ],
+          "options": [
+            {
+              "id": "long_original",
+              "name": {
+                "en": "Long Original 25-90 cm",
+                "sv": "Lång Original 25-90 cm",
+                "no": "Lang Original 25-90 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 1195,
+                "2": 2151,
+                "3": 3047,
+                "5": 4780,
+                "10": 8962
+              }
+            },
+            {
+              "id": "long_basic",
+              "name": {
+                "en": "Long Basic replacement 25-90 cm",
+                "sv": "Lång Förenklad lagning 25-90 cm",
+                "no": "Lang Basic utskifting 25-90 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 659,
+                "2": 1186,
+                "3": 1680,
+                "5": 2636,
+                "10": 4942
+              }
+            },
+            {
+              "id": "short_original",
+              "name": {
+                "en": "Short Original Max. 25 cm",
+                "sv": "Kort Original Max. 25 cm",
+                "no": "Kort Original Maks. 25 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 599,
+                "2": 1078,
+                "3": 1527,
+                "5": 2396,
+                "10": 4492
+              }
+            },
+            {
+              "id": "short_basic",
+              "name": {
+                "en": "Short Basic replacement Max 25 cm",
+                "sv": "Kort Förenklad lagning Max 25 cm",
+                "no": "Kort Basic utskifting Maks 25 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 419,
+                "2": 754,
+                "3": 1068,
+                "5": 1676,
+                "10": 3142
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "velcro_replacement",
+          "name": {
+            "en": "Velcro replacement",
+            "sv": "Byte kardborrband",
+            "no": "Borrelås utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
+          ],
+          "options": [],
+          "markedOnPicture": true,
+          "pricing": {
+            "1": 325,
+            "2": 585,
+            "3": 828,
+            "5": 1300,
+            "10": 2437
+          }
+        },
+        {
+          "id": "tear_large",
+          "name": {
+            "en": "Tear Large",
+            "sv": "Stor reva",
+            "no": "Stor Rift"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "large_sewing",
+              "name": {
+                "en": "16cm+ (Sewing repair)",
+                "sv": "16cm+ (Sömnadslagning)",
+                "no": "16cm+ (Søm reparasjon)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 545,
+                "2": 981,
+                "3": 1389,
+                "5": 2180,
+                "10": 4087
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "tear",
+          "name": {
+            "en": "Tear",
+            "sv": "Reva",
+            "no": "Rift"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "small_sewing",
+              "name": {
+                "en": "Max 15cm (Sewing repair)",
+                "sv": "Max 15cm (Sömnadslagning)",
+                "no": "Maks 15cm (Søm reparasjon)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 509,
+                "2": 916,
+                "3": 1297,
+                "5": 2036,
+                "10": 3817
+              }
+            },
+            {
+              "id": "small_patch",
+              "name": {
+                "en": "Max 15cm (Patch)",
+                "sv": "Max 15cm (Patchlagning)",
+                "no": "Maks 15cm (Lapp)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 229,
+                "2": 412,
+                "3": 583,
+                "5": 916,
+                "10": 1717
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "elastic_replacement",
+          "name": {
+            "en": "Elastic replacement",
+            "sv": "Byte resår",
+            "no": "Strikk utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [],
+          "markedOnPicture": true,
+          "pricing": {
+            "1": 425,
+            "2": 765,
+            "3": 1083,
+            "5": 1700,
+            "10": 3187
+          }
+        },
+        {
+          "id": "button_replacement",
+          "name": {
+            "en": "Button replacement",
+            "sv": "Byte knapp",
+            "no": "Knapp utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "2_4_pcs",
+              "name": {
+                "en": "2-4 pcs",
+                "sv": "2-4 st",
+                "no": "2-4 stk"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 299,
+                "2": 538,
+                "3": 762,
+                "5": 1196,
+                "10": 2242
+              }
+            },
+            {
+              "id": "4_pcs",
+              "name": {
+                "en": "4 pcs",
+                "sv": "1 st",
+                "no": "4 stk"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 239,
+                "2": 430,
+                "3": 609,
+                "5": 956,
+                "10": 1792
+              }
+            }
+          ],
+          "markedOnPicture": true
+        }
+      ],
+      "defects": [
+        {
+          "id": "wash_tough_stains",
+          "name": {
+            "en": "Wash tough stains (asphalt, oil, blood)",
+            "sv": "Tvätt svåra fläckar (Asfalt, olja, blod)",
+            "no": "Vask hardnakkede flekker (asfalt, olje, blod)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 245,
+            "2": 441,
+            "3": 624,
+            "5": 980,
+            "10": 1837
+          }
+        },
+        {
+          "id": "wash_and_refresh",
+          "name": {
+            "en": "Washi and Refresh (including odor removal)",
+            "sv": "Tvätt och Uppfräschning (inkl. dålig lukt)",
+            "no": "Washi og oppfriskning (inkludert luktfjerning)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 165,
+            "2": 297,
+            "3": 420,
+            "5": 660,
+            "10": 1237
+          }
+        },
+        {
+          "id": "pilling",
+          "name": {
+            "en": "Pilling",
+            "sv": "Noppor",
+            "no": "Noping"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 139,
+            "2": 250,
+            "3": 354,
+            "5": 556,
+            "10": 1042
+          }
+        }
+      ]
+    },
+    {
+      "id": "bottom",
+      "articleNumber": "",
+      "name": {
+        "en": "Bottom",
+        "sv": "Nederdel",
+        "no": "Bunndel"
+      },
+      "damages": [
+        {
+          "id": "zipper_replacement",
+          "name": {
+            "en": "Zipper replacement",
+            "sv": "Byte dragkedja",
+            "no": "Glidelås utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
+          ],
+          "options": [
+            {
+              "id": "long_original",
+              "name": {
+                "en": "Long Original 25-90 cm",
+                "sv": "Lång Original 25-90 cm",
+                "no": "Lang Original 25-90 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 749,
+                "2": 1348,
+                "3": 1909,
+                "5": 2996,
+                "10": 5617
+              }
+            },
+            {
+              "id": "long_basic",
+              "name": {
+                "en": "Long Basic replacement 25-90 cm",
+                "sv": "Lång Förenklad lagning 25-90 cm",
+                "no": "Lang Basic utskifting 25-90 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 609,
+                "2": 1096,
+                "3": 1552,
+                "5": 2436,
+                "10": 4567
+              }
+            },
+            {
+              "id": "short_original",
+              "name": {
+                "en": "Short Original Max. 25 cm",
+                "sv": "Kort Original Max. 25 cm",
+                "no": "Kort Original Maks. 25 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 599,
+                "2": 1078,
+                "3": 1527,
+                "5": 2396,
+                "10": 4492
+              }
+            },
+            {
+              "id": "short_basic",
+              "name": {
+                "en": "Short Basic replacement Max. 25 cm",
+                "sv": "Kort Förenklad lagning Max 25 cm",
+                "no": "Kort Basic utskifting Maks. 25 cm"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 419,
+                "2": 754,
+                "3": 1068,
+                "5": 1676,
+                "10": 3142
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "velcro_replacement",
+          "name": {
+            "en": "Velcro replacement",
+            "sv": "Byte kardborrband",
+            "no": "Borrelås utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
+          ],
+          "options": [],
+          "markedOnPicture": true,
+          "pricing": {
+            "1": 325,
+            "2": 585,
+            "3": 828,
+            "5": 1300,
+            "10": 2437
+          }
+        },
+        {
+          "id": "tear",
+          "name": {
+            "en": "Tear",
+            "sv": "Reva",
+            "no": "Rift"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "small_sewing",
+              "name": {
+                "en": "Max 15cm (Sewing repair)",
+                "sv": "Max 15cm (Sömnadslagning)",
+                "no": "Maks 15cm (Søm reparasjon)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 449,
+                "2": 808,
+                "3": 1144,
+                "5": 1796,
+                "10": 3367
+              }
+            },
+            {
+              "id": "small_patch",
+              "name": {
+                "en": "Max 15cm (Patch)",
+                "sv": "Max 15cm (Patchlagning)",
+                "no": "Maks 15cm (Lapp)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 225,
+                "2": 405,
+                "3": 573,
+                "5": 900,
+                "10": 1687
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "fly_replacement",
+          "name": {
+            "en": "Fly replacement",
+            "sv": "Byte gylf",
+            "no": "Glidelås utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
+          ],
+          "options": [
+            {
+              "id": "original",
+              "name": {
+                "en": "Original",
+                "sv": "Original",
+                "no": "Original"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 599,
+                "2": 1078,
+                "3": 1527,
+                "5": 2396,
+                "10": 4492
+              }
+            },
+            {
+              "id": "basic_replacement",
+              "name": {
+                "en": "Basic replacement",
+                "sv": "Förenklad lagning",
+                "no": "Basic utskifting"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 329,
+                "2": 592,
+                "3": 838,
+                "5": 1316,
+                "10": 2467
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "elastic_replacement",
+          "name": {
+            "en": "Elastic replacement",
+            "sv": "Byte resår",
+            "no": "Strikk utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
+          ],
+          "options": [],
+          "markedOnPicture": true,
+          "pricing": {
+            "1": 325,
+            "2": 585,
+            "3": 828,
+            "5": 1300,
+            "10": 2437
+          }
+        },
+        {
+          "id": "button_replacement",
+          "name": {
+            "en": "Button replacement",
+            "sv": "Byte knapp",
+            "no": "Knapp utskifting"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "2_4_pcs",
+              "name": {
+                "en": "2-4 pcs",
+                "sv": "2-4 st",
+                "no": "2-4 stk"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 359,
+                "2": 646,
+                "3": 915,
+                "5": 1436,
+                "10": 2692
+              }
+            },
+            {
+              "id": "1_pcs",
+              "name": {
+                "en": "1 pcs",
+                "sv": "1 st",
+                "no": "1 stk"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 239,
+                "2": 430,
+                "3": 609,
+                "5": 956,
+                "10": 1792
+              }
+            }
+          ],
+          "markedOnPicture": true
+        },
+        {
+          "id": "tear_large",
+          "name": {
+            "en": "Tear Large",
+            "sv": "Stor reva",
+            "no": "Stor Rift"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [
+            {
+              "id": "large_sewing",
+              "name": {
+                "en": "16cm+ (Sewing repair)",
+                "sv": "16cm+ (Sömnadslagning)",
+                "no": "16cm+ (Søm reparasjon)"
+              },
+              "description": {
+                "en": "",
+                "sv": "",
+                "no": ""
+              },
+              "pricing": {
+                "1": 495,
+                "2": 891,
+                "3": 1262,
+                "5": 1980,
+                "10": 3712
+              }
+            }
+          ],
+          "markedOnPicture": true
+        }
+      ],
+      "defects": [
+        {
+          "id": "wash_tough_stains",
+          "name": {
+            "en": "Wash tough stains (asphalt, oil, blood)",
+            "sv": "Tvätt svåra fläckar (Asfalt, olja, blod)",
+            "no": "Vask hardnakkede flekker (asfalt, olje, blod)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 245,
+            "2": 441,
+            "3": 624,
+            "5": 980,
+            "10": 1837
+          }
+        },
+        {
+          "id": "wash_and_refresh",
+          "name": {
+            "en": "Wash and Refresh (including odor removal)",
+            "sv": "Tvätt och Uppfräschning (inkl. dålig lukt)",
+            "no": "Vask og oppfriskning (inkludert luktfjerning)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 165,
+            "2": 297,
+            "3": 420,
+            "5": 660,
+            "10": 1237
+          }
+        },
+        {
+          "id": "pilling",
+          "name": {
+            "en": "Pilling",
+            "sv": "Noppor",
+            "no": "Noping"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 139,
+            "2": 250,
+            "3": 354,
+            "5": 556,
+            "10": 1042
+          }
+        }
+      ]
+    },
+    {
+      "id": "shoes",
+      "articleNumber": "",
+      "name": {
+        "en": "Shoes",
+        "sv": "Skor",
+        "no": "Sko"
+      },
+      "damages": [
+        {
+          "id": "repair_washing_recovering",
+          "name": {
+            "en": "Repair, Washing & Recovering (incl. odor removal)",
+            "sv": "Lagning, Tvätt & Uppfräschning (inkl. dålig lukt)",
+            "no": "Reparasjon, Vask & Gjenoppretting (inkl. luktfjerning)"
+          },
+          "picturesToBeMarked": [
+            "https://i.imgur.com/FpqlbPM.png",
+            "https://i.imgur.com/hkczXk3.png",
+            "https://i.imgur.com/CCrkCn8.png",
+            "https://i.imgur.com/5p3Oo6l.png"
+          ],
+          "options": [],
+          "markedOnPicture": true,
+          "pricing": {
+            "1": 495,
+            "2": 891,
+            "3": 1262,
+            "5": 1980,
+            "10": 3712
+          }
+        }
+      ],
+      "defects": [
+        {
+          "id": "wash_and_refresh",
+          "name": {
+            "en": "Wash and Refresh (including odor removal)",
+            "sv": "Tvätt och Uppfräschning (inkl. dålig lukt)",
+            "no": "Vask og oppfriskning (inkludert luktfjerning)"
+          },
+          "description": {
+            "en": "",
+            "sv": "",
+            "no": ""
+          },
+          "pricing": {
+            "1": 359,
+            "2": 646,
+            "3": 915,
+            "5": 1436,
+            "10": 2692
+          }
+        }
+      ]
+    }
+  ]
+}
