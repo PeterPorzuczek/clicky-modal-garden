@@ -1,12 +1,35 @@
 import React from 'react';
+import config from '../config.js';
 
-const PRICE_PER_ITEM = 50;
+const getPrice = (pricing = {}, count) => {
+  if (count >= 6) return pricing['10'] || 0;
+  if (count >= 4) return pricing['5'] || 0;
+  if (count === 3) return pricing['3'] || 0;
+  if (count === 2) return pricing['2'] || 0;
+  return pricing['1'] || 0;
+};
 
 export default function PriceSummary({ products = [], discount = 0 }) {
-  const productTotals = products.map(p => {
-    const damages = p.damageCount || 0;
-    const subtotal = damages * PRICE_PER_ITEM;
-    return { id: p.id, type: p.type, subtotal };
+  const productTotals = products.map((p) => {
+    const category = config.productCategories.find((c) => c.id === p.type);
+    let subtotal = 0;
+    if (category) {
+      p.damages?.forEach((damageId, idx) => {
+        const damage = category.damages.find((d) => d.id === damageId);
+        if (damage) {
+          const optionId = p.damageDetails?.[`damage-${idx}`]?.optionId;
+          const option = optionId ? damage.options.find((o) => o.id === optionId) : damage;
+          if (option) subtotal += getPrice(option.pricing, products.length);
+        }
+      });
+      Object.entries(p.otherIssues || {}).forEach(([id, active]) => {
+        if (active) {
+          const defect = category.defects.find((d) => d.id === id);
+          if (defect) subtotal += getPrice(defect.pricing, products.length);
+        }
+      });
+    }
+    return { id: p.id, type: category?.name?.sv || p.type, subtotal };
   });
 
   const subTotal = productTotals.reduce((sum, p) => sum + p.subtotal, 0);
@@ -15,13 +38,9 @@ export default function PriceSummary({ products = [], discount = 0 }) {
 
   return (
     <div className="space-y-4">
-      {productTotals.map(p => (
+      {productTotals.map((p) => (
         <div key={p.id} className="border border-gray-200 rounded-md p-3 bg-white/0">
           <div className="font-medium border-b pb-2 mb-2">Produkt #{p.id}: {p.type || '-'}</div>
-          <div className="flex justify-between text-sm">
-            <span>Skador</span>
-            <span>{PRICE_PER_ITEM} kr</span>
-          </div>
           <div className="flex justify-between font-medium mt-2 pt-2 border-t border-gray-200">
             <span>Delsumma</span>
             <span>{p.subtotal} kr</span>

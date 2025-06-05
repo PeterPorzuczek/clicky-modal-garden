@@ -5,21 +5,19 @@ import DamageSelector from './DamageSelector';
 import DefectsSection from './DefectsSection';
 import EmployeeOwnershipFields from './EmployeeOwnershipFields';
 import GarmentDamageMarker from './damage-marker/GarmentDamageMarker';
-
-const DAMAGE_OPTIONS = [
-  { value: 'tear', label: 'Reva' },
-  { value: 'hole', label: 'H\xE5l' },
-  { value: 'stain', label: 'Fl\xE4ck' },
-];
-
-const DEFECT_OPTIONS = [
-  { id: 'zipper', label: 'Trasig dragkedja' },
-  { id: 'button', label: 'Saknar knapp' },
-];
+import config from '../config.js';
 
 export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
   const [selectedDefectId, setSelectedDefectId] = useState();
+
+  const category = config.productCategories.find((c) => c.id === product.type);
+  const DAMAGE_OPTIONS = category
+    ? category.damages.map((d) => ({ id: d.id, label: d.name.sv || d.name.en, options: d.options || [] }))
+    : [];
+  const DEFECT_OPTIONS = category
+    ? category.defects.map((d) => ({ id: d.id, label: d.name.sv || d.name.en }))
+    : [];
 
   const updateField = (field, value) => {
     onUpdate && onUpdate(product.id, field, value);
@@ -42,6 +40,9 @@ export default function ProductCard({ product, onUpdate }) {
     const arr = [...(product.damages || [])];
     arr[idx] = val;
     updateField('damages', arr);
+    const details = { ...(product.damageDetails || {}) };
+    details[`damage-${idx}`] = { optionId: '' };
+    updateField('damageDetails', details);
   };
 
   const updateDamageDetail = (idx, detail) => {
@@ -96,10 +97,13 @@ export default function ProductCard({ product, onUpdate }) {
                 <DamageSelector
                   index={idx}
                   damage={product.damages?.[idx] || ''}
-                  tearSize={product.damageDetails?.[`damage-${idx}`]?.tearSize || ''}
-                  options={DAMAGE_OPTIONS}
+                  option={product.damageDetails?.[`damage-${idx}`]?.optionId || ''}
+                  damageOptions={DAMAGE_OPTIONS}
+                  optionOptions={
+                    DAMAGE_OPTIONS.find((d) => d.id === (product.damages?.[idx] || ''))?.options || []
+                  }
                   onDamageChange={(val) => updateDamageType(idx, val)}
-                  onTearSizeChange={(val) => updateDamageDetail(idx, { tearSize: val })}
+                  onOptionChange={(val) => updateDamageDetail(idx, { optionId: val })}
                 />
                 <button
                   type="button"
