@@ -5,7 +5,6 @@ import DamageSelector from './DamageSelector';
 import DefectsSection from './DefectsSection';
 import EmployeeOwnershipFields from './EmployeeOwnershipFields';
 import GarmentDamageMarker from './damage-marker/GarmentDamageMarker';
-import { Dialog, DialogContent, DialogTitle, DialogClose } from '../../ui/dialog';
 import config from '../../config.js';
 import t from '../../i18n.js';
 
@@ -190,19 +189,21 @@ export default function ProductCard({ product, onUpdate }) {
           product={product}
           onUpdate={(field, val) => updateField(field, val)}
         />
-        {(product.damageCount > 0 || Object.values(product.otherIssues || {}).some(Boolean)) && (
-          <Dialog
-            open={markingOpen}
-            onOpenChange={(v) => {
-              setMarkingOpen(v);
-              if (!v) {
-                setSelectedDamageIndex(undefined);
-                setSelectedDefectId(undefined);
-              }
-            }}
-          >
-            <DialogContent className="sm:max-w-[650px] p-4 overflow-auto max-h-[90vh] flex flex-col relative">
-              <DialogTitle className="sr-only">Markering</DialogTitle>
+        {(product.damageCount > 0 || Object.values(product.otherIssues || {}).some(Boolean)) &&
+          markingOpen && (
+            <div className="relative p-4 bg-white rounded-lg shadow">
+              <button
+                type="button"
+                aria-label="Close"
+                className="absolute right-4 top-4 text-gray-500 hover:text-gray-900"
+                onClick={() => {
+                  setMarkingOpen(false);
+                  setSelectedDamageIndex(undefined);
+                  setSelectedDefectId(undefined);
+                }}
+              >
+                ✕
+              </button>
               <GarmentDamageMarker
                 product={product}
                 damageIndex={selectedDamageIndex}
@@ -214,10 +215,8 @@ export default function ProductCard({ product, onUpdate }) {
                   updateField('defectDetails', details);
                 }}
               />
-              <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none" />
-            </DialogContent>
-          </Dialog>
-        )}
+            </div>
+          )}
       </div>
     </div>
   );
