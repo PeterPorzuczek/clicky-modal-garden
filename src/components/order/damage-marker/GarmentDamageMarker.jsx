@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import InstructionMessage from './InstructionMessage.jsx';
-import WholeProductList from './WholeProductList.jsx';
+import MarkerList from './MarkerList.jsx';
 import MarkerButtons from './MarkerButton.jsx';
 import GarmentView from './GarmentView.jsx';
 
@@ -118,19 +118,19 @@ export default function GarmentDamageMarker({
     <div className="mt-3 space-y-3">
       <InstructionMessage productType={product.type} isMarked={isMarked} isSingleMarkMode={singleMode} />
       <div className="flex flex-col gap-2">
-        <WholeProductList
+        <MarkerList
           product={product}
           damagePositions={damagePositions}
           defectPositions={defectPositions}
           isWholeProductMarker={isWholeMarker}
-          removeMarker={(e, idx) => {
+          removeDamage={(e, idx) => {
             e.stopPropagation();
             setDamagePositions((p) => {
               const { [idx]: removed, ...rest } = p;
               return rest;
             });
           }}
-          removeDefectMarker={(e, id) => {
+          removeDefect={(e, id) => {
             e.stopPropagation();
             setDefectPositions((p) => {
               const { [id]: removed, ...rest } = p;
