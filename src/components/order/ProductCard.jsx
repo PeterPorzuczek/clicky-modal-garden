@@ -6,6 +6,7 @@ import DefectsSection from './DefectsSection';
 import EmployeeOwnershipFields from './EmployeeOwnershipFields';
 import GarmentDamageMarker from './damage-marker/GarmentDamageMarker';
 import config from '../../config.js';
+import t from '../../i18n.js';
 
 export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
@@ -106,7 +107,7 @@ export default function ProductCard({ product, onUpdate }) {
   return (
     <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg mb-6">
       <div className="flex justify-between items-center mb-3">
-        <h3 className="text-lg font-medium">Produkt #{product.id}</h3>
+        <h3 className="text-lg font-medium">{t('firstStep.product')} #{product.id}</h3>
       </div>
       <div className="space-y-6">
         <ProductTypeSelector

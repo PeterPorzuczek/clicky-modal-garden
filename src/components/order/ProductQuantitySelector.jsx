@@ -1,4 +1,5 @@
 import React from 'react';
+import t from '../../i18n.js';
 
 function MinusIcon({className}) {
   return (
@@ -28,7 +29,7 @@ export default function ProductQuantitySelector({ quantity, onIncrease, onDecrea
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <label htmlFor="quantity" className="font-medium">
-          Hur många produkter gäller det? <span className="text-red-500">*</span>
+          {t('firstStep.selectNumberOfProducts')} <span className="text-red-500">*</span>
         </label>
       </div>
       <div className="flex items-center justify-between w-full max-w-md h-14 rounded-lg border border-input overflow-hidden bg-white">

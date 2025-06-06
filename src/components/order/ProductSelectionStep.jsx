@@ -2,6 +2,7 @@ import React from 'react';
 import ProductQuantitySelector from './ProductQuantitySelector';
 import ProductCard from './ProductCard';
 import PriceSummary from './PriceSummary';
+import t from '../../i18n.js';
 
 export default function ProductSelectionStep({
   products,
@@ -50,10 +51,9 @@ export default function ProductSelectionStep({
   return (
     <div className="space-y-4">
       <div className="space-y-4 mb-6">
-        <p>
-          Välkommen! Här kan du enkelt beställa lagning & återställning av dina arbetskläder.
-          Tänk på att inte skicka in klassificerade skyddskläder och skyddsskor.
-        </p>
+        <h2 className="text-xl md:text-2xl font-bold">{t('firstStep.title')}</h2>
+        <p>{t('firstStep.instruction')}</p>
+        <p className="text-sm text-gray-700">{t('firstStep.reminder')}</p>
         <ProductQuantitySelector
           quantity={quantity}
           onIncrease={addProduct}
@@ -74,7 +74,7 @@ export default function ProductSelectionStep({
         onClick={nextStep}
         className="w-full rounded-full h-12 bg-[#262E85] hover:bg-[#1e2566] text-white"
       >
-        Nästa
+        {t('firstStep.next')}
       </button>
     </div>
   );
