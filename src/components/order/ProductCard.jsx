@@ -214,6 +214,16 @@ export default function ProductCard({ product, onUpdate }) {
                   details[id] = { ...(details[id] || {}), ...detail };
                   updateField('defectDetails', details);
                 }}
+                onSelectDamage={(idx) => {
+                  setSelectedDefectId(undefined);
+                  setSelectedDamageIndex(idx);
+                  setMarkingOpen(true);
+                }}
+                onSelectDefect={(id) => {
+                  setSelectedDamageIndex(undefined);
+                  setSelectedDefectId(id);
+                  setMarkingOpen(true);
+                }}
               />
             </div>
           )}

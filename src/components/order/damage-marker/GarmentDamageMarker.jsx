@@ -12,6 +12,8 @@ export default function GarmentDamageMarker({
   updateDefectDetail,
   selectedDamageIndex,
   selectedDefectId,
+  onSelectDamage,
+  onSelectDefect,
 }) {
   const [damagePositions, setDamagePositions] = useState({});
   const [defectPositions, setDefectPositions] = useState({});
@@ -103,6 +105,15 @@ export default function GarmentDamageMarker({
   const singleMode = damageIndex !== undefined || !!defectId;
   const totalMarks = Object.keys(damagePositions).length + Object.keys(defectPositions).length;
 
+  const handleMarkerClick = (type, id) => {
+    if (type === 'damage' && onSelectDamage) {
+      onSelectDamage(id);
+    }
+    if (type === 'defect' && onSelectDefect) {
+      onSelectDefect(id);
+    }
+  };
+
   return (
     <div className="mt-3 space-y-3">
       <InstructionMessage productType={product.type} isMarked={isMarked} isSingleMarkMode={singleMode} />
@@ -129,12 +140,7 @@ export default function GarmentDamageMarker({
           getDefectLabel={(id) => product.defectLabels?.[id] || id}
           markerSelectionOrder={orderMap}
         />
-        <MarkerButtons
-          isMarked={isMarked}
-          onMarkWholeProduct={markWholeProduct}
-          onResetAllMarkers={resetAll}
-          isSingleMarkMode={singleMode}
-        />
+        <MarkerButtons onResetAllMarkers={resetAll} />
       </div>
       <GarmentView
         productType={product.type}
@@ -149,6 +155,7 @@ export default function GarmentDamageMarker({
         productDamages={product.damages}
         defectLabels={product.defectLabels || {}}
         onMarkerDrag={() => {}}
+        onMarkerClick={handleMarkerClick}
         markerSelectionOrder={orderMap}
       />
     </div>

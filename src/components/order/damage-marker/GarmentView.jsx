@@ -12,6 +12,7 @@ export default function GarmentView({
   productDamages = [],
   defectLabels = {},
   markerSelectionOrder = {},
+  onMarkerClick,
 }) {
   const containerRef = React.useRef(null);
 
@@ -51,8 +52,12 @@ export default function GarmentView({
         {markers.map((m) => (
           <div
             key={m.id}
-            className="absolute -translate-x-1/2 -translate-y-1/2"
+            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
             style={{ left: `${m.pos.x * 100}%`, top: `${m.pos.y * 100}%` }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onMarkerClick && onMarkerClick(m.isDamage ? 'damage' : 'defect', m.isDamage ? parseInt(m.id.split('-')[1]) : m.id);
+            }}
           >
             {m.isDamage ? (
               <div className="w-6 h-6 -ml-3 -mt-3 rounded-full bg-green-600 border-2 border-white shadow-md flex items-center justify-center text-[10px] text-white font-bold">
