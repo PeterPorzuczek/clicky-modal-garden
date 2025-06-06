@@ -9,7 +9,7 @@ App should work like this:
       - Bottom: Zipper replacement (Long Original 25-90 cm; Long Basic replacement 25-90 cm; Short Original Max. 25 cm; Short Basic replacement Max. 25 cm); Velcro replacement; Tear (Max 15cm Sewing repair; Max 15cm Patch); Fly replacement (Original; Basic replacement); Elastic replacement; Button replacement (2-4 pcs; 1 pcs); Tear Large (16cm+ Sewing repair);
       - Shoes: Repair, Washing & Recovering (incl. odor removal);
 
-    II. we choose other general DAMAGES (checkboxes to check)
+    II. we choose other general DAMAGES (checkboxes to check / "markedOnPicture": false)
       - T-shirt/Polo: Wash tough stains (asphalt, oil, blood); Pilling; Wash and Refresh (including odor removal);
       - Sweater: Wash+Water repellent treatment; Wash tough stains (asphalt, oil, blood); Wash and Refresh (including odor removal); Pilling;
       - Jacket: Wash tough stains (asphalt, oil, blood); Wash and Refresh (including odor removal); Pilling;
@@ -82,7 +82,6 @@ Damage Structure
 ├── 🆔 id: "tear" | "zipper_replacement" | "velcro_replacement" | "fly_replacement" | "tear_large" | etc.
 ├── 🌐 name: { en, sv, no }
 ├── 📸 picturesToBeMarked: [image_urls] (4 URLs or empty array)
-├── ✅ markedOnPicture: boolean
 ├── ⚙️ options[] (repair variations - optional)
 └── 💰 pricing: { 1, 2, 3, 5, 10 } (when no options exist)
 
@@ -92,6 +91,7 @@ Option Structure (Repair Variations)
 ├── 🌐 name: { en, sv, no }
 ├── 📄 description: { en, sv, no } (usually empty)
 └── 💰 pricing: { 1, 2, 3, 5, 10 } (prices for different quantities)
+├── ✅ markedOnPicture: boolean
 
 Defect Structure (Cleaning/Maintenance)
 🔧 Defect
@@ -99,6 +99,7 @@ Defect Structure (Cleaning/Maintenance)
 ├── 🌐 name: { en, sv, no }
 ├── 📄 description: { en, sv, no } (usually empty)
 └── 💰 pricing: { 1, 2, 3, 5, 10 }
+├── ✅ markedOnPicture: boolean
 
 Image Logic (picturesToBeMarked)
 📸 Image Assignment Rules:

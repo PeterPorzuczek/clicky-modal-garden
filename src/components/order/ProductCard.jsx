@@ -11,24 +11,27 @@ export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
   const [selectedDefectId, setSelectedDefectId] = useState();
 
-
   const category = config.productCategories.find((c) => c.id === product.type);
-  
+
+  // Correctly maps damage options, including nested ones and the markedOnPicture flag.
   const DAMAGE_OPTIONS = category
-    ? category.damages.map((d) => ({ 
-        id: d.id, 
+    ? category.damages.map((d) => ({
+        id: d.id,
         label: d.name.sv || d.name.en,
-        options: (d.options || []).map(opt => ({
+        markedOnPicture: d.markedOnPicture,
+        options: (d.options || []).map((opt) => ({
           id: opt.id,
-          label: opt.name.sv || opt.name.en
-        }))
+          label: opt.name.sv || opt.name.en,
+        })),
       }))
     : [];
-    
+
+  // Correctly maps defect options, including the markedOnPicture flag.
   const DEFECT_OPTIONS = category
-    ? category.defects.map((d) => ({ 
-        id: d.id, 
-        label: d.name.sv || d.name.en 
+    ? category.defects.map((d) => ({
+        id: d.id,
+        label: d.name.sv || d.name.en,
+        markedOnPicture: d.markedOnPicture,
       }))
     : [];
 
@@ -36,54 +39,48 @@ export default function ProductCard({ product, onUpdate }) {
     onUpdate && onUpdate(product.id, field, value);
   };
 
+  // This useEffect correctly preserves user selections when damageCount changes.
   useEffect(() => {
     const currentDamages = product.damages || [];
     if (currentDamages.length !== product.damageCount) {
-      let newDamages;
-      if (product.damageCount > currentDamages.length) {
-        newDamages = [...currentDamages];
-        while (newDamages.length < product.damageCount) {
-          newDamages.push('');
-        }
-      } else {
-        newDamages = currentDamages.slice(0, product.damageCount);
-      }
-
+      const newDamages = Array.from({ length: product.damageCount }).map(
+        (_, i) => currentDamages[i] || ''
+      );
       updateField('damages', newDamages);
-
-      const details = { ...(product.damageDetails || {}) };
-      Object.keys(details).forEach((k) => {
-        const idx = parseInt(k.replace('damage-', ''));
-        if (idx >= product.damageCount) delete details[k];
-      });
-      updateField('damageDetails', details);
     }
-  }, [product.damageCount]); // Removed product.damages from dependency array
+  }, [product.damageCount]);
 
-
+  // This useEffect ensures the correct images are loaded when the product type changes.
   useEffect(() => {
-    if (!product.images && category && category.damages.length > 0) {
-      const pics = category.damages[0].picturesToBeMarked || [];
-      if (pics.length) {
-        updateField('images', {
-          front: pics[0] || null,
-          back: pics[1] || pics[0] || null,
-          left: pics[2] || pics[0] || null,
-          right: pics[3] || pics[0] || null,
-        });
+    if (product.type && category) {
+      const firstDamageWithImages = category.damages.find(d => d.picturesToBeMarked && d.picturesToBeMarked.length > 0);
+      if(firstDamageWithImages) {
+          const pics = firstDamageWithImages.picturesToBeMarked;
+          updateField('images', {
+              front: pics[0] || null,
+              back: pics[1] || pics[0] || null,
+              left: pics[2] || pics[0] || null,
+              right: pics[3] || pics[0] || null,
+          });
       }
     }
-  }, [product.type, product.images, category]);
+  }, [product.type, category]);
 
   const updateDamageType = (idx, val) => {
     const arr = [...(product.damages || [])];
+    while (arr.length <= idx) {
+      arr.push('');
+    }
     arr[idx] = val;
     updateField('damages', arr);
+
     const details = { ...(product.damageDetails || {}) };
     details[`damage-${idx}`] = { optionId: '' };
     updateField('damageDetails', details);
+
+    // Update images based on the specific damage type selected
     const damageObj = category?.damages.find((d) => d.id === val);
-    if (damageObj && damageObj.picturesToBeMarked?.length) {
+    if (damageObj?.picturesToBeMarked?.length) {
       const pics = damageObj.picturesToBeMarked;
       updateField('images', {
         front: pics[0] || null,
@@ -102,24 +99,8 @@ export default function ProductCard({ product, onUpdate }) {
 
   const toggleDefect = (prodId, id) => {
     const issues = { ...(product.otherIssues || {}) };
-    const labels = { ...(product.defectLabels || {}) };
     issues[id] = !issues[id];
-    if (issues[id]) {
-      labels[id] = DEFECT_OPTIONS.find((d) => d.id === id)?.label || id;
-    } else {
-      delete labels[id];
-      const d = { ...(product.defectDetails || {}) };
-      delete d[id];
-      updateField('defectDetails', d);
-    }
     updateField('otherIssues', issues);
-    updateField('defectLabels', labels);
-  };
-
-  const updateDefectDetail = (id, detail) => {
-    const details = { ...(product.defectDetails || {}) };
-    details[id] = { ...(details[id] || {}), ...detail };
-    updateField('defectDetails', details);
   };
 
   return (
@@ -127,7 +108,6 @@ export default function ProductCard({ product, onUpdate }) {
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-medium">Produkt #{product.id}</h3>
       </div>
-      
       <div className="space-y-6">
         <ProductTypeSelector
           productType={product.type}
@@ -140,36 +120,41 @@ export default function ProductCard({ product, onUpdate }) {
             onChange={(v) => updateField('damageCount', v)}
           />
         )}
-        {product.type && product.damageCount > 0 && DAMAGE_OPTIONS.length > 0 && (
+        {product.type && product.damageCount > 0 && (
           <div className="space-y-4">
-            {Array.from({ length: product.damageCount }).map((_, idx) => (
-              <div key={idx} className="space-y-1">
-                <DamageSelector
-                  index={idx}
-                  damage={product.damages[idx] || ''}
-                  option={product.damageDetails?.[`damage-${idx}`]?.optionId || ''}
-                  damageOptions={DAMAGE_OPTIONS}
-                  optionOptions={
-                    DAMAGE_OPTIONS.find((d) => d.id === (product.damages?.[idx] || ''))?.options || []
-                  }
-                  onDamageChange={(val) => updateDamageType(idx, val)}
-                  onOptionChange={(val) => updateDamageDetail(idx, { optionId: val })}
-                />
-                <button
-                  type="button"
-                  className="text-sm text-blue-600 underline"
-                  onClick={() => {
-                    setSelectedDefectId(undefined);
-                    setSelectedDamageIndex(idx);
-                  }}
-                >
-                  Markera skada na bild
-                </button>
-              </div>
-            ))}
+            {Array.from({ length: product.damageCount }).map((_, idx) => {
+              const selectedDamageId = product.damages?.[idx];
+              const selectedDamageConfig = DAMAGE_OPTIONS.find(d => d.id === selectedDamageId);
+
+              return (
+                <div key={idx} className="space-y-1">
+                  <DamageSelector
+                    index={idx}
+                    damage={selectedDamageId || ''}
+                    option={product.damageDetails?.[`damage-${idx}`]?.optionId || ''}
+                    damageOptions={DAMAGE_OPTIONS}
+                    optionOptions={selectedDamageConfig?.options || []}
+                    onDamageChange={(val) => updateDamageType(idx, val)}
+                    onOptionChange={(val) => updateDamageDetail(idx, { optionId: val })}
+                  />
+                  {selectedDamageConfig?.markedOnPicture && (
+                    <button
+                      type="button"
+                      className="text-sm text-blue-600 underline"
+                      onClick={() => {
+                        setSelectedDefectId(undefined);
+                        setSelectedDamageIndex(idx);
+                      }}
+                    >
+                      Markera skada
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
-        {product.type && DEFECT_OPTIONS.length > 0 && (
+        {product.type && (
           <DefectsSection
             productId={product.id}
             issues={DEFECT_OPTIONS}
@@ -177,9 +162,12 @@ export default function ProductCard({ product, onUpdate }) {
             onToggle={toggleDefect}
           />
         )}
-        {Object.entries(product.otherIssues || {})
-          .filter(([_, on]) => on)
-          .map(([id]) => (
+        {Object.entries(product.otherIssues || {}).filter(([, on]) => on).map(([id]) => {
+          const defectConfig = DEFECT_OPTIONS.find((d) => d.id === id);
+          if (!defectConfig?.markedOnPicture) {
+            return null;
+          }
+          return (
             <button
               key={id}
               type="button"
@@ -189,9 +177,10 @@ export default function ProductCard({ product, onUpdate }) {
                 setSelectedDefectId(id);
               }}
             >
-              Markera: {DEFECT_OPTIONS.find((d) => d.id === id)?.label || id}
+              Markera: {defectConfig.label || id}
             </button>
-          ))}
+          )
+        })}
         <EmployeeOwnershipFields
           product={product}
           onUpdate={(field, val) => updateField(field, val)}
@@ -202,9 +191,11 @@ export default function ProductCard({ product, onUpdate }) {
             damageIndex={selectedDamageIndex}
             defectId={selectedDefectId}
             updateDamageDetail={updateDamageDetail}
-            updateDefectDetail={updateDefectDetail}
-            selectedDamageIndex={selectedDamageIndex}
-            selectedDefectId={selectedDefectId}
+            updateDefectDetail={(id, detail) => {
+              const details = { ...(product.defectDetails || {}) };
+              details[id] = { ...(details[id] || {}), ...detail };
+              updateField('defectDetails', details);
+            }}
           />
         )}
       </div>
