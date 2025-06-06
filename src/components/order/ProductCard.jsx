@@ -12,11 +12,23 @@ export default function ProductCard({ product, onUpdate }) {
   const [selectedDefectId, setSelectedDefectId] = useState();
 
   const category = config.productCategories.find((c) => c.id === product.type);
+
   const DAMAGE_OPTIONS = category
-    ? category.damages.map((d) => ({ id: d.id, label: d.name.sv || d.name.en, options: d.options || [] }))
+    ? category.damages.map((d) => ({
+        id: d.id,
+        label: d.name.sv || d.name.en,
+        options: (d.options || []).map((opt) => ({
+          id: opt.id,
+          label: opt.name.sv || opt.name.en,
+        })),
+      }))
     : [];
+
   const DEFECT_OPTIONS = category
-    ? category.defects.map((d) => ({ id: d.id, label: d.name.sv || d.name.en }))
+    ? category.defects.map((d) => ({
+        id: d.id,
+        label: d.name.sv || d.name.en,
+      }))
     : [];
 
   const updateField = (field, value) => {
@@ -24,45 +36,44 @@ export default function ProductCard({ product, onUpdate }) {
   };
 
   useEffect(() => {
-    if (product.damages?.length !== product.damageCount) {
-      const arr = Array.from({ length: product.damageCount }, (_, i) => product.damages?.[i] || '');
-      updateField('damages', arr);
-      const details = { ...(product.damageDetails || {}) };
-      Object.keys(details).forEach((k) => {
-        const idx = parseInt(k.replace('damage-', ''));
-        if (idx >= arr.length) delete details[k];
-      });
-      updateField('damageDetails', details);
+    const currentDamages = product.damages || [];
+    if (currentDamages.length !== product.damageCount) {
+      const newDamages = Array.from({ length: product.damageCount }).map(
+        (_, i) => currentDamages[i] || ''
+      );
+      updateField('damages', newDamages);
     }
   }, [product.damageCount]);
 
-  // When the product type changes ensure a default image is available so
-  // the user can start marking damages immediately. We use the first
-  // damage's picture set as a fallback if no specific image has been
-  // selected yet.
   useEffect(() => {
-    if (!product.images && category && category.damages.length > 0) {
-      const pics = category.damages[0].picturesToBeMarked || [];
-      if (pics.length) {
-        updateField('images', {
-          front: pics[0] || null,
-          back: pics[1] || pics[0] || null,
-          left: pics[2] || pics[0] || null,
-          right: pics[3] || pics[0] || null,
-        });
-      }
+    if (product.type && category) {
+        const firstDamageWithImages = category.damages.find(d => d.picturesToBeMarked && d.picturesToBeMarked.length > 0);
+        if(firstDamageWithImages) {
+            const pics = firstDamageWithImages.picturesToBeMarked;
+            updateField('images', {
+                front: pics[0] || null,
+                back: pics[1] || pics[0] || null,
+                left: pics[2] || pics[0] || null,
+                right: pics[3] || pics[0] || null,
+            });
+        }
     }
-  }, [product.type]);
+  }, [product.type, category]);
 
   const updateDamageType = (idx, val) => {
     const arr = [...(product.damages || [])];
+    while (arr.length <= idx) {
+      arr.push('');
+    }
     arr[idx] = val;
     updateField('damages', arr);
+
     const details = { ...(product.damageDetails || {}) };
     details[`damage-${idx}`] = { optionId: '' };
     updateField('damageDetails', details);
+
     const damageObj = category?.damages.find((d) => d.id === val);
-    if (damageObj && damageObj.picturesToBeMarked?.length) {
+    if (damageObj?.picturesToBeMarked?.length) {
       const pics = damageObj.picturesToBeMarked;
       updateField('images', {
         front: pics[0] || null,
@@ -81,24 +92,8 @@ export default function ProductCard({ product, onUpdate }) {
 
   const toggleDefect = (prodId, id) => {
     const issues = { ...(product.otherIssues || {}) };
-    const labels = { ...(product.defectLabels || {}) };
     issues[id] = !issues[id];
-    if (issues[id]) {
-      labels[id] = DEFECT_OPTIONS.find((d) => d.id === id)?.label || id;
-    } else {
-      delete labels[id];
-      const d = { ...(product.defectDetails || {}) };
-      delete d[id];
-      updateField('defectDetails', d);
-    }
     updateField('otherIssues', issues);
-    updateField('defectLabels', labels);
-  };
-
-  const updateDefectDetail = (id, detail) => {
-    const details = { ...(product.defectDetails || {}) };
-    details[id] = { ...(details[id] || {}), ...detail };
-    updateField('defectDetails', details);
   };
 
   return (
@@ -118,7 +113,7 @@ export default function ProductCard({ product, onUpdate }) {
             onChange={(v) => updateField('damageCount', v)}
           />
         )}
-        {product.damageCount > 0 && (
+        {product.type && product.damageCount > 0 && (
           <div className="space-y-4">
             {Array.from({ length: product.damageCount }).map((_, idx) => (
               <div key={idx} className="space-y-1">
@@ -128,7 +123,7 @@ export default function ProductCard({ product, onUpdate }) {
                   option={product.damageDetails?.[`damage-${idx}`]?.optionId || ''}
                   damageOptions={DAMAGE_OPTIONS}
                   optionOptions={
-                    DAMAGE_OPTIONS.find((d) => d.id === (product.damages?.[idx] || ''))?.options || []
+                    DAMAGE_OPTIONS.find((d) => d.id === product.damages?.[idx])?.options || []
                   }
                   onDamageChange={(val) => updateDamageType(idx, val)}
                   onOptionChange={(val) => updateDamageDetail(idx, { optionId: val })}
@@ -147,15 +142,15 @@ export default function ProductCard({ product, onUpdate }) {
             ))}
           </div>
         )}
-        <DefectsSection
-          productId={product.id}
-          issues={DEFECT_OPTIONS}
-          selected={product.otherIssues || {}}
-          onToggle={toggleDefect}
-        />
-        {Object.entries(product.otherIssues || {})
-          .filter(([_, on]) => on)
-          .map(([id]) => (
+        {product.type && (
+          <DefectsSection
+            productId={product.id}
+            issues={DEFECT_OPTIONS}
+            selected={product.otherIssues || {}}
+            onToggle={toggleDefect}
+          />
+        )}
+        {Object.entries(product.otherIssues || {}).filter(([, on]) => on).map(([id]) => (
             <button
               key={id}
               type="button"
@@ -178,9 +173,11 @@ export default function ProductCard({ product, onUpdate }) {
             damageIndex={selectedDamageIndex}
             defectId={selectedDefectId}
             updateDamageDetail={updateDamageDetail}
-            updateDefectDetail={updateDefectDetail}
-            selectedDamageIndex={selectedDamageIndex}
-            selectedDefectId={selectedDefectId}
+            updateDefectDetail={(id, detail) => {
+              const details = { ...(product.defectDetails || {}) };
+              details[id] = { ...(details[id] || {}), ...detail };
+              updateField('defectDetails', details);
+            }}
           />
         )}
       </div>
