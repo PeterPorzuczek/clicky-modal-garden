@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function DamageSelector({
   index = 0,
-  damage = '',
+  allDamages = [],
   option = '',
   damageOptions = [],
   optionOptions = [],
@@ -11,6 +11,16 @@ export default function DamageSelector({
   damageError = null,
   optionError = null,
 }) {
+  const currentDamage = allDamages[index] || '';
+
+  const handleDamageChange = (e) => {
+    onDamageChange && onDamageChange(e.target.value);
+  };
+
+  const handleOptionChange = (e) => {
+    onOptionChange && onOptionChange(e.target.value);
+  };
+
   return (
     <div className="border border-gray-200 p-3 rounded-md space-y-3 relative">
       <div className="flex flex-col space-y-3">
@@ -21,13 +31,13 @@ export default function DamageSelector({
             </label>
           </div>
           <select
-            value={damage}
-            onChange={(e) => onDamageChange && onDamageChange(e.target.value)}
-            className={damageError ? 'border-red-500' : ''}
+            value={currentDamage}
+            onChange={handleDamageChange}
+            className={`w-full h-10 rounded border px-3 ${damageError ? 'border-red-500' : 'border-gray-300'}`}
           >
             <option value="">Välj typ av skada</option>
             {damageOptions.map((opt) => (
-              <option key={opt.value || opt.id} value={opt.value || opt.id}>
+              <option key={opt.id} value={opt.id}>
                 {opt.label}
               </option>
             ))}
@@ -39,8 +49,8 @@ export default function DamageSelector({
             <label className="text-sm font-medium">Alternativ</label>
             <select
               value={option}
-              onChange={(e) => onOptionChange && onOptionChange(e.target.value)}
-              className={optionError ? 'border-red-500' : ''}
+              onChange={handleOptionChange}
+              className={`w-full h-10 rounded border px-3 ${optionError ? 'border-red-500' : 'border-gray-300'}`}
             >
               <option value="">Välj</option>
               {optionOptions.map((opt) => (

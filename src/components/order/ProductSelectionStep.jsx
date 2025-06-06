@@ -10,9 +10,10 @@ export default function ProductSelectionStep({
   setQuantity,
   nextStep,
 }) {
+
   const addProduct = () => {
     setQuantity(quantity + 1);
-    setProducts([
+    const newProducts = [
       ...products,
       {
         id: quantity + 1,
@@ -28,18 +29,21 @@ export default function ProductSelectionStep({
         employeeName: '',
         employeeDepartment: '',
       },
-    ]);
+    ];
+    setProducts(newProducts);
   };
 
   const removeProduct = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      setProducts(products.slice(0, -1));
+      const newProducts = products.slice(0, -1);
+      setProducts(newProducts);
     }
   };
 
   const updateProduct = (id, field, value) => {
-    setProducts(products.map(p => (p.id === id ? { ...p, [field]: value } : p)));
+    const newProducts = products.map(p => (p.id === id ? { ...p, [field]: value } : p));
+    setProducts(newProducts);
   };
 
   return (

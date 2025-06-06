@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --navy: 220 29% 26%;
+  --light-purple: 250 100% 97%;
+  
+  /* Colors for Badge component */
+  --primary: 220 14.3% 95.9%;
+  --primary-foreground: 220.9 39.3% 11%;
+  --secondary: 210 40% 98%;
+  --secondary-foreground: 222.2 84% 4.9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --foreground: 222.2 84% 4.9%;
+  --ring: 216.4 12.2% 83.9%;
+}
+
+/* Ensure select elements are interactive */
+select {
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  appearance: menulist;
+  background-color: white;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Ensure checkboxes are interactive */
+input[type="checkbox"] {
+  cursor: pointer;
+  pointer-events: auto;
+}

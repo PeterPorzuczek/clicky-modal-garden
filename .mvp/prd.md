@@ -56,6 +56,8 @@ App should work like this:
     - Allows the user to place an additional order with one click.
     - Allows the user to close the window and finish the process.
 
+> mocukup.png explains the initial idea.
+
 Data Structure Map - Clothing Repair Application
 
 Main Structure

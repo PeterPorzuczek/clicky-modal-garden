@@ -44,13 +44,34 @@ export default function OrderForm({ prefilledData = null }) {
 
   const validateProducts = () => {
     let valid = true;
-    setProducts((prev) =>
-      prev.map((p) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((p) => {
         const error = p.type ? undefined : 'Obligatoriskt';
         if (!p.type) valid = false;
-        return { ...p, typeError: error };
+        return {
+          ...p,
+          damages: [...(p.damages || [])],
+          damageDetails: { ...(p.damageDetails || {}) },
+          otherIssues: { ...(p.otherIssues || {}) },
+          defectDetails: { ...(p.defectDetails || {}) },
+          typeError: error,
+        };
       })
     );
+    
+    products.forEach((p) => {
+        if (!p.type) valid = false;
+    });
+
+    if (!valid) {
+      setProducts((prevProducts) =>
+        prevProducts.map((p) => ({
+          ...p,
+          typeError: p.type ? undefined : 'Obligatoriskt',
+        }))
+      );
+    }
+
     return valid;
   };
 

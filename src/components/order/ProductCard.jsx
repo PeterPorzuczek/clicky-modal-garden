@@ -11,12 +11,25 @@ export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
   const [selectedDefectId, setSelectedDefectId] = useState();
 
+
   const category = config.productCategories.find((c) => c.id === product.type);
+  
   const DAMAGE_OPTIONS = category
-    ? category.damages.map((d) => ({ id: d.id, label: d.name.sv || d.name.en, options: d.options || [] }))
+    ? category.damages.map((d) => ({ 
+        id: d.id, 
+        label: d.name.sv || d.name.en,
+        options: (d.options || []).map(opt => ({
+          id: opt.id,
+          label: opt.name.sv || opt.name.en
+        }))
+      }))
     : [];
+    
   const DEFECT_OPTIONS = category
-    ? category.defects.map((d) => ({ id: d.id, label: d.name.sv || d.name.en }))
+    ? category.defects.map((d) => ({ 
+        id: d.id, 
+        label: d.name.sv || d.name.en 
+      }))
     : [];
 
   const updateField = (field, value) => {
@@ -24,22 +37,30 @@ export default function ProductCard({ product, onUpdate }) {
   };
 
   useEffect(() => {
-    if (product.damages?.length !== product.damageCount) {
-      const arr = Array.from({ length: product.damageCount }, (_, i) => product.damages?.[i] || '');
-      updateField('damages', arr);
+    const currentDamages = product.damages || [];
+    if (currentDamages.length !== product.damageCount) {
+      let newDamages;
+      if (product.damageCount > currentDamages.length) {
+        newDamages = [...currentDamages];
+        while (newDamages.length < product.damageCount) {
+          newDamages.push('');
+        }
+      } else {
+        newDamages = currentDamages.slice(0, product.damageCount);
+      }
+
+      updateField('damages', newDamages);
+
       const details = { ...(product.damageDetails || {}) };
       Object.keys(details).forEach((k) => {
         const idx = parseInt(k.replace('damage-', ''));
-        if (idx >= arr.length) delete details[k];
+        if (idx >= product.damageCount) delete details[k];
       });
       updateField('damageDetails', details);
     }
-  }, [product.damageCount]);
+  }, [product.damageCount]); // Removed product.damages from dependency array
 
-  // When the product type changes ensure a default image is available so
-  // the user can start marking damages immediately. We use the first
-  // damage's picture set as a fallback if no specific image has been
-  // selected yet.
+
   useEffect(() => {
     if (!product.images && category && category.damages.length > 0) {
       const pics = category.damages[0].picturesToBeMarked || [];
@@ -52,7 +73,7 @@ export default function ProductCard({ product, onUpdate }) {
         });
       }
     }
-  }, [product.type]);
+  }, [product.type, product.images, category]);
 
   const updateDamageType = (idx, val) => {
     const arr = [...(product.damages || [])];
@@ -106,6 +127,7 @@ export default function ProductCard({ product, onUpdate }) {
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-medium">Produkt #{product.id}</h3>
       </div>
+      
       <div className="space-y-6">
         <ProductTypeSelector
           productType={product.type}
@@ -118,13 +140,14 @@ export default function ProductCard({ product, onUpdate }) {
             onChange={(v) => updateField('damageCount', v)}
           />
         )}
-        {product.damageCount > 0 && (
+        {product.type && product.damageCount > 0 && DAMAGE_OPTIONS.length > 0 && (
           <div className="space-y-4">
             {Array.from({ length: product.damageCount }).map((_, idx) => (
               <div key={idx} className="space-y-1">
                 <DamageSelector
                   index={idx}
-                  damage={product.damages?.[idx] || ''}
+                  damage={product.damages[idx] || ''}
+                  allDamages={product.damages || []}
                   option={product.damageDetails?.[`damage-${idx}`]?.optionId || ''}
                   damageOptions={DAMAGE_OPTIONS}
                   optionOptions={
@@ -141,18 +164,20 @@ export default function ProductCard({ product, onUpdate }) {
                     setSelectedDamageIndex(idx);
                   }}
                 >
-                  Markera skada
+                  Markera skada na bild
                 </button>
               </div>
             ))}
           </div>
         )}
-        <DefectsSection
-          productId={product.id}
-          issues={DEFECT_OPTIONS}
-          selected={product.otherIssues || {}}
-          onToggle={toggleDefect}
-        />
+        {product.type && DEFECT_OPTIONS.length > 0 && (
+          <DefectsSection
+            productId={product.id}
+            issues={DEFECT_OPTIONS}
+            selected={product.otherIssues || {}}
+            onToggle={toggleDefect}
+          />
+        )}
         {Object.entries(product.otherIssues || {})
           .filter(([_, on]) => on)
           .map(([id]) => (

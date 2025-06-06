@@ -7,6 +7,10 @@ export default function DefectsSection({
   onToggle,
   error = null,
 }) {
+  const handleToggle = (issueId) => {
+    onToggle && onToggle(productId, issueId);
+  };
+
   return (
     <div>
       <div className="flex items-center mb-2">
@@ -20,9 +24,9 @@ export default function DefectsSection({
                 id={`issue-${productId}-${issue.id}`}
                 type="checkbox"
                 checked={!!selected[issue.id]}
-                onChange={() => onToggle && onToggle(productId, issue.id)}
+                onChange={() => handleToggle(issue.id)}
               />
-              <label htmlFor={`issue-${productId}-${issue.id}`} className="flex-1">
+              <label htmlFor={`issue-${productId}-${issue.id}`} className="flex-1 cursor-pointer">
                 {issue.label}
               </label>
             </div>
