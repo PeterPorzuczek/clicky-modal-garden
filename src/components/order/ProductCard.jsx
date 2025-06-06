@@ -5,12 +5,14 @@ import DamageSelector from './DamageSelector';
 import DefectsSection from './DefectsSection';
 import EmployeeOwnershipFields from './EmployeeOwnershipFields';
 import GarmentDamageMarker from './damage-marker/GarmentDamageMarker';
+import { Dialog, DialogContent, DialogTitle, DialogClose } from '../../ui/dialog';
 import config from '../../config.js';
 import t from '../../i18n.js';
 
 export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
   const [selectedDefectId, setSelectedDefectId] = useState();
+  const [markingOpen, setMarkingOpen] = useState(false);
 
   const category = config.productCategories.find((c) => c.id === product.type);
 
@@ -145,6 +147,7 @@ export default function ProductCard({ product, onUpdate }) {
                       onClick={() => {
                         setSelectedDefectId(undefined);
                         setSelectedDamageIndex(idx);
+                        setMarkingOpen(true);
                       }}
                     >
                       Markera skada
@@ -176,6 +179,7 @@ export default function ProductCard({ product, onUpdate }) {
               onClick={() => {
                 setSelectedDamageIndex(undefined);
                 setSelectedDefectId(id);
+                setMarkingOpen(true);
               }}
             >
               Markera: {defectConfig.label || id}
@@ -187,17 +191,32 @@ export default function ProductCard({ product, onUpdate }) {
           onUpdate={(field, val) => updateField(field, val)}
         />
         {(product.damageCount > 0 || Object.values(product.otherIssues || {}).some(Boolean)) && (
-          <GarmentDamageMarker
-            product={product}
-            damageIndex={selectedDamageIndex}
-            defectId={selectedDefectId}
-            updateDamageDetail={updateDamageDetail}
-            updateDefectDetail={(id, detail) => {
-              const details = { ...(product.defectDetails || {}) };
-              details[id] = { ...(details[id] || {}), ...detail };
-              updateField('defectDetails', details);
+          <Dialog
+            open={markingOpen}
+            onOpenChange={(v) => {
+              setMarkingOpen(v);
+              if (!v) {
+                setSelectedDamageIndex(undefined);
+                setSelectedDefectId(undefined);
+              }
             }}
-          />
+          >
+            <DialogContent className="sm:max-w-[650px] p-4 overflow-auto max-h-[90vh] flex flex-col relative">
+              <DialogTitle className="sr-only">Markering</DialogTitle>
+              <GarmentDamageMarker
+                product={product}
+                damageIndex={selectedDamageIndex}
+                defectId={selectedDefectId}
+                updateDamageDetail={updateDamageDetail}
+                updateDefectDetail={(id, detail) => {
+                  const details = { ...(product.defectDetails || {}) };
+                  details[id] = { ...(details[id] || {}), ...detail };
+                  updateField('defectDetails', details);
+                }}
+              />
+              <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none" />
+            </DialogContent>
+          </Dialog>
         )}
       </div>
     </div>
