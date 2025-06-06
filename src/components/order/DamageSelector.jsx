@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function DamageSelector({
   index = 0,
-  allDamages = [],
+  damage = '',
   option = '',
   damageOptions = [],
   optionOptions = [],
@@ -11,8 +11,6 @@ export default function DamageSelector({
   damageError = null,
   optionError = null,
 }) {
-  const currentDamage = allDamages[index] || '';
-
   const handleDamageChange = (e) => {
     onDamageChange && onDamageChange(e.target.value);
   };
@@ -31,7 +29,7 @@ export default function DamageSelector({
             </label>
           </div>
           <select
-            value={currentDamage}
+            value={damage}
             onChange={handleDamageChange}
             className={`w-full h-10 rounded border px-3 ${damageError ? 'border-red-500' : 'border-gray-300'}`}
           >

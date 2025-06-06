@@ -147,7 +147,6 @@ export default function ProductCard({ product, onUpdate }) {
                 <DamageSelector
                   index={idx}
                   damage={product.damages[idx] || ''}
-                  allDamages={product.damages || []}
                   option={product.damageDetails?.[`damage-${idx}`]?.optionId || ''}
                   damageOptions={DAMAGE_OPTIONS}
                   optionOptions={
