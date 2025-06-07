@@ -177,6 +177,11 @@
         "se": "Defekter",
         "no": "Defekter"
       },
+      "defect": {
+        "en": "Defect",
+        "se": "Defekt",
+        "no": "Defekt"
+      },
       "markDamageBelow": {
         "en": "Mark the damage in the image below",
         "se": "Markera skadan på bilden nedan",
@@ -1974,11 +1979,14 @@
   ],
   "emailTemplate": {
     "header": {
-      "company_name": {
-        "sv": "Lyreco Sverige",
-        "no": "Lyreco Norge", 
-        "en": "Lyreco Sweden"
-      }
+      "sv": "Orderbekräftelse",
+      "no": "Ordrebekreftelse", 
+      "en": "Order Confirmation"
+    },
+    "company_name": {
+      "sv": "Lyreco Sverige",
+      "no": "Lyreco Norge", 
+      "en": "Lyreco Sweden"
     },
     "main_title": {
       "sv": "Beställning lagning & återställning av arbetskläder",
@@ -2165,16 +2173,24 @@
       }
     },
     "footer": {
-      "total_cost": {
-        "sv": "Kostnad:",
-        "no": "Kostnad:",
-        "en": "Cost:"
-      },
-      "currency": {
-        "sv": "kr",
-        "no": "kr",
-        "en": "SEK"
-      }
+      "sv": "Tack för att du valde vår tjänst!",
+      "no": "Takk for at du valgte vår tjeneste!",
+      "en": "Thank you for choosing our service!"
+    },
+    "disclaimer": {
+      "sv": "Detta är ett automatiskt meddelande. Vänligen svara inte på detta e-postmeddelande.",
+      "no": "Dette er en automatisk melding. Vennligst ikke svar på denne e-posten.",
+      "en": "This is an automatic message. Please do not reply to this email."
+    },
+    "total_cost": {
+      "sv": "Kostnad:",
+      "no": "Kostnad:",
+      "en": "Cost:"
+    },
+    "currency": {
+      "sv": "kr",
+      "no": "kr",
+      "en": "SEK"
     }
   }
 }

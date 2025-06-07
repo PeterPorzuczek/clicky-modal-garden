@@ -14,8 +14,18 @@ export function calculateSummary(products = [], discount = 0) {
   const productTotals = products.map((p) => {
     const category = config.productCategories.find((c) => c.id === p.type);
     let subtotal = 0;
-    const items = [];
-    if (category) {
+    let items = [];
+    
+    // If product already has items with categories (new format), use them directly
+    if (p.items && Array.isArray(p.items)) {
+      items = p.items.map(item => ({
+        ...item,
+        category: item.category || 'damages' // default to damages if no category
+      }));
+      subtotal = items.reduce((sum, item) => sum + (item.price || 0), 0);
+    } 
+    // Otherwise use the old format (damages and otherIssues)
+    else if (category) {
       p.damages?.forEach((damageId, idx) => {
         const damage = category.damages.find((d) => d.id === damageId);
         if (damage) {
@@ -24,7 +34,7 @@ export function calculateSummary(products = [], discount = 0) {
           if (option) {
             const price = getPrice(option.pricing, products.length);
             subtotal += price;
-            items.push({ label: localize(option.name), price });
+            items.push({ label: localize(option.name), price, category: 'damages' });
           }
         }
       });
@@ -34,12 +44,13 @@ export function calculateSummary(products = [], discount = 0) {
           if (defect) {
             const price = getPrice(defect.pricing, products.length);
             subtotal += price;
-            items.push({ label: localize(defect.name), price });
+            items.push({ label: localize(defect.name), price, category: 'defects' });
           }
         }
       });
     }
-    return { id: p.id, type: localize(category?.name) || p.type, subtotal, items };
+    
+    return { id: p.id, type: localize(category?.name) || p.type, subtotal: p.subtotal || subtotal, items };
   });
 
   const subTotal = productTotals.reduce((sum, p) => sum + p.subtotal, 0);
