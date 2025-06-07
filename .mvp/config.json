@@ -32,6 +32,16 @@
         "en": "Language",
         "se": "Språk",
         "no": "Språk"
+      },
+      "clearData": {
+        "en": "Clear data",
+        "se": "Rensa data",
+        "no": "Rens data"
+      },
+      "prefillCustomer": {  
+        "en": "Prefill customer",
+        "se": "Fyll i kunduppgifter",
+        "no": "Fyll i kundopplysninger"
       }
     },
     "firstStep": {

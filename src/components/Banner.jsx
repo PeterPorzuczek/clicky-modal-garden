@@ -36,8 +36,13 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
   const [openInternal, setOpenInternal] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(getCurrentLanguage());
   const [forceUpdate, setForceUpdate] = useState(0);
+  const [isPrefillChecked, setIsPrefillChecked] = useState(false);
+  const { prefilledData: internalPrefilledData, loadCustomerData, clearPrefilledData } = usePrefilledCustomerData();
   const open = isOpen !== undefined ? isOpen : openInternal;
   const formContainerRef = useRef(null);
+  
+  // Use external prefilled data if provided, otherwise use internal
+  const activePrefilledData = prefilledData || (isPrefillChecked ? internalPrefilledData : null);
 
   const handleStartClick = () => {
     if (isOpen === undefined) setOpenInternal(true);
@@ -55,6 +60,20 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
     setForceUpdate(prev => prev + 1); // Force re-render to update all text
   };
 
+  const handlePrefillToggle = (checked) => {
+    setIsPrefillChecked(checked);
+    if (checked) {
+      loadCustomerData();
+    } else {
+      clearPrefilledData();
+    }
+  };
+
+  const handleClearData = () => {
+    setIsPrefillChecked(false);
+    clearPrefilledData();
+  };
+
   const languages = [
     { code: 'se', label: 'SE' },
     { code: 'en', label: 'EN' },
@@ -67,21 +86,39 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
       
       <div className="banner">
         <div className="banner-content">
-          <div className="language-selector">
-            <span className="language-label">{t('trigger.language')}</span>
-            <div className="language-options">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  className={`language-option ${currentLanguage === lang.code ? 'active' : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLanguageChange(lang.code);
-                  }}
-                >
-                  {lang.label}
-                </button>
-              ))}
+          <div className="banner-controls">
+            <div className="language-selector">
+              <span className="language-label">{t('trigger.language')}</span>
+              <div className="language-options">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    className={`language-option ${currentLanguage === lang.code ? 'active' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLanguageChange(lang.code);
+                    }}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            <div className="app-controls-section">
+              <div className="control-group">
+                <label className="checkbox-label">
+                  <input 
+                    type="checkbox" 
+                    checked={isPrefillChecked}
+                    onChange={(e) => handlePrefillToggle(e.target.checked)}
+                  />
+                  {t('trigger.prefillCustomer')}
+                </label>
+              </div>
+              <button className="btn-secondary" onClick={handleClearData}>
+                {t('trigger.clearData')}
+              </button>
             </div>
           </div>
           <div className="banner-header">
@@ -112,7 +149,7 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
             {t('firstStep.instruction')}
           </DialogDescription>
           <div className="form-container" ref={formContainerRef}>
-            <OrderForm prefilledData={prefilledData} scrollRef={formContainerRef} />
+            <OrderForm prefilledData={activePrefilledData} scrollRef={formContainerRef} />
           </div>
           <DialogClose className="dialog-close" />
         </DialogContent>
