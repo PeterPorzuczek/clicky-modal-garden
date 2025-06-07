@@ -28,9 +28,9 @@ body {
 
 /* Ensure select elements are interactive */
 select {
-  -webkit-appearance: menulist;
-  -moz-appearance: menulist;
-  appearance: menulist;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background-color: white;
   cursor: pointer;
   pointer-events: auto;

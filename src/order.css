@@ -109,6 +109,8 @@
   cursor: pointer;
   color: #6b7280;
   background-color: transparent;
+  border: none;
+  outline: none;
   transition: background-color 0.2s;
 }
 
@@ -153,6 +155,8 @@
   cursor: pointer;
   color: #6b7280;
   background-color: transparent;
+  border: none;
+  outline: none;
   transition: background-color 0.2s;
 }
 .dcs-btn:hover {
@@ -193,6 +197,11 @@
   border: 1px solid #d1d5db;
   padding: 0 0.75rem;
   padding-right: 2.5rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDggMTAgMTIgMTQgOCIvPjwvc3ZnPg==");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
 }
 .damage-select.error {
   border-color: #ef4444;
@@ -276,6 +285,8 @@
   border-radius: 0.25rem;
   border: 1px solid #d1d5db;
   padding: 0 0.75rem;
+  font-size: 1rem;
+  background-color: white;
 }
 .employee-input.error {
   border-color: #ef4444;
@@ -310,8 +321,13 @@
   margin-bottom: 1rem;
 }
 .oi-back-btn {
+  background: none;
+  border: none;
+  padding: 0;
   color: #262E85;
   text-decoration: none;
+  font: inherit;
+  cursor: pointer;
 }
 .oi-back-btn:hover {
   text-decoration: underline;
@@ -347,6 +363,8 @@
   border-radius: 0.25rem;
   border: 1px solid #d1d5db;
   padding: 0 0.75rem;
+  font-size: 1rem;
+  background-color: white;
 }
 .oi-input-error {
   border-color: #ef4444;
@@ -507,6 +525,11 @@
   border: 1px solid #d1d5db;
   padding: 0 0.75rem;
   padding-right: 2.5rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDggMTAgMTIgMTQgOCIvPjwvc3ZnPg==");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
 }
 .pts-select.error {
   border-color: #ef4444;
