@@ -169,6 +169,7 @@ export default function ProductCard({ product, onUpdate }) {
                     optionOptions={selectedDamageConfig?.options || []}
                     onDamageChange={(val) => updateDamageType(idx, val)}
                     onOptionChange={(val) => updateDamageDetail(idx, { optionId: val })}
+                    damageError={product.damageErrors?.[idx]}
                   />
                 </div>
               );
@@ -181,7 +182,6 @@ export default function ProductCard({ product, onUpdate }) {
             issues={DEFECT_OPTIONS}
             selected={product.otherIssues || {}}
             onToggle={toggleDefect}
-            error={product.defectError}
           />
         )}
         <EmployeeOwnershipFields

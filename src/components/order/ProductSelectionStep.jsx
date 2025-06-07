@@ -29,7 +29,7 @@ export default function ProductSelectionStep({
         isEmployeeOwned: false,
         employeeName: '',
         employeeDepartment: '',
-        defectError: undefined,
+        damageErrors: {},
       },
     ];
     setProducts(newProducts);

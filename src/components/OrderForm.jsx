@@ -16,14 +16,14 @@ const createEmptyProduct = (id) => ({
   isEmployeeOwned: false,
   employeeName: '',
   employeeDepartment: '',
-  defectError: undefined,
+  damageErrors: {},
 });
 
 export default function OrderForm({ prefilledData = null }) {
   const containerRef = useRef(null);
   const [step, setStep] = useState(0);
-  const [quantity, setQuantity] = useState(0);
-  const [products, setProducts] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [products, setProducts] = useState([createEmptyProduct(1)]);
   const [orderInfo, setOrderInfo] = useState(prefilledData || {});
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
@@ -35,8 +35,8 @@ export default function OrderForm({ prefilledData = null }) {
 
   const resetForm = () => {
     setStep(0);
-    setQuantity(0);
-    setProducts([]);
+    setQuantity(1);
+    setProducts([createEmptyProduct(1)]);
     setOrderInfo(prefilledData || {});
     setTermsAccepted(false);
     setTouchedFields({});
@@ -44,41 +44,52 @@ export default function OrderForm({ prefilledData = null }) {
   };
 
   const validateProducts = () => {
+    if (products.length === 0) return false;
     let valid = true;
     setProducts((prevProducts) =>
       prevProducts.map((p) => {
-        const error = p.type ? undefined : 'Obligatoriskt';
+        const typeError = p.type ? undefined : 'Obligatoriskt';
         if (!p.type) valid = false;
-        const hasDefects = Object.values(p.otherIssues || {}).some(Boolean);
-        const defectError = hasDefects ? undefined : 'Obligatoriskt';
-        if (!hasDefects) valid = false;
+
+        const damageErrors = {};
+        if (p.damageCount <= 0) {
+          damageErrors[0] = 'Obligatoriskt';
+          valid = false;
+        } else {
+          for (let i = 0; i < p.damageCount; i++) {
+            if (!p.damages?.[i]) {
+              damageErrors[i] = 'Obligatoriskt';
+              valid = false;
+            }
+          }
+        }
+
         return {
           ...p,
           damages: [...(p.damages || [])],
           damageDetails: { ...(p.damageDetails || {}) },
           otherIssues: { ...(p.otherIssues || {}) },
           defectDetails: { ...(p.defectDetails || {}) },
-          typeError: error,
-          defectError,
+          typeError,
+          damageErrors,
         };
       })
     );
 
-    products.forEach((p) => {
-        if (!p.type) valid = false;
-        const hasDefects = Object.values(p.otherIssues || {}).some(Boolean);
-        if (!hasDefects) valid = false;
-    });
-
     if (!valid) {
       setProducts((prevProducts) =>
-        prevProducts.map((p) => ({
-          ...p,
-          typeError: p.type ? undefined : 'Obligatoriskt',
-          defectError: Object.values(p.otherIssues || {}).some(Boolean)
-            ? undefined
-            : 'Obligatoriskt',
-        }))
+        prevProducts.map((p) => {
+          const typeError = p.type ? undefined : 'Obligatoriskt';
+          const damageErrors = {};
+          if (p.damageCount <= 0) {
+            damageErrors[0] = 'Obligatoriskt';
+          } else {
+            for (let i = 0; i < p.damageCount; i++) {
+              if (!p.damages?.[i]) damageErrors[i] = 'Obligatoriskt';
+            }
+          }
+          return { ...p, typeError, damageErrors };
+        })
       );
     }
 
