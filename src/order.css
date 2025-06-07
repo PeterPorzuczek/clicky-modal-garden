@@ -113,6 +113,10 @@
   outline: none;
   transition: background-color 0.2s;
 }
+.pqs-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
 
 .pqs-btn:hover {
   background-color: #f9fafb;
@@ -158,6 +162,10 @@
   border: none;
   outline: none;
   transition: background-color 0.2s;
+}
+.dcs-btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 .dcs-btn:hover {
   background-color: #f9fafb;
@@ -390,6 +398,8 @@
   height: 1rem;
   border-radius: 0.25rem;
   border: 1px solid #d1d5db;
+  accent-color: hsl(var(--navy));
+  outline: none;
 }
 .oi-checkbox.error {
   border-color: #ef4444;
@@ -618,15 +628,13 @@
 .marker-reset {
   display: inline-flex;
   align-items: center;
+  gap: 0.25rem;
   font-size: 0.875rem;
   padding: 0.25rem 0.75rem;
   color: #4b5563;
   border: 1px solid #d1d5db;
   border-radius: 0.25rem;
   background-color: white;
-}
-.marker-reset svg {
-  margin-right: 0.25rem;
 }
 
 .gv-container {

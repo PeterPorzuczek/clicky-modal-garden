@@ -33,6 +33,7 @@ select {
   appearance: none;
   background-color: white;
   color: #374151;
+  font-size: 1rem;
   cursor: pointer;
   pointer-events: auto;
   height: 2.5rem;
@@ -53,6 +54,9 @@ input[type="checkbox"] {
   accent-color: hsl(var(--navy));
   width: 1rem;
   height: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  outline: none;
 }
 
 .app {
