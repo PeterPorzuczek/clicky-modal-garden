@@ -2,7 +2,7 @@ import React, { useEffect, createContext, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import '../../../styles/ui.css';
 
-const DialogContext = createContext(null);
+export const DialogContext = createContext(null);
 
 export function Dialog({ open, onOpenChange, children }) {
   useEffect(() => {

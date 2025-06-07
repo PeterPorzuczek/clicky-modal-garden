@@ -775,7 +775,7 @@
   color: #6b7280;
 }
 .marker-item.selected {
-  box-shadow: 0 0 0 2px #3b82f6;
+  box-shadow: 0 0 0 2px #262E85;
 }
 .marker-num {
   display: inline-flex;
@@ -976,7 +976,8 @@
 .pc-error {
   font-size: 0.875rem;
   color: #ef4444;
-  margin-top: 0.25rem;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
 }
 
 .oi-back-row {

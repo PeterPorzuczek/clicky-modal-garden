@@ -1,8 +1,9 @@
-import React from 'react';
-import { DialogClose } from './ui/Dialog.jsx';
+import React, { useContext } from 'react';
+import { DialogClose, DialogContext } from './ui/Dialog.jsx';
 import t from '../../setup/i18n.js';
 
 export default function ConfirmationStep({ resetForm, products = [], discount = 0 }) {
+  const dialogCtx = useContext(DialogContext);
   return (
     <div className="confirm-container">
       <div className="confirm-header">
@@ -34,7 +35,7 @@ export default function ConfirmationStep({ resetForm, products = [], discount = 
         </button>
         <button
           type="button"
-          onClick={() => window.close?.()}
+          onClick={() => dialogCtx?.onOpenChange(false)}
           className="primary-button"
         >
           {t('fourthStep.close')}

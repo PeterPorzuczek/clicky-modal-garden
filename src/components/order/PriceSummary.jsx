@@ -67,18 +67,18 @@ export default function PriceSummary({ products = [], discount = 0 }) {
             ))}
           </div>
           <div className="price-subtotal">
-            <span>Delsumma</span>
+            <span>{t('firstStep.subtotal')}</span>
             <span>{p.subtotal} kr</span>
           </div>
         </div>
       ))}
       <div className="price-summary-total">
-        <span>Delsumma</span>
+        <span>{t('firstStep.subtotal')}</span>
         <span>{subTotal} kr</span>
       </div>
       {discount > 0 && (
         <div className="price-discount">
-          <span>Rabatt ({discount}%)</span>
+          <span>{t('firstStep.discount')} ({discount}%)</span>
           <span>-{discountAmount} kr</span>
         </div>
       )}

@@ -287,13 +287,13 @@ export default function ProductCard({ product, onUpdate }) {
               />
             </div>
           )}
+        {product.markerError && (
+          <p className="pc-error">{product.markerError}</p>
+        )}
         <EmployeeOwnershipFields
           product={product}
           onUpdate={(field, val) => updateField(field, val)}
         />
-        {product.markerError && (
-          <p className="pc-error">{product.markerError}</p>
-        )}
       </div>
     </div>
   );

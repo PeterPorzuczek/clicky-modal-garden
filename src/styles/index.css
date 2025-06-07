@@ -70,24 +70,64 @@ input[type="checkbox"] {
 }
 
 .app-controls {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin: 0;
 }
 
 .btn-primary,
 .btn-secondary {
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .btn-primary {
-  background-color: rgb(37, 99, 235);
+  background-color: hsl(var(--navy));
   color: white;
+  border-color: hsl(var(--navy));
+}
+
+.btn-primary:hover {
+  background-color: hsl(220 35% 35%);
+  border-color: hsl(220 35% 35%);
 }
 
 .btn-secondary {
-  background-color: rgb(209, 213, 219);
+  background-color: white;
+  color: hsl(var(--navy));
+  border-color: #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
 }
 
 /* Animation utilities copied from original build */

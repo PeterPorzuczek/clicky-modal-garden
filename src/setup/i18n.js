@@ -1,6 +1,14 @@
 import config from './config.js';
 
-const LANGUAGE = 'se';
+let CURRENT_LANGUAGE = 'se';
+
+export function setLanguage(language) {
+  CURRENT_LANGUAGE = language;
+}
+
+export function getCurrentLanguage() {
+  return CURRENT_LANGUAGE;
+}
 
 export function t(path) {
   const parts = path.split('.');
@@ -10,13 +18,14 @@ export function t(path) {
     if (obj === undefined) return path;
   }
   if (typeof obj === 'string') return obj;
-  return obj?.[LANGUAGE] || obj?.sv || obj?.se || obj?.en || '';
+  return obj?.[CURRENT_LANGUAGE] || obj?.se || obj?.en || '';
 }
 
 export function localize(obj) {
   if (!obj) return '';
   if (typeof obj === 'string') return obj;
-  return obj[LANGUAGE] || obj.sv || obj.se || obj.en || '';
+  // Handle both 'se' and 'sv' for Swedish to ensure compatibility
+  return obj[CURRENT_LANGUAGE] || obj.se || obj.en || '';
 }
 
 export function getDamageLabel(productType, id) {

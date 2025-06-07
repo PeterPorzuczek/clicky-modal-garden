@@ -3,12 +3,12 @@ import config from '../../setup/config.js';
 import t, { localize } from '../../setup/i18n.js';
 import CustomSelect from './ui/CustomSelect.jsx';
 
-const OPTIONS = config.productCategories.map((cat) => ({
-  value: cat.id,
-  label: localize(cat.name),
-}));
-
 export default function ProductTypeSelector({ productType, onTypeChange, onOpenChange, error }) {
+  // Create options dynamically so they update when language changes
+  const OPTIONS = config.productCategories.map((cat) => ({
+    value: cat.id,
+    label: localize(cat.name),
+  }));
   const handleChange = (value) => {
     onTypeChange && onTypeChange(value);
     onOpenChange && onOpenChange(false);
