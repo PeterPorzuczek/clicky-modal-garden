@@ -713,10 +713,10 @@
   cursor: pointer;
 }
 .gv-marker-circle {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: -0.75rem;
-  margin-top: -0.75rem;
+  width: 1.95rem;
+  height: 1.95rem;
+  margin-left: -0.975rem;
+  margin-top: -0.975rem;
   border-radius: 9999px;
   background-color: #16a34a;
   border: 2px solid white;
@@ -724,7 +724,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 700;
   color: white;
 }
@@ -779,13 +779,13 @@
 }
 .marker-num {
   display: inline-flex;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.625rem;
+  height: 1.625rem;
   border-radius: 9999px;
   align-items: center;
   justify-content: center;
   margin-right: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 1.125rem;
   font-weight: 700;
 }
 .marker-num.marked {

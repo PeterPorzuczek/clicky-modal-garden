@@ -58,6 +58,7 @@ export default function ConfirmationStep({
           damageDetails: originalProduct.damageDetails || {},
           otherIssues: originalProduct.otherIssues || {},
           images: originalProduct.images || null,
+          capturedMarkedAreas: originalProduct.capturedMarkedAreas || {},
           items: productTotal.items || [],
           subtotal: productTotal.subtotal || 0
         };

@@ -497,6 +497,11 @@
         "en": "Send EMAIL",
         "se": "Skicka E-POST",
         "no": "Send E-POST"
+      },
+      "productWithMarkedDamages": {
+        "en": "Product with marked damages:",
+        "se": "Produkt med markerade skador:",
+        "no": "Produkt med markerte skader:"
       }
     }
   },
@@ -1625,10 +1630,10 @@
             "no": "Rift"
           },
           "picturesToBeMarked": [
-            "https://i.imgur.com/FpqlbPM.png",
-            "https://i.imgur.com/hkczXk3.png",
-            "https://i.imgur.com/CCrkCn8.png",
-            "https://i.imgur.com/5p3Oo6l.png"
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
           ],
           "markedOnPicture": true,
           "options": [
@@ -1762,10 +1767,10 @@
             "no": "Knapp utskifting"
           },
           "picturesToBeMarked": [
-            "https://i.imgur.com/FpqlbPM.png",
-            "https://i.imgur.com/hkczXk3.png",
-            "https://i.imgur.com/CCrkCn8.png",
-            "https://i.imgur.com/5p3Oo6l.png"
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
           ],
           "markedOnPicture": true,
           "options": [
@@ -1819,10 +1824,10 @@
             "no": "Stor Rift"
           },
           "picturesToBeMarked": [
-            "https://i.imgur.com/FpqlbPM.png",
-            "https://i.imgur.com/hkczXk3.png",
-            "https://i.imgur.com/CCrkCn8.png",
-            "https://i.imgur.com/5p3Oo6l.png"
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
           ],
           "markedOnPicture": true,
           "options": [

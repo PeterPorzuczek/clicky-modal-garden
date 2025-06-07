@@ -36,20 +36,36 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
             <strong>${l(et.sections?.products?.fields?.repair_id) || 'Lagnings-ID:'}</strong> ${product.lagningsId || product.repairId}
           </div>` : ''}
           <div style="margin-left: 15px;">
-            ${items
-              .map(
-                (item) => `
+            ${(() => {
+              let damageCounter = 1;
+              return items.map((item) => {
+                let label = item.label;
+                
+                // Add numbering only for damages
+                if (item.category === 'damages') {
+                  label = `${damageCounter}. ${item.label}`;
+                  damageCounter++;
+                }
+                
+                return `
                   <div style="display: table; width: 100%; margin: 4px 0; padding: 2px 0; font-size: 14px;">
-                    <span style="display: table-cell; color: #333;">${item.label}</span>
+                    <span style="display: table-cell; color: #333;">${label}</span>
                     <span style="display: table-cell; text-align: right; color: #2D2E87; font-weight: 500;">${item.price} kr</span>
-                  </div>`
-              )
-              .join('')}
+                  </div>`;
+              }).join('');
+            })()}
             <div style="display: table; width: 100%; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd; font-weight: 600; color: #2D2E87;">
               <span style="display: table-cell;">${t('firstStep.subtotal')}</span>
               <span style="display: table-cell; text-align: right;">${product.subtotal} kr</span>
             </div>
           </div>
+          ${product.capturedMarkedAreas?.markedImage ? `
+          <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+            <div style="font-weight: 500; color: #2D2E87; margin-bottom: 10px; font-size: 14px;">${t('fifthStep.productWithMarkedDamages')}</div>
+            <div style="text-align: center;">
+              <img src="${product.capturedMarkedAreas.markedImage}" alt="${t('fifthStep.productWithMarkedDamages')}" style="max-width: 300px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;" />
+            </div>
+          </div>` : ''}
         </td>
       </tr>`;
     })

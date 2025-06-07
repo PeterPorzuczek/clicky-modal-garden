@@ -34,7 +34,16 @@ export function calculateSummary(products = [], discount = 0) {
           if (option) {
             const price = getPrice(option.pricing, products.length);
             subtotal += price;
-            items.push({ label: localize(option.name), price, category: 'damages' });
+            
+            // Create label in format "damage - option" if option exists, otherwise just damage
+            let label;
+            if (optionId && option !== damage) {
+              label = `${localize(damage.name)} - ${localize(option.name)}`;
+            } else {
+              label = localize(damage.name);
+            }
+            
+            items.push({ label, price, category: 'damages' });
           }
         }
       });
