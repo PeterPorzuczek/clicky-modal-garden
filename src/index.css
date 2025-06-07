@@ -32,14 +32,27 @@ select {
   -moz-appearance: none;
   appearance: none;
   background-color: white;
+  color: #374151;
   cursor: pointer;
   pointer-events: auto;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  padding-right: 2.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #d1d5db;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN2I3MjgwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBvbHlsaW5lIHBvaW50cz0iNiA4IDEwIDEyIDE0IDgiLz48L3N2Zz4=");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
 }
 
 /* Ensure checkboxes are interactive */
 input[type="checkbox"] {
   cursor: pointer;
   pointer-events: auto;
+  accent-color: hsl(var(--navy));
+  width: 1rem;
+  height: 1rem;
 }
 
 .app {
