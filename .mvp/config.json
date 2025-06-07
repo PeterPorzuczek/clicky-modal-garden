@@ -42,6 +42,21 @@
         "en": "Prefill customer",
         "se": "Fyll i kunduppgifter",
         "no": "Fyll i kundopplysninger"
+      },
+      "emailLabel": {
+        "en": "Email address",
+        "se": "E-postadress",
+        "no": "E-postadresse"
+      },
+      "enterEmail": {
+        "en": "Enter email address",
+        "se": "Ange e-postadress",
+        "no": "Skriv inn e-postadresse"
+      },
+      "emailRequired": {
+        "en": "Email address is required",
+        "se": "E-postadress är obligatorisk",
+        "no": "E-postadresse er obligatorisk"
       }
     },
     "firstStep": {

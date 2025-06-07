@@ -37,12 +37,18 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
   const [currentLanguage, setCurrentLanguage] = useState(getCurrentLanguage());
   const [forceUpdate, setForceUpdate] = useState(0);
   const [isPrefillChecked, setIsPrefillChecked] = useState(false);
+  const [email, setEmail] = useState('');
   const { prefilledData: internalPrefilledData, loadCustomerData, clearPrefilledData } = usePrefilledCustomerData();
   const open = isOpen !== undefined ? isOpen : openInternal;
   const formContainerRef = useRef(null);
   
   // Use external prefilled data if provided, otherwise use internal
   const activePrefilledData = prefilledData || (isPrefillChecked ? internalPrefilledData : null);
+  
+  // Include banner email in the data passed to OrderForm
+  const finalPrefilledData = activePrefilledData ? 
+    { ...activePrefilledData, email: email || activePrefilledData.email } :
+    email ? { email } : null;
 
   const handleStartClick = () => {
     if (isOpen === undefined) setOpenInternal(true);
@@ -64,13 +70,19 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
     setIsPrefillChecked(checked);
     if (checked) {
       loadCustomerData();
+      // Also prefill the banner email from demo customer data
+      if (DEMO_CUSTOMER.email) {
+        setEmail(DEMO_CUSTOMER.email);
+      }
     } else {
       clearPrefilledData();
+      setEmail('');
     }
   };
 
   const handleClearData = () => {
     setIsPrefillChecked(false);
+    setEmail('');
     clearPrefilledData();
   };
 
@@ -132,7 +144,27 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
             <p className="banner-text">{t('trigger.secondary')}</p>
           </div>
           </div>
-          <button className="banner-cta" onClick={handleStartClick}>
+          
+          <div className="email-input-section">
+            <label className="email-label" htmlFor="banner-email">
+              {t('trigger.emailLabel')}
+            </label>
+            <input
+              id="banner-email"
+              type="email"
+              className="email-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={t('trigger.enterEmail')}
+              required
+            />
+          </div>
+          
+          <button 
+            className="banner-cta" 
+            onClick={handleStartClick}
+            disabled={!email.trim()}
+          >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 12l2 2 4-4"/>
               <circle cx="12" cy="12" r="9"/>
@@ -149,7 +181,7 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
             {t('firstStep.instruction')}
           </DialogDescription>
           <div className="form-container" ref={formContainerRef}>
-            <OrderForm prefilledData={activePrefilledData} scrollRef={formContainerRef} />
+            <OrderForm prefilledData={finalPrefilledData} scrollRef={formContainerRef} />
           </div>
           <DialogClose className="dialog-close" />
         </DialogContent>
