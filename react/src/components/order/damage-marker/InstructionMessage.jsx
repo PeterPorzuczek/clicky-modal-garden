@@ -1,4 +1,5 @@
 import React from 'react';
+import t from '../../../setup/i18n.js';
 
 function InfoIcon({ className = '', size = 24 }) {
   return (
@@ -25,15 +26,12 @@ export default function InstructionMessage({ productType, isMarked, isSingleMark
   let message = '';
   if (isSingleMarkMode) {
     if (isMarked) {
-      message =
-        'Du kan \u00E4ndra markeringen genom att klicka p\u00E5 en ny plats p\u00E5 plagget, dra mark\u00F6ren till en ny position, eller markera att det g\u00E4ller hela plagget.';
+      message = t('secondStep.changeMarkingInfo');
     } else {
-      message =
-        'Klicka p\u00E5 bilden f\u00F6r att markera var skadan/defekten \u00E4r placerad, eller markera att det g\u00E4ller hela plagget.';
+      message = t('secondStep.clickToMarkDamage');
     }
   } else {
-    message =
-      'Du m\u00E5ste markera alla valda skador och defekter p\u00E5 bilden nedan. Markeringar visas i den ordning de har valts. Du kan dra markeringarna till andra positioner om du beh\u00F6ver justera dem.';
+    message = t('secondStep.markAllDamagesInfo');
   }
 
   return (

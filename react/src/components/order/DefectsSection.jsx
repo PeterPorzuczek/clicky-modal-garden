@@ -1,4 +1,5 @@
 import React from 'react';
+import t from '../../setup/i18n.js';
 
 export default function DefectsSection({
   productId,
@@ -14,7 +15,7 @@ export default function DefectsSection({
   return (
     <div>
       <div className="defects-header">
-        <h4 className="defects-title">Andra fel och defekter</h4>
+        <h4 className="defects-title">{t('secondStep.otherErrorsAndDefects')}</h4>
       </div>
       <div className={error ? 'defects-wrapper error' : 'defects-wrapper'}>
         <div className="defects-list">
