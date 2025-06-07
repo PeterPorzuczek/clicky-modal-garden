@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ProductSelectionStep from './order/ProductSelectionStep.jsx';
 import OrderInformationStep from './order/OrderInformationStep.jsx';
 import ConfirmationStep from './order/ConfirmationStep.jsx';
@@ -30,6 +30,13 @@ export default function OrderForm({ prefilledData = null }) {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
   const [validationErrors, setValidationErrors] = useState({});
+
+  // Scroll back to the top of the form whenever the step changes
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [step]);
 
   const onFieldBlur = (name) => {
     setTouchedFields((prev) => ({ ...prev, [name]: true }));
