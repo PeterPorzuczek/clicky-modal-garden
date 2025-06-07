@@ -1,5 +1,17 @@
 {
   "texts": {
+    "trigger": {
+      "priamry": {
+        "en": "Order repair & restoration",
+        "se": "Beställ lagning & återställning",
+        "no": "Bestill reparasjon og gjenoppretting"
+      },
+      "secondary": {
+        "en": "As a non-logged-in customer",
+        "se": "Som icke inloggad kund",
+        "no": "Som ikke innlogget kunde"
+      }
+    },
     "firstStep": {
       "title": {
         "en": "Order repair & restoration of workwear",
