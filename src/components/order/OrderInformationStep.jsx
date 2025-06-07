@@ -44,6 +44,7 @@ export default function OrderInformationStep({
                 placeholder={t('thirdStep.enterCustomerNumber')}
                 value={orderInfo.customerNumber || ''}
                 onChange={(e) => onChange && onChange('customerNumber', e.target.value)}
+                className="w-full h-10 rounded border px-3 border-gray-300"
               />
             </div>
             <div>
@@ -56,7 +57,7 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('companyName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('companyName')}
                 required
-                className={fieldError('companyName') ? 'border-red-500' : ''}
+                className={`w-full h-10 rounded border px-3 ${fieldError('companyName') ? 'border-red-500' : 'border-gray-300'}`}
               />
               {fieldError('companyName') && (
                 <p className="text-sm text-red-500 mt-1">{fieldError('companyName')}</p>
@@ -72,7 +73,7 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('ordererName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('ordererName')}
                 required
-                className={fieldError('ordererName') ? 'border-red-500' : ''}
+                className={`w-full h-10 rounded border px-3 ${fieldError('ordererName') ? 'border-red-500' : 'border-gray-300'}`}
               />
               {fieldError('ordererName') && (
                 <p className="text-sm text-red-500 mt-1">{fieldError('ordererName')}</p>
@@ -88,7 +89,7 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('phone', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('phone')}
                 required
-                className={fieldError('phone') ? 'border-red-500' : ''}
+                className={`w-full h-10 rounded border px-3 ${fieldError('phone') ? 'border-red-500' : 'border-gray-300'}`}
               />
               {fieldError('phone') && (
                 <p className="text-sm text-red-500 mt-1">{fieldError('phone')}</p>
@@ -104,7 +105,7 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('email', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('email')}
                 required
-                className={fieldError('email') ? 'border-red-500' : ''}
+                className={`w-full h-10 rounded border px-3 ${fieldError('email') ? 'border-red-500' : 'border-gray-300'}`}
               />
               {fieldError('email') && (
                 <p className="text-sm text-red-500 mt-1">{fieldError('email')}</p>
@@ -126,7 +127,7 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('billingCompanyName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('billingCompanyName')}
                 required
-                className={fieldError('billingCompanyName') ? 'border-red-500' : ''}
+                className={`w-full h-10 rounded border px-3 ${fieldError('billingCompanyName') ? 'border-red-500' : 'border-gray-300'}`}
               />
               {fieldError('billingCompanyName') && (
                 <p className="text-sm text-red-500 mt-1">{fieldError('billingCompanyName')}</p>
@@ -142,7 +143,7 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('billingStreet', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('billingStreet')}
                 required
-                className={fieldError('billingStreet') ? 'border-red-500' : ''}
+                className={`w-full h-10 rounded border px-3 ${fieldError('billingStreet') ? 'border-red-500' : 'border-gray-300'}`}
               />
               {fieldError('billingStreet') && (
                 <p className="text-sm text-red-500 mt-1">{fieldError('billingStreet')}</p>
@@ -159,7 +160,7 @@ export default function OrderInformationStep({
                   onChange={(e) => onChange && onChange('billingZipCode', e.target.value)}
                   onBlur={() => onFieldBlur && onFieldBlur('billingZipCode')}
                   required
-                  className={fieldError('billingZipCode') ? 'border-red-500' : ''}
+                  className={`w-full h-10 rounded border px-3 ${fieldError('billingZipCode') ? 'border-red-500' : 'border-gray-300'}`}
                 />
                 {fieldError('billingZipCode') && (
                   <p className="text-sm text-red-500 mt-1">{fieldError('billingZipCode')}</p>
@@ -175,7 +176,7 @@ export default function OrderInformationStep({
                   onChange={(e) => onChange && onChange('billingCity', e.target.value)}
                   onBlur={() => onFieldBlur && onFieldBlur('billingCity')}
                   required
-                  className={fieldError('billingCity') ? 'border-red-500' : ''}
+                  className={`w-full h-10 rounded border px-3 ${fieldError('billingCity') ? 'border-red-500' : 'border-gray-300'}`}
                 />
                 {fieldError('billingCity') && (
                   <p className="text-sm text-red-500 mt-1">{fieldError('billingCity')}</p>
@@ -199,7 +200,7 @@ export default function OrderInformationStep({
             checked={termsAccepted}
             onChange={(e) => setTermsAccepted && setTermsAccepted(e.target.checked)}
             onBlur={() => onFieldBlur && onFieldBlur('termsAccepted')}
-            className={fieldError('termsAccepted') ? 'border-red-500' : ''}
+            className={`h-4 w-4 rounded border-gray-300 ${fieldError('termsAccepted') ? 'border-red-500' : ''}`}
           />
           <label htmlFor="termsAccepted" className="text-sm cursor-pointer">
             {t('thirdStep.acceptTerms')} <span className="text-red-500">*</span>
