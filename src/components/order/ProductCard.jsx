@@ -73,6 +73,23 @@ export default function ProductCard({ product, onUpdate }) {
     }
   }, [product.type, category, product.images]);
 
+  // When returning to this step, reopen the marker editor if there are
+  // existing markings stored in the product details so they remain editable.
+  useEffect(() => {
+    const hasDamageMarks = product.damages?.some(
+      (_, idx) => product.damageDetails?.[`damage-${idx}`]?.position
+    );
+    const hasDefectMarks = Object.entries(product.otherIssues || {}).some(
+      ([id, active]) =>
+        active && product.defectDetails?.[id]?.position !== undefined
+    );
+    if ((hasDamageMarks || hasDefectMarks) && !markingOpen) {
+      setMarkingOpen(true);
+    }
+    // intentionally run only on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     const dMark = {};
     product.damages.forEach((id, idx) => {
