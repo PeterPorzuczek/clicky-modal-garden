@@ -244,6 +244,9 @@ export default function ProductCard({ product, onUpdate }) {
               />
             </div>
           )}
+        {product.markerError && (
+          <p className="text-sm text-red-500 mt-1">{product.markerError}</p>
+        )}
       </div>
     </div>
   );

@@ -32,6 +32,7 @@ export default function ProductSelectionStep({
         employeeDepartment: '',
         damageErrors: {},
         damageOptionErrors: {},
+        markerError: undefined,
       },
     ];
     setProducts(newProducts);

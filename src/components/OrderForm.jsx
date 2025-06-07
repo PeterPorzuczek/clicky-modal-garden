@@ -19,6 +19,7 @@ const createEmptyProduct = (id) => ({
   employeeDepartment: '',
   damageErrors: {},
   damageOptionErrors: {},
+  markerError: undefined,
 });
 
 export default function OrderForm({ prefilledData = null, scrollRef }) {
@@ -63,6 +64,7 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
 
         const damageErrors = {};
         const damageOptionErrors = {};
+        let markerError;
         if (p.damageCount <= 0) {
           damageErrors[0] = 'Obligatoriskt';
           valid = false;
@@ -81,8 +83,30 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
                   valid = false;
                 }
               }
+              if (damage?.markedOnPicture) {
+                const pos = p.damageDetails?.[`damage-${i}`]?.position;
+                if (!pos) {
+                  markerError = 'Obligatoriskt';
+                  valid = false;
+                }
+              }
             }
           }
+        }
+
+        if (p.otherIssues && category) {
+          Object.entries(p.otherIssues).forEach(([id, active]) => {
+            if (active) {
+              const defect = category.defects.find((d) => d.id === id);
+              if (defect?.markedOnPicture) {
+                const pos = p.defectDetails?.[id]?.position;
+                if (!pos) {
+                  markerError = 'Obligatoriskt';
+                  valid = false;
+                }
+              }
+            }
+          });
         }
 
         return {
@@ -94,6 +118,7 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
           typeError,
           damageErrors,
           damageOptionErrors,
+          markerError,
         };
       })
     );
@@ -104,6 +129,7 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
             const typeError = p.type ? undefined : 'Obligatoriskt';
             const damageErrors = {};
             const damageOptionErrors = {};
+            let markerError;
             if (p.damageCount <= 0) {
               damageErrors[0] = 'Obligatoriskt';
             } else {
@@ -117,10 +143,28 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
                     const opt = p.damageDetails?.[`damage-${i}`]?.optionId;
                     if (!opt) damageOptionErrors[i] = 'Obligatoriskt';
                   }
+                  if (damage?.markedOnPicture) {
+                    const pos = p.damageDetails?.[`damage-${i}`]?.position;
+                    if (!pos) markerError = 'Obligatoriskt';
+                  }
                 }
               }
             }
-            return { ...p, typeError, damageErrors, damageOptionErrors };
+            if (p.otherIssues) {
+              const category = config.productCategories.find((c) => c.id === p.type);
+              if (category) {
+                Object.entries(p.otherIssues).forEach(([id, active]) => {
+                  if (active) {
+                    const defect = category.defects.find((d) => d.id === id);
+                    if (defect?.markedOnPicture) {
+                      const pos = p.defectDetails?.[id]?.position;
+                      if (!pos) markerError = 'Obligatoriskt';
+                    }
+                  }
+                });
+              }
+            }
+            return { ...p, typeError, damageErrors, damageOptionErrors, markerError };
           })
         );
       }
