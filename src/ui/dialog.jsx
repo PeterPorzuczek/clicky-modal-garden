@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createContext, useContext } from 'react';
 import { createPortal } from 'react-dom';
+
+const DialogContext = createContext(null);
 
 export function Dialog({ open, onOpenChange, children }) {
   useEffect(() => {
@@ -12,9 +14,11 @@ export function Dialog({ open, onOpenChange, children }) {
 
   if (!open) return null;
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      {children}
-    </div>,
+    <DialogContext.Provider value={{ onOpenChange }}>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        {children}
+      </div>
+    </DialogContext.Provider>,
     document.body
   );
 }
@@ -33,12 +37,16 @@ export const DialogDescription = ({ children, className = '' }) => (
   <p className={`text-gray-600 ${className}`}>{children}</p>
 );
 
-export const DialogClose = ({ className = '', ...props }) => (
-  <button
-    aria-label="Close"
-    className={`text-gray-500 hover:text-gray-900 ${className}`}
-    {...props}
-  >
-    ✕
-  </button>
-);
+export const DialogClose = ({ className = '', ...props }) => {
+  const ctx = useContext(DialogContext);
+  return (
+    <button
+      aria-label="Close"
+      className={`text-gray-500 hover:text-gray-900 ${className}`}
+      onClick={() => ctx?.onOpenChange(false)}
+      {...props}
+    >
+      ✕
+    </button>
+  );
+};

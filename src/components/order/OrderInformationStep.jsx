@@ -1,6 +1,7 @@
 import React from 'react';
 import PriceSummary from '../order/PriceSummary.jsx';
 import t from '../../i18n.js';
+import { DialogClose } from '../../ui/dialog.jsx';
 
 export default function OrderInformationStep({
   orderInfo = {},
@@ -27,7 +28,8 @@ export default function OrderInformationStep({
   return (
     <div>
       <div className="flex items-center mb-4">
-        <h2 className="text-xl md:text-2xl font-bold">{t('thirdStep.title')}</h2>
+        <h2 className="text-xl md:text-2xl font-bold flex-1">{t('thirdStep.title')}</h2>
+        <DialogClose className="text-xl" />
       </div>
       <div className="flex mb-4">
         <button type="button" onClick={prevStep} className="text-[#262E85] hover:underline">
@@ -184,6 +186,108 @@ export default function OrderInformationStep({
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
+          <h3 className="text-lg font-medium mb-3">{t('thirdStep.pickupAddress')}</h3>
+          <div className="space-y-4">
+            <div>
+              <label className="font-medium block mb-2">{t('thirdStep.companyName')}</label>
+              <input
+                placeholder={t('thirdStep.enterCompanyName')}
+                value={orderInfo.pickupCompanyName || ''}
+                onChange={(e) => onChange && onChange('pickupCompanyName', e.target.value)}
+                className="w-full h-10 rounded border px-3 border-gray-300"
+              />
+            </div>
+            <div>
+              <label className="font-medium block mb-2">{t('thirdStep.streetAddress')}</label>
+              <input
+                placeholder={t('thirdStep.enterStreetAddress')}
+                value={orderInfo.pickupStreet || ''}
+                onChange={(e) => onChange && onChange('pickupStreet', e.target.value)}
+                className="w-full h-10 rounded border px-3 border-gray-300"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="font-medium block mb-2">{t('thirdStep.postalCode')}</label>
+                <input
+                  placeholder={t('thirdStep.enterPostalCode')}
+                  value={orderInfo.pickupZipCode || ''}
+                  onChange={(e) => onChange && onChange('pickupZipCode', e.target.value)}
+                  className="w-full h-10 rounded border px-3 border-gray-300"
+                />
+              </div>
+              <div>
+                <label className="font-medium block mb-2">{t('thirdStep.city')}</label>
+                <input
+                  placeholder={t('thirdStep.enterCity')}
+                  value={orderInfo.pickupCity || ''}
+                  onChange={(e) => onChange && onChange('pickupCity', e.target.value)}
+                  className="w-full h-10 rounded border px-3 border-gray-300"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
+          <h3 className="text-lg font-medium mb-3">{t('thirdStep.deliveryAddress')}</h3>
+          <div className="flex items-start space-x-2 mb-4">
+            <input
+              id="usePickupAddressForDelivery"
+              type="checkbox"
+              checked={orderInfo.usePickupAddressForDelivery || false}
+              onChange={(e) => onChange && onChange('usePickupAddressForDelivery', e.target.checked)}
+              className="h-4 w-4 rounded border-gray-300"
+            />
+            <label htmlFor="usePickupAddressForDelivery" className="text-sm cursor-pointer">
+              {t('thirdStep.sameAsPickup')}
+            </label>
+          </div>
+          {!orderInfo.usePickupAddressForDelivery && (
+            <div className="space-y-4">
+              <div>
+                <label className="font-medium block mb-2">{t('thirdStep.companyName')}</label>
+                <input
+                  placeholder={t('thirdStep.enterCompanyName')}
+                  value={orderInfo.deliveryCompanyName || ''}
+                  onChange={(e) => onChange && onChange('deliveryCompanyName', e.target.value)}
+                  className="w-full h-10 rounded border px-3 border-gray-300"
+                />
+              </div>
+              <div>
+                <label className="font-medium block mb-2">{t('thirdStep.streetAddress')}</label>
+                <input
+                  placeholder={t('thirdStep.enterStreetAddress')}
+                  value={orderInfo.deliveryStreet || ''}
+                  onChange={(e) => onChange && onChange('deliveryStreet', e.target.value)}
+                  className="w-full h-10 rounded border px-3 border-gray-300"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-medium block mb-2">{t('thirdStep.postalCode')}</label>
+                  <input
+                    placeholder={t('thirdStep.enterPostalCode')}
+                    value={orderInfo.deliveryZipCode || ''}
+                    onChange={(e) => onChange && onChange('deliveryZipCode', e.target.value)}
+                    className="w-full h-10 rounded border px-3 border-gray-300"
+                  />
+                </div>
+                <div>
+                  <label className="font-medium block mb-2">{t('thirdStep.city')}</label>
+                  <input
+                    placeholder={t('thirdStep.enterCity')}
+                    value={orderInfo.deliveryCity || ''}
+                    onChange={(e) => onChange && onChange('deliveryCity', e.target.value)}
+                    className="w-full h-10 rounded border px-3 border-gray-300"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {products.some(p => p.type) && (
