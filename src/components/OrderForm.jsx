@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ProductSelectionStep from './order/ProductSelectionStep.jsx';
 import OrderInformationStep from './order/OrderInformationStep.jsx';
 import ConfirmationStep from './order/ConfirmationStep.jsx';
+import config from '../config.js';
 
 const createEmptyProduct = (id) => ({
   id,
@@ -17,10 +18,12 @@ const createEmptyProduct = (id) => ({
   employeeName: '',
   employeeDepartment: '',
   damageErrors: {},
+  damageOptionErrors: {},
 });
 
-export default function OrderForm({ prefilledData = null }) {
-  const containerRef = useRef(null);
+export default function OrderForm({ prefilledData = null, scrollRef }) {
+  const internalRef = useRef(null);
+  const containerRef = scrollRef || internalRef;
   const [step, setStep] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [products, setProducts] = useState([createEmptyProduct(1)]);
@@ -28,6 +31,13 @@ export default function OrderForm({ prefilledData = null }) {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
   const [validationErrors, setValidationErrors] = useState({});
+
+  // Scroll back to the top of the form whenever the step changes
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [step]);
 
   const onFieldBlur = (name) => {
     setTouchedFields((prev) => ({ ...prev, [name]: true }));
@@ -52,6 +62,7 @@ export default function OrderForm({ prefilledData = null }) {
         if (!p.type) valid = false;
 
         const damageErrors = {};
+        const damageOptionErrors = {};
         if (p.damageCount <= 0) {
           damageErrors[0] = 'Obligatoriskt';
           valid = false;
@@ -60,6 +71,16 @@ export default function OrderForm({ prefilledData = null }) {
             if (!p.damages?.[i]) {
               damageErrors[i] = 'Obligatoriskt';
               valid = false;
+            } else {
+              const category = config.productCategories.find((c) => c.id === p.type);
+              const damage = category?.damages.find((d) => d.id === p.damages[i]);
+              if (damage?.options?.length) {
+                const opt = p.damageDetails?.[`damage-${i}`]?.optionId;
+                if (!opt) {
+                  damageOptionErrors[i] = 'Obligatoriskt';
+                  valid = false;
+                }
+              }
             }
           }
         }
@@ -72,26 +93,37 @@ export default function OrderForm({ prefilledData = null }) {
           defectDetails: { ...(p.defectDetails || {}) },
           typeError,
           damageErrors,
+          damageOptionErrors,
         };
       })
     );
 
-    if (!valid) {
-      setProducts((prevProducts) =>
-        prevProducts.map((p) => {
-          const typeError = p.type ? undefined : 'Obligatoriskt';
-          const damageErrors = {};
-          if (p.damageCount <= 0) {
-            damageErrors[0] = 'Obligatoriskt';
-          } else {
-            for (let i = 0; i < p.damageCount; i++) {
-              if (!p.damages?.[i]) damageErrors[i] = 'Obligatoriskt';
+      if (!valid) {
+        setProducts((prevProducts) =>
+          prevProducts.map((p) => {
+            const typeError = p.type ? undefined : 'Obligatoriskt';
+            const damageErrors = {};
+            const damageOptionErrors = {};
+            if (p.damageCount <= 0) {
+              damageErrors[0] = 'Obligatoriskt';
+            } else {
+              for (let i = 0; i < p.damageCount; i++) {
+                if (!p.damages?.[i]) {
+                  damageErrors[i] = 'Obligatoriskt';
+                } else {
+                  const category = config.productCategories.find((c) => c.id === p.type);
+                  const damage = category?.damages.find((d) => d.id === p.damages[i]);
+                  if (damage?.options?.length) {
+                    const opt = p.damageDetails?.[`damage-${i}`]?.optionId;
+                    if (!opt) damageOptionErrors[i] = 'Obligatoriskt';
+                  }
+                }
+              }
             }
-          }
-          return { ...p, typeError, damageErrors };
-        })
-      );
-    }
+            return { ...p, typeError, damageErrors, damageOptionErrors };
+          })
+        );
+      }
 
     return valid;
   };

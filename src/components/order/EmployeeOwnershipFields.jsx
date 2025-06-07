@@ -31,6 +31,7 @@ export default function EmployeeOwnershipFields({ product, onUpdate, onFieldBlur
               value={product.employeeName}
               onChange={(e) => onUpdate('employeeName', e.target.value)}
               onBlur={() => onFieldBlur && onFieldBlur(fieldPrefix + 'employeeName')}
+              required={product.isEmployeeOwned}
               className={`w-full h-10 rounded border px-3 ${fieldError(fieldPrefix + 'employeeName') ? 'border-red-500' : 'border-gray-300'}`}
             />
             {fieldError(fieldPrefix + 'employeeName') && (
@@ -44,6 +45,7 @@ export default function EmployeeOwnershipFields({ product, onUpdate, onFieldBlur
               value={product.employeeDepartment}
               onChange={(e) => onUpdate('employeeDepartment', e.target.value)}
               onBlur={() => onFieldBlur && onFieldBlur(fieldPrefix + 'employeeDepartment')}
+              required={product.isEmployeeOwned}
               className={`w-full h-10 rounded border px-3 ${fieldError(fieldPrefix + 'employeeDepartment') ? 'border-red-500' : 'border-gray-300'}`}
             />
             {fieldError(fieldPrefix + 'employeeDepartment') && (
