@@ -185,10 +185,12 @@ export default function OrderInformationStep({
           </div>
         </div>
 
-        <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-3">{t('thirdStep.summary')}</h3>
-          <PriceSummary products={products} />
-        </div>
+        {products.some(p => p.type) && (
+          <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
+            <h3 className="text-lg font-medium mb-3">{t('thirdStep.summary')}</h3>
+            <PriceSummary products={products} />
+          </div>
+        )}
 
         <div className="flex items-start space-x-2 mb-6">
           <input

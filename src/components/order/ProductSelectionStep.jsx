@@ -64,7 +64,7 @@ export default function ProductSelectionStep({
       {products.map(p => (
         <ProductCard key={p.id} product={p} onUpdate={updateProduct} />
       ))}
-      {products.length > 0 && (
+      {products.some(p => p.type) && (
         <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg mb-6">
           <h3 className="text-lg font-medium mb-3">{t('firstStep.summary')}</h3>
           <PriceSummary products={products} />
