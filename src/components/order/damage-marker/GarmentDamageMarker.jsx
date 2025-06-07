@@ -3,9 +3,9 @@ import InstructionMessage from './InstructionMessage.jsx';
 import MarkerList from './MarkerList.jsx';
 import MarkerButtons from './MarkerButton.jsx';
 import GarmentView from './GarmentView.jsx';
-import { getDefectLabel, getDamageLabel } from '../../../i18n.js';
-import config from '../../../config.js';
-import t from '../../../i18n.js';
+import { getDefectLabel, getDamageLabel } from '../../../setup/i18n.js';
+import config from '../../../setup/config.js';
+import t from '../../../setup/i18n.js';
 
 export default function GarmentDamageMarker({
   product,

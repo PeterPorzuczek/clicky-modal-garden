@@ -5,8 +5,8 @@ import DamageSelector from './DamageSelector';
 import DefectsSection from './DefectsSection';
 import EmployeeOwnershipFields from './EmployeeOwnershipFields';
 import GarmentDamageMarker from './damage-marker/GarmentDamageMarker';
-import config from '../../config.js';
-import t, { localize } from '../../i18n.js';
+import config from '../../setup/config.js';
+import t, { localize } from '../../setup/i18n.js';
 
 export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();

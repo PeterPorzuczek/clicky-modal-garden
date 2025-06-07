@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDamageLabel as lookupDamageLabel } from '../../../i18n.js';
+import { getDamageLabel as lookupDamageLabel } from '../../../setup/i18n.js';
 
 function XIcon({ className = '', size = 14 }) {
   return (

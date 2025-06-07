@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ProductSelectionStep from './order/ProductSelectionStep.jsx';
 import OrderInformationStep from './order/OrderInformationStep.jsx';
 import ConfirmationStep from './order/ConfirmationStep.jsx';
-import config from '../config.js';
+import config from '../setup/config.js';
 
 const createEmptyProduct = (id) => ({
   id,

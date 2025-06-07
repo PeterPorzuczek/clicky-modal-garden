@@ -1,6 +1,6 @@
 import React from 'react';
 import PriceSummary, { calculateSummary } from '../order/PriceSummary.jsx';
-import t from '../../i18n.js';
+import t from '../../setup/i18n.js';
 import { DialogClose } from './ui/Dialog.jsx';
 
 export default function OrderInformationStep({

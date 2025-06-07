@@ -20,7 +20,7 @@ function XIcon({ className = '', size = 14 }) {
   );
 }
 
-import { getDamageLabel as lookupDamageLabel } from '../../../i18n.js';
+import { getDamageLabel as lookupDamageLabel } from '../../../setup/i18n.js';
 
 export default function MarkerList({
   product,

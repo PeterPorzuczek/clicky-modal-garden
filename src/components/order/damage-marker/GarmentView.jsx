@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge } from '../ui/Badge.jsx';
-import { getDamageLabel } from '../../../i18n.js';
+import { getDamageLabel } from '../../../setup/i18n.js';
 import WholeProductList from './WholeProductList.jsx';
 
 export default function GarmentView({

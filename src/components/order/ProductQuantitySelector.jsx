@@ -1,5 +1,5 @@
 import React from 'react';
-import t from '../../i18n.js';
+import t from '../../setup/i18n.js';
 
 function MinusIcon({className}) {
   return (

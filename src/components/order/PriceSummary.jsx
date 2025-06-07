@@ -1,6 +1,6 @@
 import React from 'react';
-import config from '../../config.js';
-import t, { localize } from '../../i18n.js';
+import config from '../../setup/config.js';
+import t, { localize } from '../../setup/i18n.js';
 
 const getPrice = (pricing = {}, count) => {
   if (count >= 6) return pricing['10'] || 0;
