@@ -23,6 +23,9 @@ export default function App() {
   return (
     <div className="app">
       <div className="app-controls">
+        <button className="btn-secondary" onClick={handleClearData}>
+          Clear data
+        </button>
         <div className="control-group">
           <label className="checkbox-label">
             <input 
@@ -33,9 +36,6 @@ export default function App() {
             Prefill customer
           </label>
         </div>
-        <button className="btn-secondary" onClick={handleClearData}>
-          Clear data
-        </button>
       </div>
       <Banner prefilledData={prefilledData} />
     </div>
