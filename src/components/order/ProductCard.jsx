@@ -91,6 +91,11 @@ export default function ProductCard({ product, onUpdate }) {
         right: pics[3] || pics[0] || null,
       });
     }
+    if (damageObj?.markedOnPicture) {
+      setSelectedDefectId(undefined);
+      setSelectedDamageIndex(idx);
+      setMarkingOpen(true);
+    }
   };
 
   const updateDamageDetail = (idx, detail) => {
@@ -103,6 +108,15 @@ export default function ProductCard({ product, onUpdate }) {
     const issues = { ...(product.otherIssues || {}) };
     issues[id] = !issues[id];
     updateField('otherIssues', issues);
+
+    if (issues[id]) {
+      const defectObj = DEFECT_OPTIONS.find((d) => d.id === id);
+      if (defectObj?.markedOnPicture) {
+        setSelectedDamageIndex(undefined);
+        setSelectedDefectId(id);
+        setMarkingOpen(true);
+      }
+    }
   };
 
   return (
@@ -139,19 +153,6 @@ export default function ProductCard({ product, onUpdate }) {
                     onDamageChange={(val) => updateDamageType(idx, val)}
                     onOptionChange={(val) => updateDamageDetail(idx, { optionId: val })}
                   />
-                  {selectedDamageConfig?.markedOnPicture && (
-                    <button
-                      type="button"
-                      className="text-sm text-blue-600 underline"
-                      onClick={() => {
-                        setSelectedDefectId(undefined);
-                        setSelectedDamageIndex(idx);
-                        setMarkingOpen(true);
-                      }}
-                    >
-                      Markera skada
-                    </button>
-                  )}
                 </div>
               );
             })}
@@ -165,26 +166,6 @@ export default function ProductCard({ product, onUpdate }) {
             onToggle={toggleDefect}
           />
         )}
-        {Object.entries(product.otherIssues || {}).filter(([, on]) => on).map(([id]) => {
-          const defectConfig = DEFECT_OPTIONS.find((d) => d.id === id);
-          if (!defectConfig?.markedOnPicture) {
-            return null;
-          }
-          return (
-            <button
-              key={id}
-              type="button"
-              className="text-sm text-blue-600 underline mr-2"
-              onClick={() => {
-                setSelectedDamageIndex(undefined);
-                setSelectedDefectId(id);
-                setMarkingOpen(true);
-              }}
-            >
-              Markera: {defectConfig.label || id}
-            </button>
-          )
-        })}
         <EmployeeOwnershipFields
           product={product}
           onUpdate={(field, val) => updateField(field, val)}
