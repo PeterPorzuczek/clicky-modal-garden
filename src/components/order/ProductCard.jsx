@@ -12,6 +12,8 @@ export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
   const [selectedDefectId, setSelectedDefectId] = useState();
   const [markingOpen, setMarkingOpen] = useState(false);
+  const [damageMarkable, setDamageMarkable] = useState({});
+  const [defectMarkable, setDefectMarkable] = useState({});
 
   const category = config.productCategories.find((c) => c.id === product.type);
 
@@ -68,6 +70,21 @@ export default function ProductCard({ product, onUpdate }) {
       }
     }
   }, [product.type, category]);
+
+  useEffect(() => {
+    const dMark = {};
+    product.damages.forEach((id, idx) => {
+      const cfg = DAMAGE_OPTIONS.find((o) => o.id === id);
+      dMark[idx] = !!cfg?.markedOnPicture;
+    });
+    setDamageMarkable(dMark);
+
+    const defMark = {};
+    DEFECT_OPTIONS.forEach((opt) => {
+      defMark[opt.id] = !!opt.markedOnPicture;
+    });
+    setDefectMarkable(defMark);
+  }, [product.damages, category]);
 
   const updateDamageType = (idx, val) => {
     const arr = [...(product.damages || [])];
@@ -198,15 +215,21 @@ export default function ProductCard({ product, onUpdate }) {
                   updateField('defectDetails', details);
                 }}
                 onSelectDamage={(idx) => {
-                  setSelectedDefectId(undefined);
-                  setSelectedDamageIndex(idx);
-                  setMarkingOpen(true);
+                  if (damageMarkable[idx]) {
+                    setSelectedDefectId(undefined);
+                    setSelectedDamageIndex(idx);
+                    setMarkingOpen(true);
+                  }
                 }}
                 onSelectDefect={(id) => {
-                  setSelectedDamageIndex(undefined);
-                  setSelectedDefectId(id);
-                  setMarkingOpen(true);
+                  if (defectMarkable[id]) {
+                    setSelectedDamageIndex(undefined);
+                    setSelectedDefectId(id);
+                    setMarkingOpen(true);
+                  }
                 }}
+                damageMarkable={damageMarkable}
+                defectMarkable={defectMarkable}
               />
             </div>
           )}
