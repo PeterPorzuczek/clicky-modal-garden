@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import config from '../../setup/config.js';
 import t, { localize } from '../../setup/i18n.js';
 import { calculateSummary } from './PriceSummary.jsx';
@@ -401,6 +402,26 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
   `;
 }
 
+/*
+EMAILJS TEMPLATE CONFIGURATION:
+To send formatted HTML emails, configure your EmailJS template with:
+
+Subject: {{subject}}
+Content: {{{message}}}  <-- IMPORTANT: Use triple braces for HTML rendering
+
+The triple braces {{{message}}} will render HTML content as formatted email.
+Double braces {{message}} would escape HTML and show raw code.
+
+Template variables available:
+- {{to_email}}        - Recipient email  
+- {{from_name}}       - Sender name
+- {{subject}}         - Email subject
+- {{{message}}}       - Full HTML email content
+- {{customer_name}}   - Customer name
+- {{company_name}}    - Company name
+- {{reply_to}}        - Reply-to email
+*/
+
 export default function EmailPreviewStep({ orderInfo, products, prevStep }) {
   const [appState, setAppState] = useState({
     orderInfo: orderInfo || {},
@@ -416,14 +437,47 @@ export default function EmailPreviewStep({ orderInfo, products, prevStep }) {
 
   const emailHtml = useMemo(() => generateEmailHtml(appState.orderInfo, appState.products), [appState.orderInfo, appState.products]);
 
-  const handleSendEmail = () => {
-    // TODO: Implement email sending with emailjs
-    console.log('Sending email...', { 
-      orderInfo: appState.orderInfo, 
-      products: appState.products, 
-      emailHtml 
-    });
-    alert('Email functionality will be implemented next!');
+  const handleSendEmail = async () => {
+    try {
+      // Initialize EmailJS with the public key
+      emailjs.init('KfQE_RyvIf8RpZNM8');
+      
+      // Get the destination email from orderInfo
+      const destinationEmail = appState.orderInfo?.email;
+      
+      if (!destinationEmail) {
+        alert('Email address is required to send the order confirmation.');
+        return;
+      }
+      
+      // Prepare email parameters
+      const templateParams = {
+        to_email: destinationEmail,
+        from_name: 'Workwear Repair Service',
+        subject: 'Order Confirmation - Workwear Repair & Restoration',
+        message: emailHtml, // Use 'message' instead of 'html_content'
+        customer_name: appState.orderInfo?.ordererName || 'Customer',
+        company_name: appState.orderInfo?.companyName || 'N/A',
+        reply_to: destinationEmail
+      };
+      
+      console.log('Sending email to:', destinationEmail);
+      
+      // Send email via EmailJS 
+      // IMPORTANT: In EmailJS template, use {{{message}}} (triple braces) to render HTML content
+      const response = await emailjs.send(
+        'service_om94h1p', // Replace with your actual EmailJS service ID
+        'template_jv1wx1q', // Replace with your actual template ID  
+        templateParams
+      );
+      
+      console.log('Email sent successfully:', response);
+      alert(`Email confirmation sent successfully to ${destinationEmail}!`);
+      
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send email. Please try again or contact support.');
+    }
   };
 
   return (
