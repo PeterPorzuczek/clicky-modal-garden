@@ -138,6 +138,8 @@ export default function GarmentDamageMarker({
       <InstructionMessage productType={product.type} isMarked={isMarked} isSingleMarkMode={singleMode} />
       <div className="gdm-row">
         <MarkerButtons onResetAllMarkers={resetAll} />
+      </div>
+      <div className="gdm-white-section">
         <MarkerList
           product={product}
           damagePositions={damagePositions}
@@ -177,56 +179,56 @@ export default function GarmentDamageMarker({
           selectedDamageIndex={selectedDamageIndex}
           selectedDefectId={selectedDefectId}
         />
+        <GarmentView
+          productType={product.type}
+          imageUrl={imageUrl}
+          onMarkPosition={handleMark}
+          disabled={false}
+          maxMarks={product.damages.length}
+          currentMarks={totalMarks}
+          selectedForMarking={selectedDamageIndex !== undefined || selectedDefectId !== undefined}
+          damagePositions={damagePositions}
+          defectPositions={defectPositions}
+          productDamages={product.damages}
+          damageLabels={product.damageLabels || {}}
+          defectLabels={Object.fromEntries(
+            Object.entries(product.otherIssues || {})
+              .filter(([_, on]) => on)
+              .map(([id]) => [id, labelForDefect(id)])
+          )}
+          onMarkerDrag={() => {}}
+          onMarkerClick={handleMarkerClick}
+          markerSelectionOrder={orderMap}
+          product={product}
+          removeDamage={(e, idx) => {
+            e.stopPropagation();
+            setDamagePositions((p) => {
+              const { [idx]: removed, ...rest } = p;
+              return rest;
+            });
+            setOrderMap((m) => {
+              const { [`damage-${idx}`]: removed, ...rest } = m;
+              return rest;
+            });
+            updateDamageDetail && updateDamageDetail(idx, { position: undefined, orderIndex: undefined });
+          }}
+          removeDefect={(e, id) => {
+            e.stopPropagation();
+            setDefectPositions((p) => {
+              const { [id]: removed, ...rest } = p;
+              return rest;
+            });
+            setOrderMap((m) => {
+              const { [id]: removed, ...rest } = m;
+              return rest;
+            });
+            updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
+          }}
+          getDamageLabel={labelForDamage}
+          getDefectLabel={labelForDefect}
+          isWholeProductMarker={isWholeMarker}
+        />
       </div>
-      <GarmentView
-        productType={product.type}
-        imageUrl={imageUrl}
-        onMarkPosition={handleMark}
-        disabled={false}
-        maxMarks={product.damages.length}
-        currentMarks={totalMarks}
-        selectedForMarking={selectedDamageIndex !== undefined || selectedDefectId !== undefined}
-        damagePositions={damagePositions}
-        defectPositions={defectPositions}
-        productDamages={product.damages}
-        damageLabels={product.damageLabels || {}}
-        defectLabels={Object.fromEntries(
-          Object.entries(product.otherIssues || {})
-            .filter(([_, on]) => on)
-            .map(([id]) => [id, labelForDefect(id)])
-        )}
-        onMarkerDrag={() => {}}
-        onMarkerClick={handleMarkerClick}
-        markerSelectionOrder={orderMap}
-        product={product}
-        removeDamage={(e, idx) => {
-          e.stopPropagation();
-          setDamagePositions((p) => {
-            const { [idx]: removed, ...rest } = p;
-            return rest;
-          });
-          setOrderMap((m) => {
-            const { [`damage-${idx}`]: removed, ...rest } = m;
-            return rest;
-          });
-          updateDamageDetail && updateDamageDetail(idx, { position: undefined, orderIndex: undefined });
-        }}
-        removeDefect={(e, id) => {
-          e.stopPropagation();
-          setDefectPositions((p) => {
-            const { [id]: removed, ...rest } = p;
-            return rest;
-          });
-          setOrderMap((m) => {
-            const { [id]: removed, ...rest } = m;
-            return rest;
-          });
-          updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
-        }}
-        getDamageLabel={labelForDamage}
-        getDefectLabel={labelForDefect}
-        isWholeProductMarker={isWholeMarker}
-      />
     </div>
   );
 }
