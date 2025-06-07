@@ -52,6 +52,7 @@
 }
 
 .dialog-content {
+  position: relative;
   width: 700px;
   height: 90vh;
   max-width: 700px;
@@ -74,14 +75,14 @@
 
 .dialog-close {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  right: 0.5rem;
+  top: 0.5rem;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
   opacity: 1;
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e5e7eb;
+  background-color: transparent;
+  border: none;
   color: #6b7280;
   font-size: 1.25rem;
   transition: all 0.2s;
@@ -89,7 +90,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: 1000;
 }
 .dialog-close:hover {
   background-color: #f3f4f6;
