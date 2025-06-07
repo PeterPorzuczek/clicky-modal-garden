@@ -177,6 +177,11 @@
         "se": "Defekter",
         "no": "Defekter"
       },
+      "otherErrorsAndDefects": {
+        "en": "Other errors and defects",
+        "se": "Andra fel och defekter",
+        "no": "Andre feil og defekter"
+      },
       "defect": {
         "en": "Defect",
         "se": "Defekt",
@@ -191,6 +196,21 @@
         "en": "Click on the image below where the selected Damage/defects are located on the product. You can drag the selection to a different position if you need to adjust them.",
         "se": "Klicka på bilden nedan där vald skada/defekt finns på produkten. Du kan dra markeringen till en annan plats om du behöver justera den.",
         "no": "Klikk på bildet under der den valgte skaden/defekten er på produktet. Du kan dra markeringen til en annen posisjon hvis du trenger å justere den."
+      },
+      "changeMarkingInfo": {
+        "en": "You can change the marking by clicking on a new place on the garment, drag the marker to a new position, or mark that it applies to the entire garment.",
+        "se": "Du kan ändra markeringen genom att klicka på en ny plats på plagget, dra markören till en ny position, eller markera att det gäller hela plagget.",
+        "no": "Du kan endre markeringen ved å klikke på et nytt sted på plagget, dra markøren til en ny posisjon, eller markere at det gjelder hele plagget."
+      },
+      "clickToMarkDamage": {
+        "en": "Click on the image to mark where the damage/defect is located, or mark that it applies to the entire garment.",
+        "se": "Klicka på bilden för att markera var skadan/defekten är placerad, eller markera att det gäller hela plagget.",
+        "no": "Klikk på bildet for å markere hvor skaden/defekten er plassert, eller merk at det gjelder hele plagget."
+      },
+      "markAllDamagesInfo": {
+        "en": "You must mark all selected damages and defects on the image below. Markers are displayed in the order they were selected. You can drag the markers to other positions if you need to adjust them.",
+        "se": "Du måste markera alla valda skador och defekter på bilden nedan. Markeringar visas i den ordning de har valts. Du kan dra markeringarna till andra positioner om du behöver justera dem.",
+        "no": "Du må markere alle valgte skader og defekter på bildet nedenfor. Markører vises i den rekkefølgen de ble valgt. Du kan dra markørene til andre posisjoner hvis du trenger å justere dem."
       },
       "appliesToEntireProduct": {
         "en": "Applies to the entire product",
