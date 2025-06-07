@@ -177,6 +177,11 @@
         "se": "Defekter",
         "no": "Defekter"
       },
+      "defect": {
+        "en": "Defect",
+        "se": "Defekt",
+        "no": "Defekt"
+      },
       "markDamageBelow": {
         "en": "Mark the damage in the image below",
         "se": "Markera skadan på bilden nedan",
@@ -481,18 +486,23 @@
         "se": "Stäng",
         "no": "Lukk"
       }
-    }
-  },
-  "fifthStep": {
-    "back": {
-      "en": "Back",
-      "se": "Tillbaka",
-      "no": "Tilbake"
     },
-    "sendEmail": {
-      "en": "Send EMAIL",
-      "se": "Skicka E-POST",
-      "no": "Send E-POST"
+    "fifthStep": {
+      "back": {
+        "en": "Back",
+        "se": "Tillbaka",
+        "no": "Tilbake"
+      },
+      "sendEmail": {
+        "en": "Send EMAIL",
+        "se": "Skicka E-POST",
+        "no": "Send E-POST"
+      },
+      "productWithMarkedDamages": {
+        "en": "Product with marked damages:",
+        "se": "Produkt med markerade skador:",
+        "no": "Produkt med markerte skader:"
+      }
     }
   },
   "productCategories": [
@@ -1620,10 +1630,10 @@
             "no": "Rift"
           },
           "picturesToBeMarked": [
-            "https://i.imgur.com/FpqlbPM.png",
-            "https://i.imgur.com/hkczXk3.png",
-            "https://i.imgur.com/CCrkCn8.png",
-            "https://i.imgur.com/5p3Oo6l.png"
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
           ],
           "markedOnPicture": true,
           "options": [
@@ -1757,10 +1767,10 @@
             "no": "Knapp utskifting"
           },
           "picturesToBeMarked": [
-            "https://i.imgur.com/FpqlbPM.png",
-            "https://i.imgur.com/hkczXk3.png",
-            "https://i.imgur.com/CCrkCn8.png",
-            "https://i.imgur.com/5p3Oo6l.png"
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
           ],
           "markedOnPicture": true,
           "options": [
@@ -1814,10 +1824,10 @@
             "no": "Stor Rift"
           },
           "picturesToBeMarked": [
-            "https://i.imgur.com/FpqlbPM.png",
-            "https://i.imgur.com/hkczXk3.png",
-            "https://i.imgur.com/CCrkCn8.png",
-            "https://i.imgur.com/5p3Oo6l.png"
+            "https://i.imgur.com/k2aFvbe.png",
+            "https://i.imgur.com/MsxNBla.png",
+            "https://i.imgur.com/PCg8ijN.png",
+            "https://i.imgur.com/JQ6YDAU.jpeg"
           ],
           "markedOnPicture": true,
           "options": [
@@ -1929,13 +1939,8 @@
             "se": "Lagning, Tvätt & Uppfräschning (inkl. dålig lukt)",
             "no": "Reparasjon, Vask & Gjenoppretting (inkl. luktfjerning)"
           },
-          "picturesToBeMarked": [
-            "https://i.imgur.com/FpqlbPM.png",
-            "https://i.imgur.com/hkczXk3.png",
-            "https://i.imgur.com/CCrkCn8.png",
-            "https://i.imgur.com/5p3Oo6l.png"
-          ],
-          "markedOnPicture": true,
+          "picturesToBeMarked": [],
+          "markedOnPicture": false,
           "options": [],
           "pricing": {
             "1": 495,
@@ -1974,11 +1979,14 @@
   ],
   "emailTemplate": {
     "header": {
-      "company_name": {
-        "sv": "Lyreco Sverige",
-        "no": "Lyreco Norge", 
-        "en": "Lyreco Sweden"
-      }
+      "sv": "Orderbekräftelse",
+      "no": "Ordrebekreftelse", 
+      "en": "Order Confirmation"
+    },
+    "company_name": {
+      "sv": "Lyreco Sverige",
+      "no": "Lyreco Norge", 
+      "en": "Lyreco Sweden"
     },
     "main_title": {
       "sv": "Beställning lagning & återställning av arbetskläder",
@@ -2131,14 +2139,24 @@
             "no": "Produkt #",
             "en": "Product #"
           },
+          "employee": {
+            "sv": "Tillhör anställd:",
+            "no": "Tilhører ansatt:",
+            "en": "Belongs to employee:"
+          },
+          "department": {
+            "sv": "Avdelning:",
+            "no": "Avdeling:",
+            "en": "Department:"
+          },
           "article_number": {
             "sv": "Artikelnummer:",
             "no": "Artikkelnummer:",
             "en": "Article Number:"
           },
           "repair_id": {
-            "sv": "Lagnings id:",
-            "no": "Reparasjons id:",
+            "sv": "Lagnings-ID:",
+            "no": "Reparasjons-ID:",
             "en": "Repair ID:"
           },
           "damage_1": {
@@ -2161,51 +2179,28 @@
             "no": "Delsum:",
             "en": "Subtotal:"
           }
-        },
-        "damage_types": {
-          "zipper_change": {
-            "sv": "Zipper change",
-            "no": "Glidelås skifte",
-            "en": "Zipper change"
-          },
-          "hole": {
-            "sv": "Hål",
-            "no": "Hull",
-            "en": "Hole"
-          }
-        },
-        "defect_types": {
-          "bad_smell": {
-            "sv": "Bad smell",
-            "no": "Dårlig lukt",
-            "en": "Bad smell"
-          }
-        },
-        "product_types": {
-          "byxa": {
-            "sv": "Byxa",
-            "no": "Bukse",
-            "en": "Trousers"
-          },
-          "vast": {
-            "sv": "Väst",
-            "no": "Vest",
-            "en": "Vest"
-          }
         }
       }
     },
     "footer": {
-      "total_cost": {
-        "sv": "Kostnad:",
-        "no": "Kostnad:",
-        "en": "Cost:"
-      },
-      "currency": {
-        "sv": "kr",
-        "no": "kr",
-        "en": "SEK"
-      }
+      "sv": "Tack för att du valde vår tjänst!",
+      "no": "Takk for at du valgte vår tjeneste!",
+      "en": "Thank you for choosing our service!"
+    },
+    "disclaimer": {
+      "sv": "Detta är ett automatiskt meddelande. Vänligen svara inte på detta e-postmeddelande.",
+      "no": "Dette er en automatisk melding. Vennligst ikke svar på denne e-posten.",
+      "en": "This is an automatic message. Please do not reply to this email."
+    },
+    "total_cost": {
+      "sv": "Kostnad:",
+      "no": "Kostnad:",
+      "en": "Cost:"
+    },
+    "currency": {
+      "sv": "kr",
+      "no": "kr",
+      "en": "SEK"
     }
   }
 }
