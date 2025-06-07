@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ProductTypeSelector from './ProductTypeSelector';
 import DamageCountSelector from './DamageCountSelector';
 import DamageSelector from './DamageSelector';
@@ -14,6 +14,7 @@ export default function ProductCard({ product, onUpdate }) {
   const [markingOpen, setMarkingOpen] = useState(false);
   const [damageMarkable, setDamageMarkable] = useState({});
   const [defectMarkable, setDefectMarkable] = useState({});
+  const prevType = useRef(product.type);
 
   const category = config.productCategories.find((c) => c.id === product.type);
 
@@ -43,6 +44,27 @@ export default function ProductCard({ product, onUpdate }) {
   const updateField = (field, value) => {
     onUpdate && onUpdate(product.id, field, value);
   };
+
+  // Reset related data when the product category changes
+  useEffect(() => {
+    if (prevType.current && prevType.current !== product.type) {
+      updateField('damageCount', 0);
+      updateField('damages', []);
+      updateField('damageDetails', {});
+      updateField('damageLabels', {});
+      updateField('otherIssues', {});
+      updateField('defectDetails', {});
+      updateField('defectLabels', {});
+      updateField('images', null);
+      updateField('damageErrors', {});
+      updateField('damageOptionErrors', {});
+      updateField('markerError', undefined);
+      setSelectedDamageIndex(undefined);
+      setSelectedDefectId(undefined);
+      setMarkingOpen(false);
+    }
+    prevType.current = product.type;
+  }, [product.type]);
 
   // This useEffect correctly preserves user selections when damageCount changes.
   useEffect(() => {
