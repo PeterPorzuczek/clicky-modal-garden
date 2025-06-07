@@ -149,6 +149,15 @@ export default function ProductCard({ product, onUpdate }) {
     issues[id] = !issues[id];
     updateField('otherIssues', issues);
 
+    const labels = { ...(product.defectLabels || {}) };
+    if (issues[id]) {
+      const defectObj = DEFECT_OPTIONS.find((d) => d.id === id);
+      if (defectObj) labels[id] = defectObj.label;
+    } else {
+      delete labels[id];
+    }
+    updateField('defectLabels', labels);
+
     if (issues[id]) {
       const defectObj = DEFECT_OPTIONS.find((d) => d.id === id);
       if (defectObj?.markedOnPicture) {
