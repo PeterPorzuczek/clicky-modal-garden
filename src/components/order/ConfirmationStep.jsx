@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import { DialogClose, DialogContext } from './ui/Dialog.jsx';
 import t from '../../setup/i18n.js';
 
-export default function ConfirmationStep({ resetForm, products = [], discount = 0 }) {
+export default function ConfirmationStep({
+  resetForm,
+  products = [],
+  discount = 0,
+  onPreview,
+}) {
   const dialogCtx = useContext(DialogContext);
   return (
     <div className="confirm-container">
@@ -32,6 +37,13 @@ export default function ConfirmationStep({ resetForm, products = [], discount = 
           className="secondary-button"
         >
           {t('fourthStep.additionalOrder')}
+        </button>
+        <button
+          type="button"
+          onClick={onPreview}
+          className="secondary-button"
+        >
+          {t('fourthStep.previewEmail')}
         </button>
         <button
           type="button"

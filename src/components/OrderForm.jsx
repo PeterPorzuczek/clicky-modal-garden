@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ProductSelectionStep from './order/ProductSelectionStep.jsx';
 import OrderInformationStep from './order/OrderInformationStep.jsx';
 import ConfirmationStep from './order/ConfirmationStep.jsx';
+import FifthStep from './order/FifthStep.jsx';
 import config from '../setup/config.js';
 import t from '../setup/i18n.js';
 
@@ -217,9 +218,21 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
     setOrderInfo((prev) => ({ ...prev, [field]: value }));
   };
 
-  return step === 2 ? (
+  return step === 3 ? (
     <div ref={containerRef} className="order-form-container">
-      <ConfirmationStep resetForm={resetForm} products={products} />
+      <FifthStep
+        orderInfo={orderInfo}
+        products={products}
+        prevStep={() => setStep(2)}
+      />
+    </div>
+  ) : step === 2 ? (
+    <div ref={containerRef} className="order-form-container">
+      <ConfirmationStep
+        resetForm={resetForm}
+        products={products}
+        onPreview={() => setStep(3)}
+      />
     </div>
   ) : (
     <div ref={containerRef} className="order-form-inner">
