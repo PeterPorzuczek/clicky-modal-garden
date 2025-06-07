@@ -1,6 +1,6 @@
 import React from 'react';
 import config from '../../config.js';
-import t from '../../i18n.js';
+import t, { localize } from '../../i18n.js';
 
 const getPrice = (pricing = {}, count) => {
   if (count >= 6) return pricing['10'] || 0;
@@ -24,7 +24,7 @@ export function calculateSummary(products = [], discount = 0) {
           if (option) {
             const price = getPrice(option.pricing, products.length);
             subtotal += price;
-            items.push({ label: option.name?.sv || option.name?.en, price });
+            items.push({ label: localize(option.name), price });
           }
         }
       });
@@ -34,12 +34,12 @@ export function calculateSummary(products = [], discount = 0) {
           if (defect) {
             const price = getPrice(defect.pricing, products.length);
             subtotal += price;
-            items.push({ label: defect.name?.sv || defect.name?.en, price });
+            items.push({ label: localize(defect.name), price });
           }
         }
       });
     }
-    return { id: p.id, type: category?.name?.sv || p.type, subtotal, items };
+    return { id: p.id, type: localize(category?.name) || p.type, subtotal, items };
   });
 
   const subTotal = productTotals.reduce((sum, p) => sum + p.subtotal, 0);

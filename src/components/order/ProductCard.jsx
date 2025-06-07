@@ -6,7 +6,7 @@ import DefectsSection from './DefectsSection';
 import EmployeeOwnershipFields from './EmployeeOwnershipFields';
 import GarmentDamageMarker from './damage-marker/GarmentDamageMarker';
 import config from '../../config.js';
-import t from '../../i18n.js';
+import t, { localize } from '../../i18n.js';
 
 export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
@@ -21,11 +21,11 @@ export default function ProductCard({ product, onUpdate }) {
   const DAMAGE_OPTIONS = category
     ? category.damages.map((d) => ({
         id: d.id,
-        label: d.name.sv || d.name.en,
+        label: localize(d.name),
         markedOnPicture: d.markedOnPicture,
         options: (d.options || []).map((opt) => ({
           id: opt.id,
-          label: opt.name.sv || opt.name.en,
+          label: localize(opt.name),
         })),
       }))
     : [];
@@ -34,7 +34,7 @@ export default function ProductCard({ product, onUpdate }) {
   const DEFECT_OPTIONS = category
     ? category.defects.map((d) => ({
         id: d.id,
-        label: d.name.sv || d.name.en,
+        label: localize(d.name),
         markedOnPicture: d.markedOnPicture,
       }))
     : [];

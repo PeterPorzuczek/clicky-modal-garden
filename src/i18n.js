@@ -13,4 +13,10 @@ export function t(path) {
   return obj?.[LANGUAGE] || obj?.sv || obj?.se || obj?.en || '';
 }
 
+export function localize(obj) {
+  if (!obj) return '';
+  if (typeof obj === 'string') return obj;
+  return obj[LANGUAGE] || obj.sv || obj.se || obj.en || '';
+}
+
 export default t;
