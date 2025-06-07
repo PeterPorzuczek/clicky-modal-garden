@@ -23,6 +23,7 @@ export default function ProductSelectionStep({
         damageCount: 0,
         damages: [],
         damageDetails: {},
+        damageLabels: {},
         otherIssues: {},
         defectDetails: {},
         defectLabels: {},

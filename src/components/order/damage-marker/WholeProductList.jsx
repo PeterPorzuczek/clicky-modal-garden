@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDamageLabel } from '../../../i18n.js';
+import { getDamageLabel as lookupDamageLabel } from '../../../i18n.js';
 
 function XIcon({ className = '', size = 14 }) {
   return (
@@ -28,6 +28,7 @@ export default function WholeProductList({
   isWholeProductMarker = () => false,
   removeMarker,
   removeDefectMarker,
+  getDamageLabel = (idx) => lookupDamageLabel(product.type, product.damages[idx]),
   getDefectLabel = (id) => id,
   markerSelectionOrder = {},
 }) {
@@ -46,7 +47,7 @@ export default function WholeProductList({
       <div className="flex flex-wrap gap-2">
         {wholeDamages.map((index) => {
           const order = markerSelectionOrder[`damage-${index}`] || 0;
-          const label = getDamageLabel(product.type, product.damages[index]);
+          const label = getDamageLabel(index);
           return (
             <div key={`whole-damage-${index}`} className="flex items-center bg-[#F2FCE2] border border-[#e1efd2] rounded-full px-3 py-1 text-xs">
               <span className="flex items-center">

@@ -10,6 +10,7 @@ const createEmptyProduct = (id) => ({
   damageCount: 0,
   damages: [],
   damageDetails: {},
+  damageLabels: {},
   otherIssues: {},
   defectDetails: {},
   defectLabels: {},

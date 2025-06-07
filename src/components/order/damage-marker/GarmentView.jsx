@@ -11,6 +11,7 @@ export default function GarmentView({
   damagePositions = {},
   defectPositions = {},
   productDamages = [],
+  damageLabels = {},
   defectLabels = {},
   markerSelectionOrder = {},
   onMarkerClick,
@@ -31,7 +32,7 @@ export default function GarmentView({
       isDamage: true,
       pos,
       order: markerSelectionOrder[`damage-${idx}`] || 0,
-      label: getDamageLabel(productType, productDamages[idx]),
+      label: damageLabels[idx] || getDamageLabel(productType, productDamages[idx]),
     })),
     ...Object.entries(defectPositions).map(([id, pos]) => ({
       id,

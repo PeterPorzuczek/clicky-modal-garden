@@ -3,7 +3,7 @@ import InstructionMessage from './InstructionMessage.jsx';
 import MarkerList from './MarkerList.jsx';
 import MarkerButtons from './MarkerButton.jsx';
 import GarmentView from './GarmentView.jsx';
-import { getDefectLabel } from '../../../i18n.js';
+import { getDefectLabel, getDamageLabel } from '../../../i18n.js';
 
 export default function GarmentDamageMarker({
   product,
@@ -25,6 +25,8 @@ export default function GarmentDamageMarker({
 
   const labelForDefect = (id) =>
     product.defectLabels?.[id] || getDefectLabel(product.type, id);
+  const labelForDamage = (idx) =>
+    product.damageLabels?.[idx] || getDamageLabel(product.type, product.damages[idx]);
 
   useEffect(() => {
     const dPos = {};
@@ -139,6 +141,7 @@ export default function GarmentDamageMarker({
           isWholeProductMarker={isWholeMarker}
           damageMarkable={damageMarkable}
           defectMarkable={defectMarkable}
+          getDamageLabel={labelForDamage}
           removeDamage={(e, idx) => {
             e.stopPropagation();
             setDamagePositions((p) => {
@@ -183,6 +186,7 @@ export default function GarmentDamageMarker({
         damagePositions={damagePositions}
         defectPositions={defectPositions}
         productDamages={product.damages}
+        damageLabels={product.damageLabels || {}}
         defectLabels={Object.fromEntries(
           Object.entries(product.otherIssues || {})
             .filter(([_, on]) => on)

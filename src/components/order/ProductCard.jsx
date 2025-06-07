@@ -52,6 +52,12 @@ export default function ProductCard({ product, onUpdate }) {
         (_, i) => currentDamages[i] || ''
       );
       updateField('damages', newDamages);
+
+      const newDamageLabels = { ...(product.damageLabels || {}) };
+      for (let i = product.damageCount; i < currentDamages.length; i++) {
+        delete newDamageLabels[i];
+      }
+      updateField('damageLabels', newDamageLabels);
     }
   }, [product.damageCount]);
 
@@ -116,14 +122,24 @@ export default function ProductCard({ product, onUpdate }) {
     arr[idx] = val;
     updateField('damages', arr);
 
+    const damageLabels = { ...(product.damageLabels || {}) };
+    if (val) {
+      const dmgOpt = DAMAGE_OPTIONS.find((d) => d.id === val);
+      if (dmgOpt) damageLabels[idx] = dmgOpt.label;
+      else delete damageLabels[idx];
+    } else {
+      delete damageLabels[idx];
+    }
+    updateField('damageLabels', damageLabels);
+
     const details = { ...(product.damageDetails || {}) };
     details[`damage-${idx}`] = { optionId: '' };
     updateField('damageDetails', details);
 
     // Update images based on the specific damage type selected
-    const damageObj = category?.damages.find((d) => d.id === val);
-    if (damageObj?.picturesToBeMarked?.length) {
-      const pics = damageObj.picturesToBeMarked;
+    const damageCfg = category?.damages.find((d) => d.id === val);
+    if (damageCfg?.picturesToBeMarked?.length) {
+      const pics = damageCfg.picturesToBeMarked;
       updateField('images', {
         front: pics[0] || null,
         back: pics[1] || pics[0] || null,
@@ -131,7 +147,7 @@ export default function ProductCard({ product, onUpdate }) {
         right: pics[3] || pics[0] || null,
       });
     }
-    if (damageObj?.markedOnPicture) {
+    if (damageCfg?.markedOnPicture) {
       setSelectedDefectId(undefined);
       setSelectedDamageIndex(idx);
       setMarkingOpen(true);
