@@ -134,6 +134,7 @@ export default function GarmentDamageMarker({
     <div className="gdm-container">
       <InstructionMessage productType={product.type} isMarked={isMarked} isSingleMarkMode={singleMode} />
       <div className="gdm-row">
+        <MarkerButtons onResetAllMarkers={resetAll} />
         <MarkerList
           product={product}
           damagePositions={damagePositions}
@@ -173,7 +174,6 @@ export default function GarmentDamageMarker({
           selectedDamageIndex={selectedDamageIndex}
           selectedDefectId={selectedDefectId}
         />
-        <MarkerButtons onResetAllMarkers={resetAll} />
       </div>
       <GarmentView
         productType={product.type}
