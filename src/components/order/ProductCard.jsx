@@ -39,20 +39,6 @@ export default function ProductCard({ product, onUpdate }) {
       }))
     : [];
 
-  useEffect(() => {
-    const dMark = {};
-    product.damages.forEach((id, idx) => {
-      const cfg = DAMAGE_OPTIONS.find((o) => o.id === id);
-      dMark[idx] = !!cfg?.markedOnPicture;
-    });
-    setDamageMarkable(dMark);
-
-    const defMark = {};
-    DEFECT_OPTIONS.forEach((opt) => {
-      defMark[opt.id] = !!opt.markedOnPicture;
-    });
-    setDefectMarkable(defMark);
-  }, [product.damages, category]);
 
   const updateField = (field, value) => {
     onUpdate && onUpdate(product.id, field, value);
@@ -84,6 +70,21 @@ export default function ProductCard({ product, onUpdate }) {
       }
     }
   }, [product.type, category]);
+
+  useEffect(() => {
+    const dMark = {};
+    product.damages.forEach((id, idx) => {
+      const cfg = DAMAGE_OPTIONS.find((o) => o.id === id);
+      dMark[idx] = !!cfg?.markedOnPicture;
+    });
+    setDamageMarkable(dMark);
+
+    const defMark = {};
+    DEFECT_OPTIONS.forEach((opt) => {
+      defMark[opt.id] = !!opt.markedOnPicture;
+    });
+    setDefectMarkable(defMark);
+  }, [product.damages, category]);
 
   const updateDamageType = (idx, val) => {
     const arr = [...(product.damages || [])];

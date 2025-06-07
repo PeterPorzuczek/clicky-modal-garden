@@ -1,5 +1,6 @@
 import React from 'react';
 import PriceSummary from '../order/PriceSummary.jsx';
+import t from '../../i18n.js';
 
 export default function OrderInformationStep({
   orderInfo = {},
@@ -26,33 +27,31 @@ export default function OrderInformationStep({
   return (
     <div>
       <div className="flex items-center mb-4">
-        <h2 className="text-xl md:text-2xl font-bold">
-          Beställ lagning & återställning av arbetskläder
-        </h2>
+        <h2 className="text-xl md:text-2xl font-bold">{t('thirdStep.title')}</h2>
       </div>
       <div className="flex mb-4">
         <button type="button" onClick={prevStep} className="text-[#262E85] hover:underline">
-          Tillbaka
+          {t('thirdStep.back')}
         </button>
       </div>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-3">Orderinformation</h3>
+          <h3 className="text-lg font-medium mb-3">{t('thirdStep.orderInformation')}</h3>
           <div className="space-y-4">
             <div>
-              <label className="font-medium block mb-2">Kundnummer</label>
+              <label className="font-medium block mb-2">{t('thirdStep.customerNumber')}</label>
               <input
-                placeholder="Ange kundnummer"
+                placeholder={t('thirdStep.enterCustomerNumber')}
                 value={orderInfo.customerNumber || ''}
                 onChange={(e) => onChange && onChange('customerNumber', e.target.value)}
               />
             </div>
             <div>
               <label className="font-medium block mb-2">
-                Företagsnamn <span className="text-red-500">*</span>
+                {t('thirdStep.companyName')} <span className="text-red-500">*</span>
               </label>
               <input
-                placeholder="Ange företagsnamn"
+                placeholder={t('thirdStep.enterCompanyName')}
                 value={orderInfo.companyName || ''}
                 onChange={(e) => onChange && onChange('companyName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('companyName')}
@@ -65,10 +64,10 @@ export default function OrderInformationStep({
             </div>
             <div>
               <label className="font-medium block mb-2">
-                Namn på beställare <span className="text-red-500">*</span>
+                {t('thirdStep.ordererName')} <span className="text-red-500">*</span>
               </label>
               <input
-                placeholder="Ange beställare"
+                placeholder={t('thirdStep.enterOrdererName')}
                 value={orderInfo.ordererName || ''}
                 onChange={(e) => onChange && onChange('ordererName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('ordererName')}
@@ -81,10 +80,10 @@ export default function OrderInformationStep({
             </div>
             <div>
               <label className="font-medium block mb-2">
-                Telefon <span className="text-red-500">*</span>
+                {t('thirdStep.phone')} <span className="text-red-500">*</span>
               </label>
               <input
-                placeholder="Ange telefon"
+                placeholder={t('thirdStep.enterPhone')}
                 value={orderInfo.phone || ''}
                 onChange={(e) => onChange && onChange('phone', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('phone')}
@@ -97,10 +96,10 @@ export default function OrderInformationStep({
             </div>
             <div>
               <label className="font-medium block mb-2">
-                E-post <span className="text-red-500">*</span>
+                {t('thirdStep.email')} <span className="text-red-500">*</span>
               </label>
               <input
-                placeholder="Ange e-post"
+                placeholder={t('thirdStep.enterEmail')}
                 value={orderInfo.email || ''}
                 onChange={(e) => onChange && onChange('email', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('email')}
@@ -115,14 +114,14 @@ export default function OrderInformationStep({
         </div>
 
         <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-3">Faktureringsadress</h3>
+          <h3 className="text-lg font-medium mb-3">{t('thirdStep.billingAddress')}</h3>
           <div className="space-y-4">
             <div>
               <label className="font-medium block mb-2">
-                Företagsnamn <span className="text-red-500">*</span>
+                {t('thirdStep.companyName')} <span className="text-red-500">*</span>
               </label>
               <input
-                placeholder="Ange företagsnamn"
+                placeholder={t('thirdStep.enterCompanyName')}
                 value={orderInfo.billingCompanyName || ''}
                 onChange={(e) => onChange && onChange('billingCompanyName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('billingCompanyName')}
@@ -135,10 +134,10 @@ export default function OrderInformationStep({
             </div>
             <div>
               <label className="font-medium block mb-2">
-                Gatuadress <span className="text-red-500">*</span>
+                {t('thirdStep.streetAddress')} <span className="text-red-500">*</span>
               </label>
               <input
-                placeholder="Ange gatuadress"
+                placeholder={t('thirdStep.enterStreetAddress')}
                 value={orderInfo.billingStreet || ''}
                 onChange={(e) => onChange && onChange('billingStreet', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('billingStreet')}
@@ -152,10 +151,10 @@ export default function OrderInformationStep({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="font-medium block mb-2">
-                  Postnummer <span className="text-red-500">*</span>
+                  {t('thirdStep.postalCode')} <span className="text-red-500">*</span>
                 </label>
                 <input
-                  placeholder="Ange postnummer"
+                  placeholder={t('thirdStep.enterPostalCode')}
                   value={orderInfo.billingZipCode || ''}
                   onChange={(e) => onChange && onChange('billingZipCode', e.target.value)}
                   onBlur={() => onFieldBlur && onFieldBlur('billingZipCode')}
@@ -168,10 +167,10 @@ export default function OrderInformationStep({
               </div>
               <div>
                 <label className="font-medium block mb-2">
-                  Ort <span className="text-red-500">*</span>
+                  {t('thirdStep.city')} <span className="text-red-500">*</span>
                 </label>
                 <input
-                  placeholder="Ange ort"
+                  placeholder={t('thirdStep.enterCity')}
                   value={orderInfo.billingCity || ''}
                   onChange={(e) => onChange && onChange('billingCity', e.target.value)}
                   onBlur={() => onFieldBlur && onFieldBlur('billingCity')}
@@ -186,7 +185,12 @@ export default function OrderInformationStep({
           </div>
         </div>
 
-        <PriceSummary products={products} />
+        {products.some(p => p.type) && (
+          <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
+            <h3 className="text-lg font-medium mb-3">{t('thirdStep.summary')}</h3>
+            <PriceSummary products={products} />
+          </div>
+        )}
 
         <div className="flex items-start space-x-2 mb-6">
           <input
@@ -198,7 +202,7 @@ export default function OrderInformationStep({
             className={fieldError('termsAccepted') ? 'border-red-500' : ''}
           />
           <label htmlFor="termsAccepted" className="text-sm cursor-pointer">
-            Jag accepterar villkoren <span className="text-red-500">*</span>
+            {t('thirdStep.acceptTerms')} <span className="text-red-500">*</span>
           </label>
         </div>
         {fieldError('termsAccepted') && (
@@ -206,7 +210,7 @@ export default function OrderInformationStep({
         )}
 
         <button type="submit" className="w-full rounded-full h-12 bg-[#262E85] hover:bg-[#1e2566]">
-          Skicka
+          {t('thirdStep.order')}
         </button>
       </form>
     </div>
