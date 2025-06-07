@@ -1,10 +1,10 @@
 import React from 'react';
 import config from '../../config.js';
-import t from '../../i18n.js';
+import t, { localize } from '../../i18n.js';
 
 const OPTIONS = config.productCategories.map((cat) => ({
   value: cat.id,
-  label: cat.name.sv || cat.name.en,
+  label: localize(cat.name),
 }));
 
 export default function ProductTypeSelector({ productType, onTypeChange, onOpenChange, error }) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import Badge from '../../../ui/Badge.jsx';
+import { getDamageLabel } from '../../../i18n.js';
 
 export default function GarmentView({
   productType,
@@ -10,6 +11,7 @@ export default function GarmentView({
   damagePositions = {},
   defectPositions = {},
   productDamages = [],
+  damageLabels = {},
   defectLabels = {},
   markerSelectionOrder = {},
   onMarkerClick,
@@ -30,7 +32,7 @@ export default function GarmentView({
       isDamage: true,
       pos,
       order: markerSelectionOrder[`damage-${idx}`] || 0,
-      label: productDamages[idx] === 'tear' ? 'Reva' : productDamages[idx],
+      label: damageLabels[idx] || getDamageLabel(productType, productDamages[idx]),
     })),
     ...Object.entries(defectPositions).map(([id, pos]) => ({
       id,

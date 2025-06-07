@@ -3,6 +3,7 @@ import InstructionMessage from './InstructionMessage.jsx';
 import MarkerList from './MarkerList.jsx';
 import MarkerButtons from './MarkerButton.jsx';
 import GarmentView from './GarmentView.jsx';
+import { getDefectLabel, getDamageLabel } from '../../../i18n.js';
 
 export default function GarmentDamageMarker({
   product,
@@ -21,6 +22,11 @@ export default function GarmentDamageMarker({
   const [defectPositions, setDefectPositions] = useState({});
   const [orderMap, setOrderMap] = useState({});
   const [nextOrder, setNextOrder] = useState(1);
+
+  const labelForDefect = (id) =>
+    product.defectLabels?.[id] || getDefectLabel(product.type, id);
+  const labelForDamage = (idx) =>
+    product.damageLabels?.[idx] || getDamageLabel(product.type, product.damages[idx]);
 
   useEffect(() => {
     const dPos = {};
@@ -135,6 +141,7 @@ export default function GarmentDamageMarker({
           isWholeProductMarker={isWholeMarker}
           damageMarkable={damageMarkable}
           defectMarkable={defectMarkable}
+          getDamageLabel={labelForDamage}
           removeDamage={(e, idx) => {
             e.stopPropagation();
             setDamagePositions((p) => {
@@ -159,7 +166,7 @@ export default function GarmentDamageMarker({
             });
             updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
           }}
-          getDefectLabel={(id) => product.defectLabels?.[id] || id}
+          getDefectLabel={labelForDefect}
           markerSelectionOrder={orderMap}
           onSelectDamage={onSelectDamage}
           onSelectDefect={onSelectDefect}
@@ -179,7 +186,12 @@ export default function GarmentDamageMarker({
         damagePositions={damagePositions}
         defectPositions={defectPositions}
         productDamages={product.damages}
-        defectLabels={product.defectLabels || {}}
+        damageLabels={product.damageLabels || {}}
+        defectLabels={Object.fromEntries(
+          Object.entries(product.otherIssues || {})
+            .filter(([_, on]) => on)
+            .map(([id]) => [id, labelForDefect(id)])
+        )}
         onMarkerDrag={() => {}}
         onMarkerClick={handleMarkerClick}
         markerSelectionOrder={orderMap}

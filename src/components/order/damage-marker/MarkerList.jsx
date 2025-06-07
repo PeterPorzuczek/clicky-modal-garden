@@ -20,6 +20,8 @@ function XIcon({ className = '', size = 14 }) {
   );
 }
 
+import { getDamageLabel as lookupDamageLabel } from '../../../i18n.js';
+
 export default function MarkerList({
   product,
   damagePositions = {},
@@ -28,6 +30,8 @@ export default function MarkerList({
   removeDamage,
   removeDefect,
   getDefectLabel = (id) => id,
+  getDamageLabel = (idx) =>
+    product.damageLabels?.[idx] || lookupDamageLabel(product.type, product.damages[idx]),
   isWholeProductMarker = () => false,
   onSelectDamage,
   onSelectDefect,
@@ -42,7 +46,7 @@ export default function MarkerList({
       type: 'damage',
       id: idx,
       order: markerSelectionOrder[`damage-${idx}`],
-      label: d === 'tear' ? 'Reva' : d,
+      label: getDamageLabel(idx),
       pos: damagePositions[idx],
       markable: damageMarkable[idx],
     }))
