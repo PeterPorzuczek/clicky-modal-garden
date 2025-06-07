@@ -55,21 +55,40 @@ export default function ProductCard({ product, onUpdate }) {
     }
   }, [product.damageCount]);
 
-  // This useEffect ensures the correct images are loaded when the product type changes.
+  // Ensure default images are only set if none are saved for this product.
   useEffect(() => {
-    if (product.type && category) {
-      const firstDamageWithImages = category.damages.find(d => d.picturesToBeMarked && d.picturesToBeMarked.length > 0);
-      if(firstDamageWithImages) {
-          const pics = firstDamageWithImages.picturesToBeMarked;
-          updateField('images', {
-              front: pics[0] || null,
-              back: pics[1] || pics[0] || null,
-              left: pics[2] || pics[0] || null,
-              right: pics[3] || pics[0] || null,
-          });
+    if (product.type && category && !product.images) {
+      const firstDamageWithImages = category.damages.find(
+        (d) => d.picturesToBeMarked && d.picturesToBeMarked.length > 0
+      );
+      if (firstDamageWithImages) {
+        const pics = firstDamageWithImages.picturesToBeMarked;
+        updateField('images', {
+          front: pics[0] || null,
+          back: pics[1] || pics[0] || null,
+          left: pics[2] || pics[0] || null,
+          right: pics[3] || pics[0] || null,
+        });
       }
     }
-  }, [product.type, category]);
+  }, [product.type, category, product.images]);
+
+  // When returning to this step, reopen the marker editor if there are
+  // existing markings stored in the product details so they remain editable.
+  useEffect(() => {
+    const hasDamageMarks = product.damages?.some(
+      (_, idx) => product.damageDetails?.[`damage-${idx}`]?.position
+    );
+    const hasDefectMarks = Object.entries(product.otherIssues || {}).some(
+      ([id, active]) =>
+        active && product.defectDetails?.[id]?.position !== undefined
+    );
+    if ((hasDamageMarks || hasDefectMarks) && !markingOpen) {
+      setMarkingOpen(true);
+    }
+    // intentionally run only on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const dMark = {};
