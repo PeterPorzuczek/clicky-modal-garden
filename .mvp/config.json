@@ -471,6 +471,11 @@
         "se": "Ytterligare beställning",
         "no": "Ytterligere bestilling"
       },
+      "previewEmail": {
+        "en": "Preview EMAIL",
+        "se": "Förhandsgranskning E-POST",
+        "no": "Forhåndsgranskning E-POST"
+      },
       "close": {
         "en": "Close",
         "se": "Stäng",
