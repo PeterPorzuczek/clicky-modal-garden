@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge } from '../ui/Badge.jsx';
 import { getDamageLabel } from '../../../setup/i18n.js';
 import WholeProductList from './WholeProductList.jsx';
+import t from '../../../setup/i18n.js';
 
 export default function GarmentView({
   productType,
@@ -61,7 +62,7 @@ export default function GarmentView({
           />
         ) : (
           <div className="gv-placeholder">
-            Ingen bild tillg\u00E4nglig
+            {t('secondStep.noImageAvailable')}
           </div>
         )}
         {markers.map((m) => (

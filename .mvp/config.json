@@ -1,5 +1,17 @@
 {
   "texts": {
+    "validation": {
+      "required": {
+        "en": "This field is required",
+        "se": "Obligatorisk",
+        "no": "Dette feltet er obligatoriskt"
+      },
+      "mustAccept": {
+        "en": "Must be accepted",
+        "se": "Måste accepteras",
+        "no": "Må aksepteres"
+      }
+    },
     "trigger": {
       "priamry": {
         "en": "Order repair & restoration",
@@ -159,6 +171,41 @@
         "en": "Product belongs to employee",
         "se": "Produkten tillhör anställd",
         "no": "Produktet tilhører ansatt"
+      },
+      "clearAllMarkers": {
+        "en": "Clear all markers",
+        "se": "Rensa alla markeringar",
+        "no": "Fjern alle markører"
+      },
+      "employeeName": {
+        "en": "Employee name",
+        "se": "Namn på anställd",
+        "no": "Ansattes navn"
+      },
+      "department": {
+        "en": "Department",
+        "se": "Avdelning",
+        "no": "Avdeling"
+      },
+      "selectedMarkers": {
+        "en": "Selected markers:",
+        "se": "Valda markeringar:",
+        "no": "Valgte markører:"
+      },
+      "wholeProductMarkers": {
+        "en": "Whole product markers:",
+        "se": "Helproduktmarkeringar:",
+        "no": "Hele produktmarkører:"
+      },
+      "wholeProduct": {
+        "en": "(whole product)",
+        "se": "(hela produkten)",
+        "no": "(hele produktet)"
+      },
+      "noImageAvailable": {
+        "en": "No image available",
+        "se": "Ingen bild tillgänglig",
+        "no": "Ingen bilde tilgjengelig"
       },
       "summary": {
         "en": "Summary",

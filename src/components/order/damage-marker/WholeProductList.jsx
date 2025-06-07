@@ -1,5 +1,6 @@
 import React from 'react';
 import { getDamageLabel as lookupDamageLabel } from '../../../setup/i18n.js';
+import t from '../../../setup/i18n.js';
 
 function XIcon({ className = '', size = 14 }) {
   return (
@@ -43,7 +44,7 @@ export default function WholeProductList({
 
   return (
     <div className="whole-list">
-      <h5 className="whole-title">Helproduktmarkeringar:</h5>
+              <h5 className="whole-title">{t('secondStep.wholeProductMarkers')}</h5>
       <div className="whole-items">
         {wholeDamages.map((index) => {
           const order = markerSelectionOrder[`damage-${index}`] || 0;
@@ -55,7 +56,7 @@ export default function WholeProductList({
                   {order}
                 </span>
                 <span className="label-text">{label}</span>
-                <span className="marker-whole">(hela produkten)</span>
+                <span className="marker-whole">{t('secondStep.wholeProduct')}</span>
               </span>
               <button type="button" onClick={(e) => removeMarker && removeMarker(e, index)} className="marker-remove">
                 <XIcon size={14} />
@@ -72,7 +73,7 @@ export default function WholeProductList({
                   {order}
                 </span>
                 <span className="label-text">{getDefectLabel(id)}</span>
-                <span className="marker-whole">(hela produkten)</span>
+                <span className="marker-whole">{t('secondStep.wholeProduct')}</span>
               </span>
               <button type="button" onClick={(e) => removeDefectMarker && removeDefectMarker(e, id)} className="marker-remove">
                 <XIcon size={14} />

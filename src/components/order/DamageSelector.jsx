@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomSelect from './ui/CustomSelect.jsx';
+import t from '../../setup/i18n.js';
 
 export default function DamageSelector({
   index = 0,
@@ -36,13 +37,13 @@ export default function DamageSelector({
         <div>
           <div className="damage-label-row">
             <label className="damage-label">
-              Skada {index + 1} <span className="text-red">*</span>
+              {t('secondStep.damage')} {index + 1} <span className="text-red">*</span>
             </label>
           </div>
           <CustomSelect
             value={damage}
             onValueChange={handleDamageChange}
-            placeholder="Välj typ av skada"
+            placeholder={t('secondStep.typeOfDamage')}
             options={damageSelectOptions}
             error={!!damageError}
           />
@@ -51,12 +52,12 @@ export default function DamageSelector({
         {optionOptions.length > 0 && (
           <div>
             <label className="damage-label">
-              Alternativ <span className="text-red">*</span>
+              {t('firstStep.select')} <span className="text-red">*</span>
             </label>
             <CustomSelect
               value={option}
               onValueChange={handleOptionChange}
-              placeholder="Välj"
+              placeholder={t('firstStep.select')}
               options={optionSelectOptions}
               error={!!optionError}
             />

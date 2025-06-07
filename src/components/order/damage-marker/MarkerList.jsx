@@ -21,6 +21,7 @@ function XIcon({ className = '', size = 14 }) {
 }
 
 import { getDamageLabel as lookupDamageLabel } from '../../../setup/i18n.js';
+import t from '../../../setup/i18n.js';
 
 export default function MarkerList({
   product,
@@ -76,7 +77,7 @@ export default function MarkerList({
 
   return (
     <div className="marker-list">
-      <h5 className="marker-list-title">Valda markeringar:</h5>
+              <h5 className="marker-list-title">{t('secondStep.selectedMarkers')}</h5>
       <div className="marker-list-items">
         {entries.map((e) => {
           const markable = !!e.markable;
@@ -106,7 +107,7 @@ export default function MarkerList({
                 </span>
                 <span className="label-text">{e.label}</span>
                 {marked && isWholeProductMarker(e.pos) && (
-                  <span className="marker-whole">(hela produkten)</span>
+                                      <span className="marker-whole">{t('secondStep.wholeProduct')}</span>
                 )}
               </span>
               {marked && (

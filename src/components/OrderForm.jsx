@@ -3,6 +3,7 @@ import ProductSelectionStep from './order/ProductSelectionStep.jsx';
 import OrderInformationStep from './order/OrderInformationStep.jsx';
 import ConfirmationStep from './order/ConfirmationStep.jsx';
 import config from '../setup/config.js';
+import t from '../setup/i18n.js';
 
 const createEmptyProduct = (id) => ({
   id,
@@ -41,6 +42,13 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
     }
   }, [step]);
 
+  // Update orderInfo when prefilledData changes
+  useEffect(() => {
+    if (prefilledData) {
+      setOrderInfo(prefilledData);
+    }
+  }, [prefilledData]);
+
   const onFieldBlur = (name) => {
     setTouchedFields((prev) => ({ ...prev, [name]: true }));
   };
@@ -60,7 +68,7 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
     let valid = true;
     setProducts((prevProducts) =>
       prevProducts.map((p) => {
-        const typeError = p.type ? undefined : 'Obligatoriskt';
+        const typeError = p.type ? undefined : t('validation.required');
         if (!p.type) valid = false;
 
         const damageErrors = {};
@@ -68,26 +76,26 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
         let markerError;
         const category = config.productCategories.find((c) => c.id === p.type);
         if (p.damageCount <= 0) {
-          damageErrors[0] = 'Obligatoriskt';
+          damageErrors[0] = t('validation.required');
           valid = false;
         } else {
           for (let i = 0; i < p.damageCount; i++) {
             if (!p.damages?.[i]) {
-              damageErrors[i] = 'Obligatoriskt';
+              damageErrors[i] = t('validation.required');
               valid = false;
             } else {
               const damage = category?.damages.find((d) => d.id === p.damages[i]);
               if (damage?.options?.length) {
                 const opt = p.damageDetails?.[`damage-${i}`]?.optionId;
                 if (!opt) {
-                  damageOptionErrors[i] = 'Obligatoriskt';
+                  damageOptionErrors[i] = t('validation.required');
                   valid = false;
                 }
               }
               if (damage?.markedOnPicture) {
                 const pos = p.damageDetails?.[`damage-${i}`]?.position;
                 if (!pos) {
-                  markerError = 'Obligatoriskt';
+                  markerError = t('validation.required');
                   valid = false;
                 }
               }
@@ -102,7 +110,7 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
               if (defect?.markedOnPicture) {
                 const pos = p.defectDetails?.[id]?.position;
                 if (!pos) {
-                  markerError = 'Obligatoriskt';
+                  markerError = t('validation.required');
                   valid = false;
                 }
               }
@@ -127,26 +135,26 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
       if (!valid) {
         setProducts((prevProducts) =>
           prevProducts.map((p) => {
-            const typeError = p.type ? undefined : 'Obligatoriskt';
+            const typeError = p.type ? undefined : t('validation.required');
             const damageErrors = {};
             const damageOptionErrors = {};
             let markerError;
             if (p.damageCount <= 0) {
-              damageErrors[0] = 'Obligatoriskt';
+              damageErrors[0] = t('validation.required');
             } else {
               for (let i = 0; i < p.damageCount; i++) {
                 if (!p.damages?.[i]) {
-                  damageErrors[i] = 'Obligatoriskt';
+                  damageErrors[i] = t('validation.required');
                 } else {
                   const category = config.productCategories.find((c) => c.id === p.type);
                   const damage = category?.damages.find((d) => d.id === p.damages[i]);
                   if (damage?.options?.length) {
                     const opt = p.damageDetails?.[`damage-${i}`]?.optionId;
-                    if (!opt) damageOptionErrors[i] = 'Obligatoriskt';
+                    if (!opt) damageOptionErrors[i] = t('validation.required');
                   }
                   if (damage?.markedOnPicture) {
                     const pos = p.damageDetails?.[`damage-${i}`]?.position;
-                    if (!pos) markerError = 'Obligatoriskt';
+                    if (!pos) markerError = t('validation.required');
                   }
                 }
               }
@@ -159,7 +167,7 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
                     const defect = category.defects.find((d) => d.id === id);
                     if (defect?.markedOnPicture) {
                       const pos = p.defectDetails?.[id]?.position;
-                      if (!pos) markerError = 'Obligatoriskt';
+                      if (!pos) markerError = t('validation.required');
                     }
                   }
                 });
@@ -186,9 +194,9 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
     ];
     const errors = {};
     required.forEach((key) => {
-      if (!orderInfo[key]) errors[key] = 'Obligatoriskt';
+      if (!orderInfo[key]) errors[key] = t('validation.required');
     });
-    if (!termsAccepted) errors.termsAccepted = 'Måste accepteras';
+    if (!termsAccepted) errors.termsAccepted = t('validation.mustAccept');
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };

@@ -1,4 +1,5 @@
 import React from 'react';
+import t from '../../setup/i18n.js';
 
 export default function EmployeeOwnershipFields({ product, onUpdate, onFieldBlur, touchedFields = {}, validationErrors = [] }) {
   const fieldPrefix = `product-${product.id}-`;
@@ -19,13 +20,13 @@ export default function EmployeeOwnershipFields({ product, onUpdate, onFieldBlur
           onChange={(e) => onUpdate('isEmployeeOwned', e.target.checked)}
         />
         <label htmlFor={`${fieldPrefix}isEmployeeOwned`} className="employee-label-checkbox">
-          Plagg tillhör anställd
+          {t('secondStep.belongsToEmployee')}
         </label>
       </div>
       {product.isEmployeeOwned && (
         <div className="employee-fields">
           <div>
-            <label htmlFor={`${fieldPrefix}employeeName`} className="employee-label">Namn på anställd</label>
+            <label htmlFor={`${fieldPrefix}employeeName`} className="employee-label">{t('secondStep.employeeName')}</label>
             <input
               id={`${fieldPrefix}employeeName`}
               value={product.employeeName}
@@ -39,7 +40,7 @@ export default function EmployeeOwnershipFields({ product, onUpdate, onFieldBlur
             )}
           </div>
           <div>
-            <label htmlFor={`${fieldPrefix}employeeDepartment`} className="employee-label">Avdelning</label>
+            <label htmlFor={`${fieldPrefix}employeeDepartment`} className="employee-label">{t('secondStep.department')}</label>
             <input
               id={`${fieldPrefix}employeeDepartment`}
               value={product.employeeDepartment}

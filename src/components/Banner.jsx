@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from './order/ui/Dialog.jsx';
 import '../styles/banner.css';
 import OrderForm from './OrderForm';
+import t from '../setup/i18n.js';
 
 export const DEMO_CUSTOMER = {
   customerNumber: 'CUS12345',
@@ -49,14 +50,14 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
   return (
     <div className="banner-wrapper">
       <div className="banner" onClick={handleBannerClick}>
-        <h2 className="banner-title">Beställ lagning & återställning</h2>
-        <p className="banner-text">Som icke inloggad kund</p>
+        <h2 className="banner-title">{t('trigger.priamry')}</h2>
+        <p className="banner-text">{t('trigger.secondary')}</p>
       </div>
       <Dialog open={open} onOpenChange={handleChange}>
         <DialogContent className="dialog-content">
-          <DialogTitle className="sr-only">Beställ lagning & återställning</DialogTitle>
+          <DialogTitle className="sr-only">{t('trigger.priamry')}</DialogTitle>
           <DialogDescription className="sr-only">
-            Formulär för att beställa lagning och återställning av arbetskläder
+            {t('firstStep.instruction')}
           </DialogDescription>
           <div className="form-container" ref={formContainerRef}>
             <OrderForm prefilledData={prefilledData} scrollRef={formContainerRef} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import t from '../../../setup/i18n.js';
 
 function RotateCcwIcon({ className = '', size = 14 }) {
   return (
@@ -29,7 +30,7 @@ export default function MarkerButtons({ onResetAllMarkers }) {
         onClick={onResetAllMarkers}
       >
         <RotateCcwIcon className="icon" />
-        Rensa alla markeringar
+        {t('secondStep.clearAllMarkers')}
       </button>
     </div>
   );

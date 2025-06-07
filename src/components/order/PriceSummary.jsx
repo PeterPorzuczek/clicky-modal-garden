@@ -57,7 +57,7 @@ export default function PriceSummary({ products = [], discount = 0 }) {
     <div className="price-summary">
       {productTotals.map((p) => (
         <div key={p.id} className="price-product">
-          <div className="price-product-heading">Produkt #{p.id}: {p.type || '-'}</div>
+                      <div className="price-product-heading">{t('firstStep.product')} #{p.id}: {p.type || '-'}</div>
           <div className="price-product-items">
             {p.items.map((item, idx) => (
               <div key={idx} className="price-item">
