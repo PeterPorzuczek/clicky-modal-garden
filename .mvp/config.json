@@ -476,16 +476,23 @@
         "se": "Förhandsgranskning E-POST",
         "no": "Forhåndsgranskning E-POST"
       },
-      "sendEmail": {
-        "en": "Send EMAIL",
-        "se": "Skicka E-POST",
-        "no": "Send E-POST"
-      },
       "close": {
         "en": "Close",
         "se": "Stäng",
         "no": "Lukk"
       }
+    }
+  },
+  "fifthStep": {
+    "back": {
+      "en": "Back",
+      "se": "Tillbaka",
+      "no": "Tilbake"
+    },
+    "sendEmail": {
+      "en": "Send EMAIL",
+      "se": "Skicka E-POST",
+      "no": "Send E-POST"
     }
   },
   "productCategories": [
