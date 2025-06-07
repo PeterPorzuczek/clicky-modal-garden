@@ -16,6 +16,7 @@ const createEmptyProduct = (id) => ({
   isEmployeeOwned: false,
   employeeName: '',
   employeeDepartment: '',
+  defectError: undefined,
 });
 
 export default function OrderForm({ prefilledData = null }) {
@@ -48,6 +49,9 @@ export default function OrderForm({ prefilledData = null }) {
       prevProducts.map((p) => {
         const error = p.type ? undefined : 'Obligatoriskt';
         if (!p.type) valid = false;
+        const hasDefects = Object.values(p.otherIssues || {}).some(Boolean);
+        const defectError = hasDefects ? undefined : 'Obligatoriskt';
+        if (!hasDefects) valid = false;
         return {
           ...p,
           damages: [...(p.damages || [])],
@@ -55,12 +59,15 @@ export default function OrderForm({ prefilledData = null }) {
           otherIssues: { ...(p.otherIssues || {}) },
           defectDetails: { ...(p.defectDetails || {}) },
           typeError: error,
+          defectError,
         };
       })
     );
-    
+
     products.forEach((p) => {
         if (!p.type) valid = false;
+        const hasDefects = Object.values(p.otherIssues || {}).some(Boolean);
+        if (!hasDefects) valid = false;
     });
 
     if (!valid) {
@@ -68,6 +75,9 @@ export default function OrderForm({ prefilledData = null }) {
         prevProducts.map((p) => ({
           ...p,
           typeError: p.type ? undefined : 'Obligatoriskt',
+          defectError: Object.values(p.otherIssues || {}).some(Boolean)
+            ? undefined
+            : 'Obligatoriskt',
         }))
       );
     }

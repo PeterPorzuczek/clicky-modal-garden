@@ -181,6 +181,7 @@ export default function ProductCard({ product, onUpdate }) {
             issues={DEFECT_OPTIONS}
             selected={product.otherIssues || {}}
             onToggle={toggleDefect}
+            error={product.defectError}
           />
         )}
         <EmployeeOwnershipFields

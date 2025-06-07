@@ -1,5 +1,6 @@
 import React from 'react';
 import config from '../../config.js';
+import t from '../../i18n.js';
 
 const getPrice = (pricing = {}, count) => {
   if (count >= 6) return pricing['10'] || 0;
@@ -13,23 +14,32 @@ export default function PriceSummary({ products = [], discount = 0 }) {
   const productTotals = products.map((p) => {
     const category = config.productCategories.find((c) => c.id === p.type);
     let subtotal = 0;
+    const items = [];
     if (category) {
       p.damages?.forEach((damageId, idx) => {
         const damage = category.damages.find((d) => d.id === damageId);
         if (damage) {
           const optionId = p.damageDetails?.[`damage-${idx}`]?.optionId;
           const option = optionId ? damage.options.find((o) => o.id === optionId) : damage;
-          if (option) subtotal += getPrice(option.pricing, products.length);
+          if (option) {
+            const price = getPrice(option.pricing, products.length);
+            subtotal += price;
+            items.push({ label: option.name?.sv || option.name?.en, price });
+          }
         }
       });
       Object.entries(p.otherIssues || {}).forEach(([id, active]) => {
         if (active) {
           const defect = category.defects.find((d) => d.id === id);
-          if (defect) subtotal += getPrice(defect.pricing, products.length);
+          if (defect) {
+            const price = getPrice(defect.pricing, products.length);
+            subtotal += price;
+            items.push({ label: defect.name?.sv || defect.name?.en, price });
+          }
         }
       });
     }
-    return { id: p.id, type: category?.name?.sv || p.type, subtotal };
+    return { id: p.id, type: category?.name?.sv || p.type, subtotal, items };
   });
 
   const subTotal = productTotals.reduce((sum, p) => sum + p.subtotal, 0);
@@ -41,6 +51,14 @@ export default function PriceSummary({ products = [], discount = 0 }) {
       {productTotals.map((p) => (
         <div key={p.id} className="border border-gray-200 rounded-md p-3 bg-white/0">
           <div className="font-medium border-b pb-2 mb-2">Produkt #{p.id}: {p.type || '-'}</div>
+          <div className="space-y-1 text-sm">
+            {p.items.map((item, idx) => (
+              <div key={idx} className="flex justify-between">
+                <span>{item.label}</span>
+                <span>{item.price} kr</span>
+              </div>
+            ))}
+          </div>
           <div className="flex justify-between font-medium mt-2 pt-2 border-t border-gray-200">
             <span>Delsumma</span>
             <span>{p.subtotal} kr</span>
@@ -58,7 +76,7 @@ export default function PriceSummary({ products = [], discount = 0 }) {
         </div>
       )}
       <div className="flex justify-between font-bold text-lg pt-2 mt-2 border-t border-gray-300">
-        <span>Totalt</span>
+        <span>{t('firstStep.total')}</span>
         <span>{total} kr</span>
       </div>
     </div>

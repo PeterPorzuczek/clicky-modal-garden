@@ -29,6 +29,7 @@ export default function ProductSelectionStep({
         isEmployeeOwned: false,
         employeeName: '',
         employeeDepartment: '',
+        defectError: undefined,
       },
     ];
     setProducts(newProducts);
@@ -65,7 +66,7 @@ export default function ProductSelectionStep({
       ))}
       {products.length > 0 && (
         <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg mb-6">
-          <h3 className="text-lg font-medium mb-3">Summering</h3>
+          <h3 className="text-lg font-medium mb-3">{t('firstStep.summary')}</h3>
           <PriceSummary products={products} />
         </div>
       )}
