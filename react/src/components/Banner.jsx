@@ -9,7 +9,7 @@ export const DEMO_CUSTOMER = {
   companyName: 'Demo AB',
   ordererName: 'Anna Andersson',
   phone: '070-123 45 67',
-  email: 'piotr.porzuczek@gmail.com',
+  email: 'piotr.porzuczek@lyreco.com',
   billingCompanyName: 'Demo AB',
   billingStreet: 'Storgatan 1',
   billingZipCode: '12345',
