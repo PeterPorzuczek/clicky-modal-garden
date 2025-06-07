@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ProductSelectionStep from './order/ProductSelectionStep.jsx';
 import OrderInformationStep from './order/OrderInformationStep.jsx';
 import ConfirmationStep from './order/ConfirmationStep.jsx';
-import FifthStep from './order/FifthStep.jsx';
+import EmailPreviewStep from './order/EmailPreviewStep.jsx';
 import config from '../setup/config.js';
 import t from '../setup/i18n.js';
 
@@ -220,7 +220,7 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
 
   return step === 3 ? (
     <div ref={containerRef} className="order-form-container">
-      <FifthStep
+      <EmailPreviewStep
         orderInfo={orderInfo}
         products={products}
         prevStep={() => setStep(2)}
