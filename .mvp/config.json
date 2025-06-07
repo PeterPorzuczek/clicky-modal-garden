@@ -1972,7 +1972,7 @@
       ]
     }
   ],
-  "email_template": {
+  "emailTemplate": {
     "header": {
       "company_name": {
         "sv": "Lyreco Sverige",
