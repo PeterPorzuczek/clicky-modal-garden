@@ -21,8 +21,8 @@ const createEmptyProduct = (id) => ({
 export default function OrderForm({ prefilledData = null }) {
   const containerRef = useRef(null);
   const [step, setStep] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-  const [products, setProducts] = useState([createEmptyProduct(1)]);
+  const [quantity, setQuantity] = useState(0);
+  const [products, setProducts] = useState([]);
   const [orderInfo, setOrderInfo] = useState(prefilledData || {});
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
@@ -34,8 +34,8 @@ export default function OrderForm({ prefilledData = null }) {
 
   const resetForm = () => {
     setStep(0);
-    setQuantity(1);
-    setProducts([createEmptyProduct(1)]);
+    setQuantity(0);
+    setProducts([]);
     setOrderInfo(prefilledData || {});
     setTermsAccepted(false);
     setTouchedFields({});

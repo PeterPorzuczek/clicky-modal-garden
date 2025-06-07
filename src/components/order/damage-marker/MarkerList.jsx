@@ -36,15 +36,17 @@ export default function MarkerList({
   damageMarkable = {},
   defectMarkable = {},
 }) {
-  const damageEntries = product.damages.map((d, idx) => ({
-    key: `damage-${idx}`,
-    type: 'damage',
-    id: idx,
-    order: markerSelectionOrder[`damage-${idx}`],
-    label: d === 'tear' ? 'Reva' : d,
-    pos: damagePositions[idx],
-    markable: damageMarkable[idx],
-  }));
+  const damageEntries = product.damages
+    .map((d, idx) => ({
+      key: `damage-${idx}`,
+      type: 'damage',
+      id: idx,
+      order: markerSelectionOrder[`damage-${idx}`],
+      label: d === 'tear' ? 'Reva' : d,
+      pos: damagePositions[idx],
+      markable: damageMarkable[idx],
+    }))
+    .filter((e) => e.markable);
 
   const defectEntries = Object.entries(product.otherIssues || {})
     .filter(([, on]) => on)
@@ -56,7 +58,8 @@ export default function MarkerList({
       label: getDefectLabel(id),
       pos: defectPositions[id],
       markable: defectMarkable[id],
-    }));
+    }))
+    .filter((e) => e.markable);
 
   const entries = [...damageEntries, ...defectEntries].sort((a, b) => {
     const orderA = a.order ?? Infinity;

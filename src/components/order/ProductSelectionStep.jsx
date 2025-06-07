@@ -35,7 +35,7 @@ export default function ProductSelectionStep({
   };
 
   const removeProduct = () => {
-    if (quantity > 1) {
+    if (quantity > 0) {
       setQuantity(quantity - 1);
       const newProducts = products.slice(0, -1);
       setProducts(newProducts);

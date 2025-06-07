@@ -45,9 +45,15 @@ export default function GarmentView({
     <div className="mt-4 border rounded-lg p-2 bg-white">
       <div className="relative mt-2" ref={containerRef} onClick={handleClick} style={{ cursor: selectedForMarking ? 'crosshair' : 'default' }}>
         {imageUrl ? (
-          <img src={imageUrl} alt={productType} className="w-full h-auto object-contain" />
+          <img
+            src={imageUrl}
+            alt={productType}
+            className="w-full h-auto object-contain max-h-[250px]"
+          />
         ) : (
-          <div className="w-full aspect-[4/3] flex items-center justify-center bg-gray-100 text-gray-500">Ingen bild tillg\u00E4nglig</div>
+          <div className="w-full aspect-[4/3] max-h-[250px] flex items-center justify-center bg-gray-100 text-gray-500">
+            Ingen bild tillg\u00E4nglig
+          </div>
         )}
         {markers.map((m) => (
           <div

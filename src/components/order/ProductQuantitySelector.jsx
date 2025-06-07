@@ -20,7 +20,7 @@ function PlusIcon({className}) {
 
 export default function ProductQuantitySelector({ quantity, onIncrease, onDecrease }) {
   const decrease = () => {
-    if (quantity > 1) onDecrease();
+    if (quantity > 0) onDecrease();
   };
   const increase = () => {
     onIncrease();
@@ -33,7 +33,7 @@ export default function ProductQuantitySelector({ quantity, onIncrease, onDecrea
         </label>
       </div>
       <div className="flex items-center justify-between w-full max-w-md h-14 rounded-lg border border-input overflow-hidden bg-white">
-        <button type="button" className="flex items-center justify-center h-full px-6 cursor-pointer text-gray-500 hover:bg-gray-50" onClick={decrease} disabled={quantity <= 1}>
+        <button type="button" className="flex items-center justify-center h-full px-6 cursor-pointer text-gray-500 hover:bg-gray-50" onClick={decrease} disabled={quantity <= 0}>
           <MinusIcon className="h-5 w-5" />
         </button>
         <span className="text-xl font-medium flex-1 text-center">{quantity}</span>
