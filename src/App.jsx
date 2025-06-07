@@ -22,6 +22,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <Banner prefilledData={prefilledData} />
       <div className="app-controls">
         <button className="btn-secondary" onClick={handleClearData}>
           Clear data
@@ -37,7 +38,6 @@ export default function App() {
           </label>
         </div>
       </div>
-      <Banner prefilledData={prefilledData} />
     </div>
   );
 }

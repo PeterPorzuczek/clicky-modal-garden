@@ -67,23 +67,23 @@ export default function Banner({ prefilledData = null, isOpen, onOpenChange }) {
       
       <div className="banner">
         <div className="banner-content">
-        <div className="language-selector">
-        <span className="language-label">{t('trigger.language')}</span>
-        <div className="language-options">
-          {languages.map((lang) => (
-            <button
-              key={lang.code}
-              className={`language-option ${currentLanguage === lang.code ? 'active' : ''}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleLanguageChange(lang.code);
-              }}
-            >
-              {lang.label}
-            </button>
-          ))}
-        </div>
-      </div>
+          <div className="language-selector">
+            <span className="language-label">{t('trigger.language')}</span>
+            <div className="language-options">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  className={`language-option ${currentLanguage === lang.code ? 'active' : ''}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLanguageChange(lang.code);
+                  }}
+                >
+                  {lang.label}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="banner-header">
           <div className="banner-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
