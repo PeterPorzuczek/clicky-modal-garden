@@ -55,21 +55,23 @@ export default function ProductCard({ product, onUpdate }) {
     }
   }, [product.damageCount]);
 
-  // This useEffect ensures the correct images are loaded when the product type changes.
+  // Ensure default images are only set if none are saved for this product.
   useEffect(() => {
-    if (product.type && category) {
-      const firstDamageWithImages = category.damages.find(d => d.picturesToBeMarked && d.picturesToBeMarked.length > 0);
-      if(firstDamageWithImages) {
-          const pics = firstDamageWithImages.picturesToBeMarked;
-          updateField('images', {
-              front: pics[0] || null,
-              back: pics[1] || pics[0] || null,
-              left: pics[2] || pics[0] || null,
-              right: pics[3] || pics[0] || null,
-          });
+    if (product.type && category && !product.images) {
+      const firstDamageWithImages = category.damages.find(
+        (d) => d.picturesToBeMarked && d.picturesToBeMarked.length > 0
+      );
+      if (firstDamageWithImages) {
+        const pics = firstDamageWithImages.picturesToBeMarked;
+        updateField('images', {
+          front: pics[0] || null,
+          back: pics[1] || pics[0] || null,
+          left: pics[2] || pics[0] || null,
+          right: pics[3] || pics[0] || null,
+        });
       }
     }
-  }, [product.type, category]);
+  }, [product.type, category, product.images]);
 
   useEffect(() => {
     const dMark = {};
