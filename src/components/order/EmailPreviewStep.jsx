@@ -4,40 +4,39 @@ import t, { localize } from '../../setup/i18n.js';
 import { calculateSummary } from './PriceSummary.jsx';
 
 export function generateEmailHtml(orderInfo = {}, products = []) {
-  const { productTotals, subTotal, total } = calculateSummary(products);
+  const { subTotal, total } = calculateSummary(products);
   const et = config.emailTemplate || {};
   const l = localize;
 
-  // Create product items using calculated totals but merge with original product data
-  const productItemsHtml = productTotals
-    .map((p) => {
-      // Find original product to get additional info like employee, artikelNumber, etc.
-      const originalProduct = products.find(prod => prod.id === p.id) || {};
+  // Create product items directly from products data
+  const productItemsHtml = products
+    .map((product) => {
+      const items = product.items || [];
       
       return `
       <tr>
         <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">
           <div style="font-weight: 600; color: #2D2E87; margin-bottom: 8px; font-size: 16px;">
-            ${t('firstStep.product')} #${p.id} ${p.type || '-'}
+            ${t('firstStep.product')} #${product.id} ${product.type || '-'}
           </div>
-          ${(originalProduct.employee || originalProduct.employeeName) ? `
+          ${(product.employee || product.employeeName) ? `
           <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
-            <strong>${l(et.sections?.products?.fields?.employee) || 'Tillhör anställd:'}</strong> ${originalProduct.employee || originalProduct.employeeName}
+            <strong>${l(et.sections?.products?.fields?.employee) || 'Tillhör anställd:'}</strong> ${product.employee || product.employeeName}
           </div>` : ''}
-          ${(originalProduct.employeeDepartment || originalProduct.department) ? `
+          ${(product.employeeDepartment || product.department) ? `
           <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
-            <strong>${l(et.sections?.products?.fields?.department) || 'Avdelning:'}</strong> ${originalProduct.employeeDepartment || originalProduct.department}
+            <strong>${l(et.sections?.products?.fields?.department) || 'Avdelning:'}</strong> ${product.employeeDepartment || product.department}
           </div>` : ''}
-          ${(originalProduct.artikelNumber || originalProduct.articleNumber) ? `
+          ${(product.artikelNumber || product.articleNumber) ? `
           <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
-            <strong>${l(et.sections?.products?.fields?.article_number) || 'Artikelnummer:'}</strong> ${originalProduct.artikelNumber || originalProduct.articleNumber}
+            <strong>${l(et.sections?.products?.fields?.article_number) || 'Artikelnummer:'}</strong> ${product.artikelNumber || product.articleNumber}
           </div>` : ''}
-          ${(originalProduct.lagningsId || originalProduct.repairId) ? `
+          ${(product.lagningsId || product.repairId) ? `
           <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
-            <strong>${l(et.sections?.products?.fields?.repair_id) || 'Lagnings-ID:'}</strong> ${originalProduct.lagningsId || originalProduct.repairId}
+            <strong>${l(et.sections?.products?.fields?.repair_id) || 'Lagnings-ID:'}</strong> ${product.lagningsId || product.repairId}
           </div>` : ''}
           <div style="margin-left: 15px;">
-            ${p.items
+            ${items
               .map(
                 (item) => `
                   <div style="display: table; width: 100%; margin: 4px 0; padding: 2px 0; font-size: 14px;">
@@ -48,7 +47,7 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
               .join('')}
             <div style="display: table; width: 100%; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd; font-weight: 600; color: #2D2E87;">
               <span style="display: table-cell;">${t('firstStep.subtotal')}</span>
-              <span style="display: table-cell; text-align: right;">${p.subtotal} kr</span>
+              <span style="display: table-cell; text-align: right;">${product.subtotal} kr</span>
             </div>
           </div>
         </td>
@@ -393,84 +392,10 @@ export default function EmailPreviewStep({ orderInfo, products, prevStep }) {
   });
 
   useEffect(() => {
-    // Try to get state from props first, then from window object, then use fallback test data
-    let finalOrderInfo = orderInfo;
-    let finalProducts = products;
-
-    // Check window object for application state
-    if ((!orderInfo || Object.keys(orderInfo).length === 0) && 
-        (!products || products.length === 0) && 
-        window.appOrderState) {
-      finalOrderInfo = window.appOrderState.orderInfo || {};
-      finalProducts = window.appOrderState.products || [];
-    }
-
-    // Fallback test data for demonstration
-    if ((!finalOrderInfo || Object.keys(finalOrderInfo).length === 0) && 
-        (!finalProducts || finalProducts.length === 0)) {
-      finalOrderInfo = {
-        customerNumber: '5124996',
-        companyName: 'Lyreco Sverige AB',
-        ordererName: 'Marcus',
-        phone: '0720347999',
-        email: 'Marcus.svanstrom@lyreco.com',
-        billingCompanyName: 'Lyreco Sverige AB',
-        billingStreet: 'Datavägen 3',
-        billingZipCode: '411 20',
-        billingCity: 'Sisjön',
-        pickupCompanyName: 'Lyreco Sverige AB',
-        pickupStreet: 'Datavägen 3',
-        pickupZipCode: '411 20',
-        pickupCity: 'Sisjön',
-        usePickupAddressForDelivery: true
-      };
-      
-      finalProducts = [
-        {
-          id: 1,
-          type: 'byxa',
-          employee: 'John Andersson',
-          employeeName: 'John Andersson',
-          employeeDepartment: 'Lager',
-          artikelNumber: '12025325',
-          lagningsId: 'L12906',
-          isEmployeeOwned: true,
-          items: [
-            { label: 'Hål', price: 120, category: 'damages' },
-            { label: 'Hål', price: 120, category: 'damages' },
-            { label: 'Bad smell', price: 60, category: 'defects' }
-          ],
-          subtotal: 300
-        },
-        {
-          id: 2,
-          type: 'väst',
-          employee: 'Anna Svensson',
-          employeeName: 'Anna Svensson',
-          employeeDepartment: 'Administration',
-          artikelNumber: '12025325',
-          lagningsId: 'L12908',
-          isEmployeeOwned: true,
-          items: [
-            { label: 'Hål', price: 100, category: 'damages' }
-          ],
-          subtotal: 100
-        }
-      ];
-    }
-
     setAppState({
-      orderInfo: finalOrderInfo,
-      products: finalProducts
+      orderInfo: orderInfo || {},
+      products: products || []
     });
-
-    // Store in window object for other components to access
-    if (!window.appOrderState) {
-      window.appOrderState = {
-        orderInfo: finalOrderInfo,
-        products: finalProducts
-      };
-    }
   }, [orderInfo, products]);
 
   const emailHtml = useMemo(() => generateEmailHtml(appState.orderInfo, appState.products), [appState.orderInfo, appState.products]);

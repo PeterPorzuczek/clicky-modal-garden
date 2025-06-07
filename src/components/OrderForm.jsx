@@ -133,52 +133,6 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
       })
     );
 
-      if (!valid) {
-        setProducts((prevProducts) =>
-          prevProducts.map((p) => {
-            const typeError = p.type ? undefined : t('validation.required');
-            const damageErrors = {};
-            const damageOptionErrors = {};
-            let markerError;
-            if (p.damageCount <= 0) {
-              damageErrors[0] = t('validation.required');
-            } else {
-              for (let i = 0; i < p.damageCount; i++) {
-                if (!p.damages?.[i]) {
-                  damageErrors[i] = t('validation.required');
-                } else {
-                  const category = config.productCategories.find((c) => c.id === p.type);
-                  const damage = category?.damages.find((d) => d.id === p.damages[i]);
-                  if (damage?.options?.length) {
-                    const opt = p.damageDetails?.[`damage-${i}`]?.optionId;
-                    if (!opt) damageOptionErrors[i] = t('validation.required');
-                  }
-                  if (damage?.markedOnPicture) {
-                    const pos = p.damageDetails?.[`damage-${i}`]?.position;
-                    if (!pos) markerError = t('validation.required');
-                  }
-                }
-              }
-            }
-            if (p.otherIssues) {
-              const category = config.productCategories.find((c) => c.id === p.type);
-              if (category) {
-                Object.entries(p.otherIssues).forEach(([id, active]) => {
-                  if (active) {
-                    const defect = category.defects.find((d) => d.id === id);
-                    if (defect?.markedOnPicture) {
-                      const pos = p.defectDetails?.[id]?.position;
-                      if (!pos) markerError = t('validation.required');
-                    }
-                  }
-                });
-              }
-            }
-            return { ...p, typeError, damageErrors, damageOptionErrors, markerError };
-          })
-        );
-      }
-
     return valid;
   };
 
@@ -218,11 +172,13 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
     setOrderInfo((prev) => ({ ...prev, [field]: value }));
   };
 
+  const [completeOrderData, setCompleteOrderData] = useState(null);
+
   return step === 3 ? (
     <div ref={containerRef} className="order-form-container">
       <EmailPreviewStep
-        orderInfo={orderInfo}
-        products={products}
+        orderInfo={completeOrderData?.orderInfo}
+        products={completeOrderData?.products}
         prevStep={() => setStep(2)}
       />
     </div>
@@ -231,7 +187,11 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
       <ConfirmationStep
         resetForm={resetForm}
         products={products}
-        onPreview={() => setStep(3)}
+        orderInfo={orderInfo}
+        onPreview={(orderData) => {
+          setCompleteOrderData(orderData);
+          setStep(3);
+        }}
       />
     </div>
   ) : (
