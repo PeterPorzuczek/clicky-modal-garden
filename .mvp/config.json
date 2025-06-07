@@ -1954,5 +1954,241 @@
         }
       ]
     }
-  ]
+  ],
+  "email_template": {
+    "header": {
+      "company_name": {
+        "sv": "Lyreco Sverige",
+        "no": "Lyreco Norge", 
+        "en": "Lyreco Sweden"
+      }
+    },
+    "main_title": {
+      "sv": "Beställning lagning & återställning av arbetskläder",
+      "no": "Bestilling reparasjon & gjenoppretting av arbeidsklær",
+      "en": "Order repair & restoration of workwear"
+    },
+    "intro": {
+      "thank_you": {
+        "sv": "Tack för din beställning!",
+        "no": "Takk for din bestilling!",
+        "en": "Thank you for your order!"
+      },
+      "summary_text": {
+        "sv": "Nedan ser du en Summary av din beställning. Vår kundservice kommer inom kort återkomma med ytterligare instruktioner.",
+        "no": "Nedenfor ser du et sammendrag av din bestilling. Vår kundeservice vil snart komme tilbake med ytterligere instruksjoner.",
+        "en": "Below you can see a summary of your order. Our customer service will shortly return with additional instructions."
+      }
+    },
+    "sections": {
+      "order_information": {
+        "title": {
+          "sv": "Orderinformation",
+          "no": "Bestillingsinformasjon",
+          "en": "Order Information"
+        },
+        "fields": {
+          "customer_number": {
+            "sv": "Kundnummer:",
+            "no": "Kundenummer:",
+            "en": "Customer Number:"
+          },
+          "company_name": {
+            "sv": "Företagsnamn:",
+            "no": "Firmanavn:",
+            "en": "Company Name:"
+          },
+          "orderer_name": {
+            "sv": "Namnet på beställare:",
+            "no": "Navn på bestiller:",
+            "en": "Name of Orderer:"
+          },
+          "phone": {
+            "sv": "Telefon:",
+            "no": "Telefon:",
+            "en": "Phone:"
+          },
+          "email": {
+            "sv": "E-post:",
+            "no": "E-post:",
+            "en": "Email:"
+          }
+        }
+      },
+      "billing_address": {
+        "title": {
+          "sv": "Faktureringsadress",
+          "no": "Faktureringsadresse",
+          "en": "Billing Address"
+        },
+        "fields": {
+          "company_name": {
+            "sv": "Företagsnamn:",
+            "no": "Firmanavn:",
+            "en": "Company Name:"
+          },
+          "street_address": {
+            "sv": "Gatuadress:",
+            "no": "Gateadresse:",
+            "en": "Street Address:"
+          },
+          "postal_code": {
+            "sv": "Postnummer:",
+            "no": "Postnummer:",
+            "en": "Postal Code:"
+          },
+          "city": {
+            "sv": "Ort:",
+            "no": "Sted:",
+            "en": "City:"
+          }
+        }
+      },
+      "pickup_address": {
+        "title": {
+          "sv": "Upphämtningsadress",
+          "no": "Hentingsadresse",
+          "en": "Pickup Address"
+        },
+        "fields": {
+          "company_name": {
+            "sv": "Företagsnamn:",
+            "no": "Firmanavn:",
+            "en": "Company Name:"
+          },
+          "street_address": {
+            "sv": "Gatuadress:",
+            "no": "Gateadresse:",
+            "en": "Street Address:"
+          },
+          "postal_code": {
+            "sv": "Postnummer:",
+            "no": "Postnummer:",
+            "en": "Postal Code:"
+          },
+          "city": {
+            "sv": "Ort:",
+            "no": "Sted:",
+            "en": "City:"
+          }
+        }
+      },
+      "delivery_address": {
+        "title": {
+          "sv": "Leveransadress",
+          "no": "Leveringsadresse",
+          "en": "Delivery Address"
+        },
+        "fields": {
+          "company_name": {
+            "sv": "Företagsnamn:",
+            "no": "Firnanavn:",
+            "en": "Company Name:"
+          },
+          "street_address": {
+            "sv": "Gatuadress:",
+            "no": "Gateadresse:",
+            "en": "Street Address:"
+          },
+          "postal_code": {
+            "sv": "Postnummer:",
+            "no": "Postnummer:",
+            "en": "Postal Code:"
+          },
+          "city": {
+            "sv": "Ort:",
+            "no": "Sted:",
+            "en": "City:"
+          }
+        }
+      },
+      "products": {
+        "title": {
+          "sv": "Produkter",
+          "no": "Produkter",
+          "en": "Products"
+        },
+        "fields": {
+          "product_number": {
+            "sv": "Produkt #",
+            "no": "Produkt #",
+            "en": "Product #"
+          },
+          "article_number": {
+            "sv": "Artikelnummer:",
+            "no": "Artikkelnummer:",
+            "en": "Article Number:"
+          },
+          "repair_id": {
+            "sv": "Lagnings id:",
+            "no": "Reparasjons id:",
+            "en": "Repair ID:"
+          },
+          "damage_1": {
+            "sv": "Damage 1:",
+            "no": "Skade 1:",
+            "en": "Damage 1:"
+          },
+          "damage_2": {
+            "sv": "Damage 2:",
+            "no": "Skade 2:",
+            "en": "Damage 2:"
+          },
+          "defect": {
+            "sv": "Defekt:",
+            "no": "Defekt:",
+            "en": "Defect:"
+          },
+          "subtotal": {
+            "sv": "Delsumma:",
+            "no": "Delsum:",
+            "en": "Subtotal:"
+          }
+        },
+        "damage_types": {
+          "zipper_change": {
+            "sv": "Zipper change",
+            "no": "Glidelås skifte",
+            "en": "Zipper change"
+          },
+          "hole": {
+            "sv": "Hål",
+            "no": "Hull",
+            "en": "Hole"
+          }
+        },
+        "defect_types": {
+          "bad_smell": {
+            "sv": "Bad smell",
+            "no": "Dårlig lukt",
+            "en": "Bad smell"
+          }
+        },
+        "product_types": {
+          "byxa": {
+            "sv": "Byxa",
+            "no": "Bukse",
+            "en": "Trousers"
+          },
+          "vast": {
+            "sv": "Väst",
+            "no": "Vest",
+            "en": "Vest"
+          }
+        }
+      }
+    },
+    "footer": {
+      "total_cost": {
+        "sv": "Kostnad:",
+        "no": "Kostnad:",
+        "en": "Cost:"
+      },
+      "currency": {
+        "sv": "kr",
+        "no": "kr",
+        "en": "SEK"
+      }
+    }
+  }
 }
