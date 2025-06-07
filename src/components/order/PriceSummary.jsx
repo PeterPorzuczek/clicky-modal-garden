@@ -10,7 +10,7 @@ const getPrice = (pricing = {}, count) => {
   return pricing['1'] || 0;
 };
 
-export default function PriceSummary({ products = [], discount = 0 }) {
+export function calculateSummary(products = [], discount = 0) {
   const productTotals = products.map((p) => {
     const category = config.productCategories.find((c) => c.id === p.type);
     let subtotal = 0;
@@ -45,6 +45,13 @@ export default function PriceSummary({ products = [], discount = 0 }) {
   const subTotal = productTotals.reduce((sum, p) => sum + p.subtotal, 0);
   const discountAmount = Math.round(subTotal * (discount / 100));
   const total = subTotal - discountAmount;
+
+  return { productTotals, subTotal, discountAmount, total };
+}
+
+export default function PriceSummary({ products = [], discount = 0 }) {
+  const { productTotals, subTotal, discountAmount, total } =
+    calculateSummary(products, discount);
 
   return (
     <div className="space-y-4">

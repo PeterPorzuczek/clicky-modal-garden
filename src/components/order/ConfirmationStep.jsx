@@ -1,9 +1,13 @@
 import React from 'react';
+import { DialogClose } from '../../ui/dialog.jsx';
 
 export default function ConfirmationStep({ resetForm, products = [], discount = 0 }) {
   return (
     <div className="p-8 flex flex-col items-center space-y-4">
-      <h2 className="text-2xl font-bold text-center mb-2">Tack för din beställning!</h2>
+      <div className="flex items-center w-full mb-2">
+        <h2 className="text-2xl font-bold text-center flex-1">Tack för din beställning!</h2>
+        <DialogClose className="text-xl" />
+      </div>
       <p className="text-center text-gray-700 mb-4">
         Din beställning är nu mottagen och vi har skickat en bekräftelse till din e-postadress.
       </p>

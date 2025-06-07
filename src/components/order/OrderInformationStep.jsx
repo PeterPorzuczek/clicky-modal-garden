@@ -1,5 +1,5 @@
 import React from 'react';
-import PriceSummary from '../order/PriceSummary.jsx';
+import PriceSummary, { calculateSummary } from '../order/PriceSummary.jsx';
 import t from '../../i18n.js';
 import { DialogClose } from '../../ui/dialog.jsx';
 
@@ -24,6 +24,8 @@ export default function OrderInformationStep({
     e.preventDefault();
     nextStep && nextStep();
   };
+
+  const { total } = calculateSummary(products);
 
   return (
     <div>
@@ -304,7 +306,7 @@ export default function OrderInformationStep({
           )}
         </div>
 
-        {products.some(p => p.type) && (
+        {products.some(p => p.type) && total > 0 && (
           <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
             <h3 className="text-lg font-medium mb-3">{t('thirdStep.summary')}</h3>
             <PriceSummary products={products} />
