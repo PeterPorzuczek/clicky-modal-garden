@@ -11,6 +11,9 @@ import t from '../../i18n.js';
 export default function ProductCard({ product, onUpdate }) {
   const [selectedDamageIndex, setSelectedDamageIndex] = useState();
   const [selectedDefectId, setSelectedDefectId] = useState();
+  const [markingOpen, setMarkingOpen] = useState(false);
+  const [damageMarkable, setDamageMarkable] = useState({});
+  const [defectMarkable, setDefectMarkable] = useState({});
 
   const category = config.productCategories.find((c) => c.id === product.type);
 
@@ -35,6 +38,21 @@ export default function ProductCard({ product, onUpdate }) {
         markedOnPicture: d.markedOnPicture,
       }))
     : [];
+
+  useEffect(() => {
+    const dMark = {};
+    product.damages.forEach((id, idx) => {
+      const cfg = DAMAGE_OPTIONS.find((o) => o.id === id);
+      dMark[idx] = !!cfg?.markedOnPicture;
+    });
+    setDamageMarkable(dMark);
+
+    const defMark = {};
+    DEFECT_OPTIONS.forEach((opt) => {
+      defMark[opt.id] = !!opt.markedOnPicture;
+    });
+    setDefectMarkable(defMark);
+  }, [product.damages, category]);
 
   const updateField = (field, value) => {
     onUpdate && onUpdate(product.id, field, value);
@@ -90,6 +108,11 @@ export default function ProductCard({ product, onUpdate }) {
         right: pics[3] || pics[0] || null,
       });
     }
+    if (damageObj?.markedOnPicture) {
+      setSelectedDefectId(undefined);
+      setSelectedDamageIndex(idx);
+      setMarkingOpen(true);
+    }
   };
 
   const updateDamageDetail = (idx, detail) => {
@@ -102,6 +125,15 @@ export default function ProductCard({ product, onUpdate }) {
     const issues = { ...(product.otherIssues || {}) };
     issues[id] = !issues[id];
     updateField('otherIssues', issues);
+
+    if (issues[id]) {
+      const defectObj = DEFECT_OPTIONS.find((d) => d.id === id);
+      if (defectObj?.markedOnPicture) {
+        setSelectedDamageIndex(undefined);
+        setSelectedDefectId(id);
+        setMarkingOpen(true);
+      }
+    }
   };
 
   return (
@@ -138,18 +170,6 @@ export default function ProductCard({ product, onUpdate }) {
                     onDamageChange={(val) => updateDamageType(idx, val)}
                     onOptionChange={(val) => updateDamageDetail(idx, { optionId: val })}
                   />
-                  {selectedDamageConfig?.markedOnPicture && (
-                    <button
-                      type="button"
-                      className="text-sm text-blue-600 underline"
-                      onClick={() => {
-                        setSelectedDefectId(undefined);
-                        setSelectedDamageIndex(idx);
-                      }}
-                    >
-                      Markera skada
-                    </button>
-                  )}
                 </div>
               );
             })}
@@ -163,42 +183,54 @@ export default function ProductCard({ product, onUpdate }) {
             onToggle={toggleDefect}
           />
         )}
-        {Object.entries(product.otherIssues || {}).filter(([, on]) => on).map(([id]) => {
-          const defectConfig = DEFECT_OPTIONS.find((d) => d.id === id);
-          if (!defectConfig?.markedOnPicture) {
-            return null;
-          }
-          return (
-            <button
-              key={id}
-              type="button"
-              className="text-sm text-blue-600 underline mr-2"
-              onClick={() => {
-                setSelectedDamageIndex(undefined);
-                setSelectedDefectId(id);
-              }}
-            >
-              Markera: {defectConfig.label || id}
-            </button>
-          )
-        })}
         <EmployeeOwnershipFields
           product={product}
           onUpdate={(field, val) => updateField(field, val)}
         />
-        {(product.damageCount > 0 || Object.values(product.otherIssues || {}).some(Boolean)) && (
-          <GarmentDamageMarker
-            product={product}
-            damageIndex={selectedDamageIndex}
-            defectId={selectedDefectId}
-            updateDamageDetail={updateDamageDetail}
-            updateDefectDetail={(id, detail) => {
-              const details = { ...(product.defectDetails || {}) };
-              details[id] = { ...(details[id] || {}), ...detail };
-              updateField('defectDetails', details);
-            }}
-          />
-        )}
+        {(product.damageCount > 0 || Object.values(product.otherIssues || {}).some(Boolean)) &&
+          markingOpen && (
+            <div className="relative p-4 bg-white rounded-lg shadow">
+              <button
+                type="button"
+                aria-label="Close"
+                className="absolute right-4 top-4 text-gray-500 hover:text-gray-900"
+                onClick={() => {
+                  setMarkingOpen(false);
+                  setSelectedDamageIndex(undefined);
+                  setSelectedDefectId(undefined);
+                }}
+              >
+                ✕
+              </button>
+              <GarmentDamageMarker
+                product={product}
+                damageIndex={selectedDamageIndex}
+                defectId={selectedDefectId}
+                updateDamageDetail={updateDamageDetail}
+                updateDefectDetail={(id, detail) => {
+                  const details = { ...(product.defectDetails || {}) };
+                  details[id] = { ...(details[id] || {}), ...detail };
+                  updateField('defectDetails', details);
+                }}
+                onSelectDamage={(idx) => {
+                  if (damageMarkable[idx]) {
+                    setSelectedDefectId(undefined);
+                    setSelectedDamageIndex(idx);
+                    setMarkingOpen(true);
+                  }
+                }}
+                onSelectDefect={(id) => {
+                  if (defectMarkable[id]) {
+                    setSelectedDamageIndex(undefined);
+                    setSelectedDefectId(id);
+                    setMarkingOpen(true);
+                  }
+                }}
+                damageMarkable={damageMarkable}
+                defectMarkable={defectMarkable}
+              />
+            </div>
+          )}
       </div>
     </div>
   );

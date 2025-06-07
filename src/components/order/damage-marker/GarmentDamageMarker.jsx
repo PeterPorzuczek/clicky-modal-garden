@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import InstructionMessage from './InstructionMessage.jsx';
-import WholeProductList from './WholeProductList.jsx';
+import MarkerList from './MarkerList.jsx';
 import MarkerButtons from './MarkerButton.jsx';
 import GarmentView from './GarmentView.jsx';
 
@@ -12,6 +12,10 @@ export default function GarmentDamageMarker({
   updateDefectDetail,
   selectedDamageIndex,
   selectedDefectId,
+  onSelectDamage,
+  onSelectDefect,
+  damageMarkable = {},
+  defectMarkable = {},
 }) {
   const [damagePositions, setDamagePositions] = useState({});
   const [defectPositions, setDefectPositions] = useState({});
@@ -61,7 +65,7 @@ export default function GarmentDamageMarker({
   };
 
   const handleMark = (x, y, view) => {
-    if (damageIndex !== undefined) {
+    if (damageIndex !== undefined && damageMarkable[damageIndex]) {
       const pos = { x, y, view };
       setDamagePositions((p) => ({ ...p, [damageIndex]: pos }));
       const orderKey = `damage-${damageIndex}`;
@@ -72,7 +76,7 @@ export default function GarmentDamageMarker({
       updateDamageDetail && updateDamageDetail(damageIndex, { position: pos, orderIndex: orderMap[orderKey] || nextOrder });
       return;
     }
-    if (defectId) {
+    if (defectId && defectMarkable[defectId]) {
       const pos = { x, y, view };
       setDefectPositions((p) => ({ ...p, [defectId]: pos }));
       if (!orderMap[defectId]) {
@@ -93,6 +97,14 @@ export default function GarmentDamageMarker({
     setDefectPositions({});
     setOrderMap({});
     setNextOrder(1);
+    product.damages.forEach((_, idx) => {
+      updateDamageDetail && updateDamageDetail(idx, { position: undefined, orderIndex: undefined });
+    });
+    Object.entries(product.otherIssues || {}).forEach(([id, on]) => {
+      if (on) {
+        updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
+      }
+    });
   };
 
   const isWholeMarker = (pos) => pos && pos.view === 'whole';
@@ -103,38 +115,58 @@ export default function GarmentDamageMarker({
   const singleMode = damageIndex !== undefined || !!defectId;
   const totalMarks = Object.keys(damagePositions).length + Object.keys(defectPositions).length;
 
+  const handleMarkerClick = (type, id) => {
+    if (type === 'damage' && onSelectDamage && damageMarkable[id]) {
+      onSelectDamage(id);
+    }
+    if (type === 'defect' && onSelectDefect && defectMarkable[id]) {
+      onSelectDefect(id);
+    }
+  };
+
   return (
     <div className="mt-3 space-y-3">
       <InstructionMessage productType={product.type} isMarked={isMarked} isSingleMarkMode={singleMode} />
       <div className="flex flex-col gap-2">
-        <WholeProductList
+        <MarkerList
           product={product}
           damagePositions={damagePositions}
           defectPositions={defectPositions}
           isWholeProductMarker={isWholeMarker}
-          removeMarker={(e, idx) => {
+          damageMarkable={damageMarkable}
+          defectMarkable={defectMarkable}
+          removeDamage={(e, idx) => {
             e.stopPropagation();
             setDamagePositions((p) => {
               const { [idx]: removed, ...rest } = p;
               return rest;
             });
+            setOrderMap((m) => {
+              const { [`damage-${idx}`]: removed, ...rest } = m;
+              return rest;
+            });
+            updateDamageDetail && updateDamageDetail(idx, { position: undefined, orderIndex: undefined });
           }}
-          removeDefectMarker={(e, id) => {
+          removeDefect={(e, id) => {
             e.stopPropagation();
             setDefectPositions((p) => {
               const { [id]: removed, ...rest } = p;
               return rest;
             });
+            setOrderMap((m) => {
+              const { [id]: removed, ...rest } = m;
+              return rest;
+            });
+            updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
           }}
           getDefectLabel={(id) => product.defectLabels?.[id] || id}
           markerSelectionOrder={orderMap}
+          onSelectDamage={onSelectDamage}
+          onSelectDefect={onSelectDefect}
+          selectedDamageIndex={selectedDamageIndex}
+          selectedDefectId={selectedDefectId}
         />
-        <MarkerButtons
-          isMarked={isMarked}
-          onMarkWholeProduct={markWholeProduct}
-          onResetAllMarkers={resetAll}
-          isSingleMarkMode={singleMode}
-        />
+        <MarkerButtons onResetAllMarkers={resetAll} />
       </div>
       <GarmentView
         productType={product.type}
@@ -149,6 +181,7 @@ export default function GarmentDamageMarker({
         productDamages={product.damages}
         defectLabels={product.defectLabels || {}}
         onMarkerDrag={() => {}}
+        onMarkerClick={handleMarkerClick}
         markerSelectionOrder={orderMap}
       />
     </div>

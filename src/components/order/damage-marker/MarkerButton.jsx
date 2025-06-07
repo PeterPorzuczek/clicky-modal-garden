@@ -20,18 +20,9 @@ function RotateCcwIcon({ className = '', size = 14 }) {
   );
 }
 
-export default function MarkerButtons({ isMarked, onMarkWholeProduct, onResetAllMarkers, isSingleMarkMode }) {
+export default function MarkerButtons({ onResetAllMarkers }) {
   return (
-    <div className="flex flex-wrap gap-2 justify-between">
-      {isSingleMarkMode && (
-        <button
-          type="button"
-          className={`text-sm py-1 px-3 h-auto bg-white hover:bg-gray-50 border rounded ${isMarked ? '' : 'border-blue-500 text-blue-600'}`}
-          onClick={onMarkWholeProduct}
-        >
-          Hela produkten
-        </button>
-      )}
+    <div className="flex flex-wrap gap-2 justify-end">
       <button
         type="button"
         className="text-sm py-1 px-3 h-auto text-gray-600 border rounded"

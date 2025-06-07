@@ -12,6 +12,7 @@ export default function GarmentView({
   productDamages = [],
   defectLabels = {},
   markerSelectionOrder = {},
+  onMarkerClick,
 }) {
   const containerRef = React.useRef(null);
 
@@ -44,15 +45,25 @@ export default function GarmentView({
     <div className="mt-4 border rounded-lg p-2 bg-white">
       <div className="relative mt-2" ref={containerRef} onClick={handleClick} style={{ cursor: selectedForMarking ? 'crosshair' : 'default' }}>
         {imageUrl ? (
-          <img src={imageUrl} alt={productType} className="w-full h-auto object-contain" />
+          <img
+            src={imageUrl}
+            alt={productType}
+            className="w-full h-auto object-contain max-h-[250px]"
+          />
         ) : (
-          <div className="w-full aspect-[4/3] flex items-center justify-center bg-gray-100 text-gray-500">Ingen bild tillg\u00E4nglig</div>
+          <div className="w-full aspect-[4/3] max-h-[250px] flex items-center justify-center bg-gray-100 text-gray-500">
+            Ingen bild tillg\u00E4nglig
+          </div>
         )}
         {markers.map((m) => (
           <div
             key={m.id}
-            className="absolute -translate-x-1/2 -translate-y-1/2"
+            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
             style={{ left: `${m.pos.x * 100}%`, top: `${m.pos.y * 100}%` }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onMarkerClick && onMarkerClick(m.isDamage ? 'damage' : 'defect', m.isDamage ? parseInt(m.id.split('-')[1]) : m.id);
+            }}
           >
             {m.isDamage ? (
               <div className="w-6 h-6 -ml-3 -mt-3 rounded-full bg-green-600 border-2 border-white shadow-md flex items-center justify-center text-[10px] text-white font-bold">
