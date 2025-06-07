@@ -3,8 +3,7 @@ import InstructionMessage from './InstructionMessage.jsx';
 import MarkerList from './MarkerList.jsx';
 import MarkerButtons from './MarkerButton.jsx';
 import GarmentView from './GarmentView.jsx';
-import config from '../../../config.js';
-import { localize } from '../../../i18n.js';
+import { getDefectLabel } from '../../../i18n.js';
 
 export default function GarmentDamageMarker({
   product,
@@ -24,12 +23,8 @@ export default function GarmentDamageMarker({
   const [orderMap, setOrderMap] = useState({});
   const [nextOrder, setNextOrder] = useState(1);
 
-  const getDefectLabel = (id) => {
-    if (product.defectLabels?.[id]) return product.defectLabels[id];
-    const category = config.productCategories.find((c) => c.id === product.type);
-    const defect = category?.defects.find((d) => d.id === id);
-    return defect ? localize(defect.name) : id;
-  };
+  const labelForDefect = (id) =>
+    product.defectLabels?.[id] || getDefectLabel(product.type, id);
 
   useEffect(() => {
     const dPos = {};
@@ -168,7 +163,7 @@ export default function GarmentDamageMarker({
             });
             updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
           }}
-          getDefectLabel={getDefectLabel}
+          getDefectLabel={labelForDefect}
           markerSelectionOrder={orderMap}
           onSelectDamage={onSelectDamage}
           onSelectDefect={onSelectDefect}
@@ -191,7 +186,7 @@ export default function GarmentDamageMarker({
         defectLabels={Object.fromEntries(
           Object.entries(product.otherIssues || {})
             .filter(([_, on]) => on)
-            .map(([id]) => [id, getDefectLabel(id)])
+            .map(([id]) => [id, labelForDefect(id)])
         )}
         onMarkerDrag={() => {}}
         onMarkerClick={handleMarkerClick}

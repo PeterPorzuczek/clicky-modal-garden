@@ -20,6 +20,8 @@ function XIcon({ className = '', size = 14 }) {
   );
 }
 
+import { getDamageLabel } from '../../../i18n.js';
+
 export default function MarkerList({
   product,
   damagePositions = {},
@@ -42,7 +44,7 @@ export default function MarkerList({
       type: 'damage',
       id: idx,
       order: markerSelectionOrder[`damage-${idx}`],
-      label: d === 'tear' ? 'Reva' : d,
+      label: getDamageLabel(product.type, d),
       pos: damagePositions[idx],
       markable: damageMarkable[idx],
     }))
