@@ -4,6 +4,8 @@ import MarkerList from './MarkerList.jsx';
 import MarkerButtons from './MarkerButton.jsx';
 import GarmentView from './GarmentView.jsx';
 import { getDefectLabel, getDamageLabel } from '../../../i18n.js';
+import config from '../../../config.js';
+import t from '../../../i18n.js';
 
 export default function GarmentDamageMarker({
   product,
@@ -132,6 +134,7 @@ export default function GarmentDamageMarker({
 
   return (
     <div className="gdm-container">
+      <h4 className="gdm-title">{t('secondStep.markDamageBelow')}</h4>
       <InstructionMessage productType={product.type} isMarked={isMarked} isSingleMarkMode={singleMode} />
       <div className="gdm-row">
         <MarkerButtons onResetAllMarkers={resetAll} />
@@ -195,6 +198,34 @@ export default function GarmentDamageMarker({
         onMarkerDrag={() => {}}
         onMarkerClick={handleMarkerClick}
         markerSelectionOrder={orderMap}
+        product={product}
+        removeDamage={(e, idx) => {
+          e.stopPropagation();
+          setDamagePositions((p) => {
+            const { [idx]: removed, ...rest } = p;
+            return rest;
+          });
+          setOrderMap((m) => {
+            const { [`damage-${idx}`]: removed, ...rest } = m;
+            return rest;
+          });
+          updateDamageDetail && updateDamageDetail(idx, { position: undefined, orderIndex: undefined });
+        }}
+        removeDefect={(e, id) => {
+          e.stopPropagation();
+          setDefectPositions((p) => {
+            const { [id]: removed, ...rest } = p;
+            return rest;
+          });
+          setOrderMap((m) => {
+            const { [id]: removed, ...rest } = m;
+            return rest;
+          });
+          updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
+        }}
+        getDamageLabel={labelForDamage}
+        getDefectLabel={labelForDefect}
+        isWholeProductMarker={isWholeMarker}
       />
     </div>
   );

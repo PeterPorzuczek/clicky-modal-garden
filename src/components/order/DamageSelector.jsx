@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomSelect from '../ui/CustomSelect.jsx';
 
 export default function DamageSelector({
   index = 0,
@@ -11,13 +12,23 @@ export default function DamageSelector({
   damageError = null,
   optionError = null,
 }) {
-  const handleDamageChange = (e) => {
-    onDamageChange && onDamageChange(e.target.value);
+  const handleDamageChange = (value) => {
+    onDamageChange && onDamageChange(value);
   };
 
-  const handleOptionChange = (e) => {
-    onOptionChange && onOptionChange(e.target.value);
+  const handleOptionChange = (value) => {
+    onOptionChange && onOptionChange(value);
   };
+
+  const damageSelectOptions = damageOptions.map(opt => ({
+    value: opt.id,
+    label: opt.label
+  }));
+
+  const optionSelectOptions = optionOptions.map(opt => ({
+    value: opt.id,
+    label: opt.label
+  }));
 
   return (
     <div className="damage-selector">
@@ -28,19 +39,13 @@ export default function DamageSelector({
               Skada {index + 1} <span className="text-red">*</span>
             </label>
           </div>
-          <select
+          <CustomSelect
             value={damage}
-            onChange={handleDamageChange}
-            className={`damage-select ${damageError ? 'error' : ''}`}
-            required
-          >
-            <option value="">Välj typ av skada</option>
-            {damageOptions.map((opt) => (
-              <option key={opt.id} value={opt.id}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
+            onValueChange={handleDamageChange}
+            placeholder="Välj typ av skada"
+            options={damageSelectOptions}
+            error={!!damageError}
+          />
           {damageError && <p className="damage-error">{damageError}</p>}
         </div>
         {optionOptions.length > 0 && (
@@ -48,19 +53,13 @@ export default function DamageSelector({
             <label className="damage-label">
               Alternativ <span className="text-red">*</span>
             </label>
-            <select
+            <CustomSelect
               value={option}
-              onChange={handleOptionChange}
-              className={`damage-select ${optionError ? 'error' : ''}`}
-              required
-            >
-              <option value="">Välj</option>
-              {optionOptions.map((opt) => (
-                <option key={opt.id} value={opt.id}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+              onValueChange={handleOptionChange}
+              placeholder="Välj"
+              options={optionSelectOptions}
+              error={!!optionError}
+            />
             {optionError && <p className="damage-error">{optionError}</p>}
           </div>
         )}
