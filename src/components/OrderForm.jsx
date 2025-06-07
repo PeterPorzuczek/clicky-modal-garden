@@ -21,8 +21,9 @@ const createEmptyProduct = (id) => ({
   damageOptionErrors: {},
 });
 
-export default function OrderForm({ prefilledData = null }) {
-  const containerRef = useRef(null);
+export default function OrderForm({ prefilledData = null, scrollRef }) {
+  const internalRef = useRef(null);
+  const containerRef = scrollRef || internalRef;
   const [step, setStep] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [products, setProducts] = useState([createEmptyProduct(1)]);
