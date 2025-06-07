@@ -45,11 +45,14 @@ export default function DamageSelector({
         </div>
         {optionOptions.length > 0 && (
           <div>
-            <label className="text-sm font-medium">Alternativ</label>
+            <label className="text-sm font-medium">
+              Alternativ <span className="text-red-500">*</span>
+            </label>
             <select
               value={option}
               onChange={handleOptionChange}
               className={`w-full h-10 rounded border px-3 pr-10 ${optionError ? 'border-red-500' : 'border-gray-300'}`}
+              required
             >
               <option value="">Välj</option>
               {optionOptions.map((opt) => (
