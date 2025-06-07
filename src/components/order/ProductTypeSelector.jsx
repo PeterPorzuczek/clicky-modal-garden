@@ -1,6 +1,7 @@
 import React from 'react';
 import config from '../../config.js';
 import t, { localize } from '../../i18n.js';
+import CustomSelect from '../ui/CustomSelect.jsx';
 
 const OPTIONS = config.productCategories.map((cat) => ({
   value: cat.id,
@@ -8,8 +9,8 @@ const OPTIONS = config.productCategories.map((cat) => ({
 }));
 
 export default function ProductTypeSelector({ productType, onTypeChange, onOpenChange, error }) {
-  const handleChange = (e) => {
-    onTypeChange && onTypeChange(e.target.value);
+  const handleChange = (value) => {
+    onTypeChange && onTypeChange(value);
     onOpenChange && onOpenChange(false);
   };
 
@@ -18,17 +19,13 @@ export default function ProductTypeSelector({ productType, onTypeChange, onOpenC
       <label className="pts-label">
         {t('firstStep.selectTypeOfProduct')} <span className="text-red">*</span>
       </label>
-      <select
-        className={`pts-select ${error ? 'error' : ''}`}
+      <CustomSelect
         value={productType || ''}
-        onChange={handleChange}
-        required
-      >
-        <option value="" disabled>{t('firstStep.select')}</option>
-        {OPTIONS.map(opt => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
-        ))}
-      </select>
+        onValueChange={handleChange}
+        placeholder={t('firstStep.select')}
+        options={OPTIONS}
+        error={!!error}
+      />
       {error && <p className="pts-error">{error}</p>}
     </div>
   );

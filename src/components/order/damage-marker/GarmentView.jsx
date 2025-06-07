@@ -1,6 +1,7 @@
 import React from 'react';
 import Badge from '../../../ui/Badge.jsx';
 import { getDamageLabel } from '../../../i18n.js';
+import WholeProductList from './WholeProductList.jsx';
 
 export default function GarmentView({
   productType,
@@ -15,6 +16,12 @@ export default function GarmentView({
   defectLabels = {},
   markerSelectionOrder = {},
   onMarkerClick,
+  product,
+  removeDamage,
+  removeDefect,
+  getDamageLabel: getDamageLabelProp,
+  getDefectLabel,
+  isWholeProductMarker,
 }) {
   const containerRef = React.useRef(null);
 
@@ -81,6 +88,19 @@ export default function GarmentView({
           </div>
         ))}
       </div>
+      {product && isWholeProductMarker && (
+        <WholeProductList
+          product={product}
+          damagePositions={damagePositions}
+          defectPositions={defectPositions}
+          isWholeProductMarker={isWholeProductMarker}
+          removeMarker={removeDamage}
+          removeDefectMarker={removeDefect}
+          getDamageLabel={getDamageLabelProp}
+          getDefectLabel={getDefectLabel}
+          markerSelectionOrder={markerSelectionOrder}
+        />
+      )}
     </div>
   );
 }

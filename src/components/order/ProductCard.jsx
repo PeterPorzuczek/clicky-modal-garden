@@ -255,10 +255,6 @@ export default function ProductCard({ product, onUpdate }) {
             onToggle={toggleDefect}
           />
         )}
-        <EmployeeOwnershipFields
-          product={product}
-          onUpdate={(field, val) => updateField(field, val)}
-        />
         {(product.damageCount > 0 || Object.values(product.otherIssues || {}).some(Boolean)) &&
           markingOpen && (
             <div className="pc-marker">
@@ -291,6 +287,10 @@ export default function ProductCard({ product, onUpdate }) {
               />
             </div>
           )}
+        <EmployeeOwnershipFields
+          product={product}
+          onUpdate={(field, val) => updateField(field, val)}
+        />
         {product.markerError && (
           <p className="pc-error">{product.markerError}</p>
         )}

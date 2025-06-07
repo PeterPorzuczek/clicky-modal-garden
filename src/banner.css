@@ -52,12 +52,19 @@
 }
 
 .dialog-content {
-  max-width: 650px;
+  width: 700px;
+  height: 90vh;
+  max-width: 700px;
+  max-height: 90vh;
+  min-width: 700px;
+  min-height: 600px;
   padding: 0;
   overflow: hidden;
-  max-height: 90vh;
   display: flex;
   flex-direction: column;
+  border-radius: 0.75rem;
+  background-color: white;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 }
 
 .form-container {
@@ -69,15 +76,49 @@
   position: absolute;
   right: 1rem;
   top: 1rem;
-  border-radius: 0.125rem;
-  opacity: 0.7;
-  padding: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
   font-size: 1.25rem;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
 }
 .dialog-close:hover {
-  opacity: 1;
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #d1d5db;
 }
 .dialog-close:focus {
   outline: none;
+  box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2);
+}
+
+/* Responsive modal - fixed size on larger screens, responsive on smaller ones */
+@media (max-width: 720px) {
+  .dialog-content {
+    width: 95vw;
+    min-width: 320px;
+  }
+}
+
+@media (max-height: 600px) {
+  .dialog-content {
+    height: 95vh;
+    min-height: 400px;
+  }
+}
+
+@media (min-width: 721px) {
+  .dialog-content {
+    width: 700px;
+    min-width: 700px;
+  }
 }
