@@ -169,6 +169,7 @@ export default function ProductCard({ product, onUpdate }) {
                     optionOptions={selectedDamageConfig?.options || []}
                     onDamageChange={(val) => updateDamageType(idx, val)}
                     onOptionChange={(val) => updateDamageDetail(idx, { optionId: val })}
+                    damageError={product.damageErrors?.[idx]}
                   />
                 </div>
               );

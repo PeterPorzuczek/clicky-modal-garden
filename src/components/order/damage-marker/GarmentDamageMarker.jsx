@@ -127,7 +127,7 @@ export default function GarmentDamageMarker({
   return (
     <div className="mt-3 space-y-3">
       <InstructionMessage productType={product.type} isMarked={isMarked} isSingleMarkMode={singleMode} />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <MarkerList
           product={product}
           damagePositions={damagePositions}

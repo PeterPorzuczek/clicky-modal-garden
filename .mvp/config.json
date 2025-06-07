@@ -40,6 +40,16 @@
         "en": "Next",
         "se": "Nästa",
         "no": "Neste"
+      },
+      "summary": {
+        "en": "Summary",
+        "se": "Sammanfattning",
+        "no": "Sammendrag"
+      },
+      "total": {
+        "en": "Total",
+        "se": "Totalt",
+        "no": "Totalt"
       }
     },
     "secondStep": {
