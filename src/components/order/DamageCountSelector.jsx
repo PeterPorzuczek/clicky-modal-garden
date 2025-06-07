@@ -1,4 +1,5 @@
 import React from 'react';
+import t from '../../setup/i18n.js';
 
 function MinusIcon({className}) {
   return (
@@ -23,7 +24,7 @@ export default function DamageCountSelector({ count, onChange }) {
 
   return (
     <div className="dcs-container">
-      <label className="oi-label">Antal skador</label>
+      <label className="oi-label">{t('secondStep.numberOfDamages')}</label>
       <div className="dcs-control">
         <button
           type="button"

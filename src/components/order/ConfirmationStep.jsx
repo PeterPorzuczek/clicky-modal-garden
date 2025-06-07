@@ -1,27 +1,28 @@
 import React from 'react';
 import { DialogClose } from './ui/Dialog.jsx';
+import t from '../../setup/i18n.js';
 
 export default function ConfirmationStep({ resetForm, products = [], discount = 0 }) {
   return (
     <div className="confirm-container">
       <div className="confirm-header">
-        <h2 className="confirm-title">Tack för din beställning!</h2>
+        <h2 className="confirm-title">{t('fourthStep.thankYouTitle')}</h2>
         <DialogClose className="confirm-close" />
       </div>
       <p className="confirm-text">
-        Din beställning är nu mottagen och vi har skickat en bekräftelse till din e-postadress.
+        {t('fourthStep.orderReceivedMsg')}
       </p>
       {discount > 0 && (
-        <p className="confirm-discount">Du fick {discount}% rabatt på din order!</p>
+        <p className="confirm-discount">{t('fourthStep.discountMsg').replace('{discount}', discount)}</p>
       )}
-      <p className="confirm-steps-intro">Följ stegen nedan för att förbereda dina plagg för reparation & återställning:</p>
+      <p className="confirm-steps-intro">{t('fourthStep.instructionsTitle')}</p>
       <ol className="confirm-list">
-        <li>Mottag orderbekräftelse och medföljande plaggetikett (en per plagg) samt fraktsedel.</li>
-        <li>Skriv ut plaggetikett och fraktsedel.</li>
-        <li>Fäst plaggetiketter ordentligt på varje plagg. Dessa är viktiga för att koppla plagget till din beställning!</li>
-        <li>Packa dina kläder i ett lämpligt paket.</li>
-        <li>Klistra fast fraktsedeln på paketet.</li>
-        <li>Skicka paketet enligt anvisningarna på fraktsedeln.</li>
+        <li>{t('fourthStep.step1')}</li>
+        <li>{t('fourthStep.step2')}</li>
+        <li>{t('fourthStep.step3')}</li>
+        <li>{t('fourthStep.step4')}</li>
+        <li>{t('fourthStep.step5')}</li>
+        <li>{t('fourthStep.step6')}</li>
       </ol>
       <div className="confirm-actions">
         <button
@@ -29,14 +30,14 @@ export default function ConfirmationStep({ resetForm, products = [], discount = 
           onClick={resetForm}
           className="secondary-button"
         >
-          Ytterligare beställning
+          {t('fourthStep.additionalOrder')}
         </button>
         <button
           type="button"
           onClick={() => window.close?.()}
           className="primary-button"
         >
-          Stäng
+          {t('fourthStep.close')}
         </button>
       </div>
     </div>

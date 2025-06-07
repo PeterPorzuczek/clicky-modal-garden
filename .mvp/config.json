@@ -381,6 +381,11 @@
         "se": "Din beställning är nu mottagen och vi har skickat en bekräftelse till din e-postadress.",
         "no": "Bestillingen din er mottatt, og vi har sendt en bekreftelse til din e-postadresse."
       },
+      "discountMsg": {
+        "en": "You received {discount}% discount on your order!",
+        "se": "Du fick {discount}% rabatt på din order!",
+        "no": "Du fikk {discount}% rabatt på bestillingen!"
+      },
       "instructionsTitle": {
         "en": "Follow the steps below to prepare your garments for repair & restoration:",
         "se": "Följ stegen nedan för att förbereda dina plagg för reparation & återställning:",
