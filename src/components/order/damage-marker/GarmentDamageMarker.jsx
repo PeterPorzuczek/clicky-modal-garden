@@ -95,6 +95,14 @@ export default function GarmentDamageMarker({
     setDefectPositions({});
     setOrderMap({});
     setNextOrder(1);
+    product.damages.forEach((_, idx) => {
+      updateDamageDetail && updateDamageDetail(idx, { position: undefined, orderIndex: undefined });
+    });
+    Object.entries(product.otherIssues || {}).forEach(([id, on]) => {
+      if (on) {
+        updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
+      }
+    });
   };
 
   const isWholeMarker = (pos) => pos && pos.view === 'whole';
@@ -129,6 +137,11 @@ export default function GarmentDamageMarker({
               const { [idx]: removed, ...rest } = p;
               return rest;
             });
+            setOrderMap((m) => {
+              const { [`damage-${idx}`]: removed, ...rest } = m;
+              return rest;
+            });
+            updateDamageDetail && updateDamageDetail(idx, { position: undefined, orderIndex: undefined });
           }}
           removeDefect={(e, id) => {
             e.stopPropagation();
@@ -136,9 +149,18 @@ export default function GarmentDamageMarker({
               const { [id]: removed, ...rest } = p;
               return rest;
             });
+            setOrderMap((m) => {
+              const { [id]: removed, ...rest } = m;
+              return rest;
+            });
+            updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
           }}
           getDefectLabel={(id) => product.defectLabels?.[id] || id}
           markerSelectionOrder={orderMap}
+          onSelectDamage={onSelectDamage}
+          onSelectDefect={onSelectDefect}
+          selectedDamageIndex={selectedDamageIndex}
+          selectedDefectId={selectedDefectId}
         />
         <MarkerButtons onResetAllMarkers={resetAll} />
       </div>
