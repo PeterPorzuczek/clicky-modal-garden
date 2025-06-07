@@ -18,14 +18,28 @@ export function t(path) {
     if (obj === undefined) return path;
   }
   if (typeof obj === 'string') return obj;
-  return obj?.[CURRENT_LANGUAGE] || obj?.se || obj?.en || '';
+  return (
+    obj?.[CURRENT_LANGUAGE] ||
+    (CURRENT_LANGUAGE === 'se' ? obj?.sv : undefined) ||
+    obj?.se ||
+    obj?.sv ||
+    obj?.en ||
+    ''
+  );
 }
 
 export function localize(obj) {
   if (!obj) return '';
   if (typeof obj === 'string') return obj;
   // Handle both 'se' and 'sv' for Swedish to ensure compatibility
-  return obj[CURRENT_LANGUAGE] || obj.se || obj.en || '';
+  return (
+    obj[CURRENT_LANGUAGE] ||
+    (CURRENT_LANGUAGE === 'se' ? obj.sv : undefined) ||
+    obj.se ||
+    obj.sv ||
+    obj.en ||
+    ''
+  );
 }
 
 export function getDamageLabel(productType, id) {
