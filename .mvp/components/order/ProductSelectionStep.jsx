@@ -10,20 +10,23 @@ export default function ProductSelectionStep({
   setQuantity,
   nextStep,
 }) {
+  const MAX_QUANTITY = 20;
   const addProduct = () => {
-    setQuantity(quantity + 1);
-    setProducts([
-      ...products,
-      {
-        id: quantity + 1,
-        type: '',
-        damageCount: 0,
-        otherIssues: {},
-        isEmployeeOwned: false,
-        employeeName: '',
-        employeeDepartment: '',
-      },
-    ]);
+    if (quantity < MAX_QUANTITY) {
+      setQuantity(quantity + 1);
+      setProducts([
+        ...products,
+        {
+          id: quantity + 1,
+          type: '',
+          damageCount: 0,
+          otherIssues: {},
+          isEmployeeOwned: false,
+          employeeName: '',
+          employeeDepartment: '',
+        },
+      ]);
+    }
   };
 
   const removeProduct = () => {
