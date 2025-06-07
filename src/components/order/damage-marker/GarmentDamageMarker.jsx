@@ -14,6 +14,8 @@ export default function GarmentDamageMarker({
   selectedDefectId,
   onSelectDamage,
   onSelectDefect,
+  damageMarkable = {},
+  defectMarkable = {},
 }) {
   const [damagePositions, setDamagePositions] = useState({});
   const [defectPositions, setDefectPositions] = useState({});
@@ -63,7 +65,7 @@ export default function GarmentDamageMarker({
   };
 
   const handleMark = (x, y, view) => {
-    if (damageIndex !== undefined) {
+    if (damageIndex !== undefined && damageMarkable[damageIndex]) {
       const pos = { x, y, view };
       setDamagePositions((p) => ({ ...p, [damageIndex]: pos }));
       const orderKey = `damage-${damageIndex}`;
@@ -74,7 +76,7 @@ export default function GarmentDamageMarker({
       updateDamageDetail && updateDamageDetail(damageIndex, { position: pos, orderIndex: orderMap[orderKey] || nextOrder });
       return;
     }
-    if (defectId) {
+    if (defectId && defectMarkable[defectId]) {
       const pos = { x, y, view };
       setDefectPositions((p) => ({ ...p, [defectId]: pos }));
       if (!orderMap[defectId]) {
@@ -114,10 +116,10 @@ export default function GarmentDamageMarker({
   const totalMarks = Object.keys(damagePositions).length + Object.keys(defectPositions).length;
 
   const handleMarkerClick = (type, id) => {
-    if (type === 'damage' && onSelectDamage) {
+    if (type === 'damage' && onSelectDamage && damageMarkable[id]) {
       onSelectDamage(id);
     }
-    if (type === 'defect' && onSelectDefect) {
+    if (type === 'defect' && onSelectDefect && defectMarkable[id]) {
       onSelectDefect(id);
     }
   };
@@ -131,6 +133,8 @@ export default function GarmentDamageMarker({
           damagePositions={damagePositions}
           defectPositions={defectPositions}
           isWholeProductMarker={isWholeMarker}
+          damageMarkable={damageMarkable}
+          defectMarkable={defectMarkable}
           removeDamage={(e, idx) => {
             e.stopPropagation();
             setDamagePositions((p) => {
