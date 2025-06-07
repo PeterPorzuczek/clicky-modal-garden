@@ -476,6 +476,11 @@
         "se": "Förhandsgranskning E-POST",
         "no": "Forhåndsgranskning E-POST"
       },
+      "sendEmail": {
+        "en": "Send EMAIL",
+        "se": "Skicka E-POST",
+        "no": "Send E-POST"
+      },
       "close": {
         "en": "Close",
         "se": "Stäng",
