@@ -13,30 +13,34 @@ export default function ProductSelectionStep({
   nextStep,
 }) {
 
+  const MAX_QUANTITY = 20;
+
   const addProduct = () => {
-    setQuantity(quantity + 1);
-    const newProducts = [
-      ...products,
-      {
-        id: quantity + 1,
-        type: '',
-        damageCount: 0,
-        damages: [],
-        damageDetails: {},
-        damageLabels: {},
-        otherIssues: {},
-        defectDetails: {},
-        defectLabels: {},
-        images: null,
-        isEmployeeOwned: false,
-        employeeName: '',
-        employeeDepartment: '',
-        damageErrors: {},
-        damageOptionErrors: {},
-        markerError: undefined,
-      },
-    ];
-    setProducts(newProducts);
+    if (quantity < MAX_QUANTITY) {
+      setQuantity(quantity + 1);
+      const newProducts = [
+        ...products,
+        {
+          id: quantity + 1,
+          type: '',
+          damageCount: 0,
+          damages: [],
+          damageDetails: {},
+          damageLabels: {},
+          otherIssues: {},
+          defectDetails: {},
+          defectLabels: {},
+          images: null,
+          isEmployeeOwned: false,
+          employeeName: '',
+          employeeDepartment: '',
+          damageErrors: {},
+          damageOptionErrors: {},
+          markerError: undefined,
+        },
+      ];
+      setProducts(newProducts);
+    }
   };
 
   const removeProduct = () => {

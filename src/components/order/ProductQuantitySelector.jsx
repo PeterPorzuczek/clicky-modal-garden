@@ -18,12 +18,14 @@ function PlusIcon({className}) {
   );
 }
 
+const MAX_QUANTITY = 20;
+
 export default function ProductQuantitySelector({ quantity, onIncrease, onDecrease }) {
   const decrease = () => {
     if (quantity > 0) onDecrease();
   };
   const increase = () => {
-    onIncrease();
+    if (quantity < MAX_QUANTITY) onIncrease();
   };
   return (
     <div className="space-y-2">
@@ -37,7 +39,12 @@ export default function ProductQuantitySelector({ quantity, onIncrease, onDecrea
           <MinusIcon className="h-5 w-5" />
         </button>
         <span className="text-xl font-medium flex-1 text-center">{quantity}</span>
-        <button type="button" className="flex items-center justify-center h-full px-6 cursor-pointer text-gray-500 hover:bg-gray-50" onClick={increase}>
+        <button
+          type="button"
+          className="flex items-center justify-center h-full px-6 cursor-pointer text-gray-500 hover:bg-gray-50"
+          onClick={increase}
+          disabled={quantity >= MAX_QUANTITY}
+        >
           <PlusIcon className="h-5 w-5" />
         </button>
       </div>
