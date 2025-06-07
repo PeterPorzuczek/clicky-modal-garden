@@ -190,46 +190,60 @@ export default function OrderInformationStep({
 
         <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
           <h3 className="text-lg font-medium mb-3">{t('thirdStep.pickupAddress')}</h3>
-          <div className="space-y-4">
-            <div>
-              <label className="font-medium block mb-2">{t('thirdStep.companyName')}</label>
-              <input
-                placeholder={t('thirdStep.enterCompanyName')}
-                value={orderInfo.pickupCompanyName || ''}
-                onChange={(e) => onChange && onChange('pickupCompanyName', e.target.value)}
-                className="w-full h-10 rounded border px-3 border-gray-300"
-              />
-            </div>
-            <div>
-              <label className="font-medium block mb-2">{t('thirdStep.streetAddress')}</label>
-              <input
-                placeholder={t('thirdStep.enterStreetAddress')}
-                value={orderInfo.pickupStreet || ''}
-                onChange={(e) => onChange && onChange('pickupStreet', e.target.value)}
-                className="w-full h-10 rounded border px-3 border-gray-300"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="font-medium block mb-2">{t('thirdStep.postalCode')}</label>
-                <input
-                  placeholder={t('thirdStep.enterPostalCode')}
-                  value={orderInfo.pickupZipCode || ''}
-                  onChange={(e) => onChange && onChange('pickupZipCode', e.target.value)}
-                  className="w-full h-10 rounded border px-3 border-gray-300"
-                />
-              </div>
-              <div>
-                <label className="font-medium block mb-2">{t('thirdStep.city')}</label>
-                <input
-                  placeholder={t('thirdStep.enterCity')}
-                  value={orderInfo.pickupCity || ''}
-                  onChange={(e) => onChange && onChange('pickupCity', e.target.value)}
-                  className="w-full h-10 rounded border px-3 border-gray-300"
-                />
-              </div>
-            </div>
+          <div className="flex items-start space-x-2 mb-4">
+            <input
+              id="useBillingAddressForPickup"
+              type="checkbox"
+              checked={orderInfo.useBillingAddressForPickup !== undefined ? orderInfo.useBillingAddressForPickup : true}
+              onChange={(e) => onChange && onChange('useBillingAddressForPickup', e.target.checked)}
+              className="h-4 w-4 rounded border-gray-300"
+            />
+            <label htmlFor="useBillingAddressForPickup" className="text-sm cursor-pointer">
+              {t('thirdStep.sameAsBilling')}
+            </label>
           </div>
+          {orderInfo.useBillingAddressForPickup === false && (
+            <div className="space-y-4">
+              <div>
+                <label className="font-medium block mb-2">{t('thirdStep.companyName')}</label>
+                <input
+                  placeholder={t('thirdStep.enterCompanyName')}
+                  value={orderInfo.pickupCompanyName || ''}
+                  onChange={(e) => onChange && onChange('pickupCompanyName', e.target.value)}
+                  className="w-full h-10 rounded border px-3 border-gray-300"
+                />
+              </div>
+              <div>
+                <label className="font-medium block mb-2">{t('thirdStep.streetAddress')}</label>
+                <input
+                  placeholder={t('thirdStep.enterStreetAddress')}
+                  value={orderInfo.pickupStreet || ''}
+                  onChange={(e) => onChange && onChange('pickupStreet', e.target.value)}
+                  className="w-full h-10 rounded border px-3 border-gray-300"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-medium block mb-2">{t('thirdStep.postalCode')}</label>
+                  <input
+                    placeholder={t('thirdStep.enterPostalCode')}
+                    value={orderInfo.pickupZipCode || ''}
+                    onChange={(e) => onChange && onChange('pickupZipCode', e.target.value)}
+                    className="w-full h-10 rounded border px-3 border-gray-300"
+                  />
+                </div>
+                <div>
+                  <label className="font-medium block mb-2">{t('thirdStep.city')}</label>
+                  <input
+                    placeholder={t('thirdStep.enterCity')}
+                    value={orderInfo.pickupCity || ''}
+                    onChange={(e) => onChange && onChange('pickupCity', e.target.value)}
+                    className="w-full h-10 rounded border px-3 border-gray-300"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
@@ -238,7 +252,7 @@ export default function OrderInformationStep({
             <input
               id="usePickupAddressForDelivery"
               type="checkbox"
-              checked={orderInfo.usePickupAddressForDelivery || false}
+              checked={orderInfo.usePickupAddressForDelivery !== undefined ? orderInfo.usePickupAddressForDelivery : true}
               onChange={(e) => onChange && onChange('usePickupAddressForDelivery', e.target.checked)}
               className="h-4 w-4 rounded border-gray-300"
             />
@@ -246,7 +260,7 @@ export default function OrderInformationStep({
               {t('thirdStep.sameAsPickup')}
             </label>
           </div>
-          {!orderInfo.usePickupAddressForDelivery && (
+          {orderInfo.usePickupAddressForDelivery === false && (
             <div className="space-y-4">
               <div>
                 <label className="font-medium block mb-2">{t('thirdStep.companyName')}</label>

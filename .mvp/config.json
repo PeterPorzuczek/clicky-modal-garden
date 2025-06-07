@@ -280,6 +280,11 @@
         "se": "Samma som upphämtningsadress",
         "no": "Samme som hentingsadresse"
       },
+      "sameAsBilling": {
+        "en": "Same as billing address",
+        "se": "Samma som faktureringsadress",
+        "no": "Samme som fakturaadresse"
+      },
       "summary": {
         "en": "Summary",
         "se": "Summary",
