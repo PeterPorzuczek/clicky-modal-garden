@@ -192,18 +192,6 @@ export default function ProductCard({ product, onUpdate }) {
         {(product.damageCount > 0 || Object.values(product.otherIssues || {}).some(Boolean)) &&
           markingOpen && (
             <div className="relative p-4 bg-white rounded-lg shadow">
-              <button
-                type="button"
-                aria-label="Close"
-                className="absolute right-4 top-4 text-gray-500 hover:text-gray-900"
-                onClick={() => {
-                  setMarkingOpen(false);
-                  setSelectedDamageIndex(undefined);
-                  setSelectedDefectId(undefined);
-                }}
-              >
-                ✕
-              </button>
               <GarmentDamageMarker
                 product={product}
                 damageIndex={selectedDamageIndex}
