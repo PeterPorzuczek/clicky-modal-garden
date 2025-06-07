@@ -1,6 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './banner.css';
+@import './order.css';
+@import './ui.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
 
 :root {
   --navy: 220 29% 26%;
@@ -31,4 +40,35 @@ select {
 input[type="checkbox"] {
   cursor: pointer;
   pointer-events: auto;
+}
+
+.app {
+  padding: 1rem;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(243, 244, 246);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-controls {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+.btn-primary {
+  background-color: rgb(37, 99, 235);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: rgb(209, 213, 219);
 }

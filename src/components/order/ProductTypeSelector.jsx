@@ -14,10 +14,12 @@ export default function ProductTypeSelector({ productType, onTypeChange, onOpenC
   };
 
   return (
-    <div className="space-y-2">
-      <label className="font-medium">{t('firstStep.selectTypeOfProduct')} <span className="text-red-500">*</span></label>
+    <div className="pts-container">
+      <label className="pts-label">
+        {t('firstStep.selectTypeOfProduct')} <span className="text-red">*</span>
+      </label>
       <select
-        className={`w-full h-10 rounded border px-3 pr-10 ${error ? 'border-red-500' : ''}`}
+        className={`pts-select ${error ? 'error' : ''}`}
         value={productType || ''}
         onChange={handleChange}
         required
@@ -27,7 +29,7 @@ export default function ProductTypeSelector({ productType, onTypeChange, onOpenC
           <option key={opt.value} value={opt.value}>{opt.label}</option>
         ))}
       </select>
-      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+      {error && <p className="pts-error">{error}</p>}
     </div>
   );
 }

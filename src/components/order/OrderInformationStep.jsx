@@ -29,31 +29,31 @@ export default function OrderInformationStep({
 
   return (
     <div>
-      <div className="flex items-center mb-4">
-        <h2 className="text-xl md:text-2xl font-bold flex-1">{t('thirdStep.title')}</h2>
-        <DialogClose className="text-xl" />
+      <div className="oi-header">
+        <h2 className="oi-title">{t('thirdStep.title')}</h2>
+        <DialogClose className="oi-close" />
       </div>
-      <div className="flex mb-4">
-        <button type="button" onClick={prevStep} className="text-[#262E85] hover:underline">
+      <div className="oi-back-row">
+        <button type="button" onClick={prevStep} className="oi-back-btn">
           {t('thirdStep.back')}
         </button>
       </div>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-3">{t('thirdStep.orderInformation')}</h3>
-          <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="oi-form">
+        <div className="oi-card">
+          <h3 className="oi-card-title">{t('thirdStep.orderInformation')}</h3>
+          <div className="oi-section">
             <div>
-              <label className="font-medium block mb-2">{t('thirdStep.customerNumber')}</label>
+              <label className="oi-label">{t('thirdStep.customerNumber')}</label>
               <input
                 placeholder={t('thirdStep.enterCustomerNumber')}
                 value={orderInfo.customerNumber || ''}
                 onChange={(e) => onChange && onChange('customerNumber', e.target.value)}
-                className="w-full h-10 rounded border px-3 border-gray-300"
+                className="oi-input"
               />
             </div>
             <div>
-              <label className="font-medium block mb-2">
-                {t('thirdStep.companyName')} <span className="text-red-500">*</span>
+              <label className="oi-label">
+                {t('thirdStep.companyName')} <span className="text-red">*</span>
               </label>
               <input
                 placeholder={t('thirdStep.enterCompanyName')}
@@ -61,15 +61,15 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('companyName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('companyName')}
                 required
-                className={`w-full h-10 rounded border px-3 ${fieldError('companyName') ? 'border-red-500' : 'border-gray-300'}`}
+                className={`oi-input ${fieldError('companyName') ? 'oi-input-error' : ''}`}
               />
               {fieldError('companyName') && (
-                <p className="text-sm text-red-500 mt-1">{fieldError('companyName')}</p>
+                <p className="oi-error">{fieldError('companyName')}</p>
               )}
             </div>
             <div>
-              <label className="font-medium block mb-2">
-                {t('thirdStep.ordererName')} <span className="text-red-500">*</span>
+              <label className="oi-label">
+                {t('thirdStep.ordererName')} <span className="text-red">*</span>
               </label>
               <input
                 placeholder={t('thirdStep.enterOrdererName')}
@@ -77,15 +77,15 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('ordererName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('ordererName')}
                 required
-                className={`w-full h-10 rounded border px-3 ${fieldError('ordererName') ? 'border-red-500' : 'border-gray-300'}`}
+                className={`oi-input ${fieldError('ordererName') ? 'oi-input-error' : ''}`}
               />
               {fieldError('ordererName') && (
-                <p className="text-sm text-red-500 mt-1">{fieldError('ordererName')}</p>
+                <p className="oi-error">{fieldError('ordererName')}</p>
               )}
             </div>
             <div>
-              <label className="font-medium block mb-2">
-                {t('thirdStep.phone')} <span className="text-red-500">*</span>
+              <label className="oi-label">
+                {t('thirdStep.phone')} <span className="text-red">*</span>
               </label>
               <input
                 placeholder={t('thirdStep.enterPhone')}
@@ -93,15 +93,15 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('phone', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('phone')}
                 required
-                className={`w-full h-10 rounded border px-3 ${fieldError('phone') ? 'border-red-500' : 'border-gray-300'}`}
+                className={`oi-input ${fieldError('phone') ? 'oi-input-error' : ''}`}
               />
               {fieldError('phone') && (
-                <p className="text-sm text-red-500 mt-1">{fieldError('phone')}</p>
+                <p className="oi-error">{fieldError('phone')}</p>
               )}
             </div>
             <div>
-              <label className="font-medium block mb-2">
-                {t('thirdStep.email')} <span className="text-red-500">*</span>
+              <label className="oi-label">
+                {t('thirdStep.email')} <span className="text-red">*</span>
               </label>
               <input
                 placeholder={t('thirdStep.enterEmail')}
@@ -109,21 +109,21 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('email', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('email')}
                 required
-                className={`w-full h-10 rounded border px-3 ${fieldError('email') ? 'border-red-500' : 'border-gray-300'}`}
+                className={`oi-input ${fieldError('email') ? 'oi-input-error' : ''}`}
               />
               {fieldError('email') && (
-                <p className="text-sm text-red-500 mt-1">{fieldError('email')}</p>
+                <p className="oi-error">{fieldError('email')}</p>
               )}
             </div>
           </div>
         </div>
 
-        <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-3">{t('thirdStep.billingAddress')}</h3>
-          <div className="space-y-4">
+        <div className="oi-card">
+          <h3 className="oi-card-title">{t('thirdStep.billingAddress')}</h3>
+          <div className="oi-section">
             <div>
-              <label className="font-medium block mb-2">
-                {t('thirdStep.companyName')} <span className="text-red-500">*</span>
+              <label className="oi-label">
+                {t('thirdStep.companyName')} <span className="text-red">*</span>
               </label>
               <input
                 placeholder={t('thirdStep.enterCompanyName')}
@@ -131,15 +131,15 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('billingCompanyName', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('billingCompanyName')}
                 required
-                className={`w-full h-10 rounded border px-3 ${fieldError('billingCompanyName') ? 'border-red-500' : 'border-gray-300'}`}
+                className={`oi-input ${fieldError('billingCompanyName') ? 'oi-input-error' : ''}`}
               />
               {fieldError('billingCompanyName') && (
-                <p className="text-sm text-red-500 mt-1">{fieldError('billingCompanyName')}</p>
+                <p className="oi-error">{fieldError('billingCompanyName')}</p>
               )}
             </div>
             <div>
-              <label className="font-medium block mb-2">
-                {t('thirdStep.streetAddress')} <span className="text-red-500">*</span>
+              <label className="oi-label">
+                {t('thirdStep.streetAddress')} <span className="text-red">*</span>
               </label>
               <input
                 placeholder={t('thirdStep.enterStreetAddress')}
@@ -147,16 +147,16 @@ export default function OrderInformationStep({
                 onChange={(e) => onChange && onChange('billingStreet', e.target.value)}
                 onBlur={() => onFieldBlur && onFieldBlur('billingStreet')}
                 required
-                className={`w-full h-10 rounded border px-3 ${fieldError('billingStreet') ? 'border-red-500' : 'border-gray-300'}`}
+                className={`oi-input ${fieldError('billingStreet') ? 'oi-input-error' : ''}`}
               />
               {fieldError('billingStreet') && (
-                <p className="text-sm text-red-500 mt-1">{fieldError('billingStreet')}</p>
+                <p className="oi-error">{fieldError('billingStreet')}</p>
               )}
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="oi-grid-2">
               <div>
-                <label className="font-medium block mb-2">
-                  {t('thirdStep.postalCode')} <span className="text-red-500">*</span>
+                <label className="oi-label">
+                  {t('thirdStep.postalCode')} <span className="text-red">*</span>
                 </label>
                 <input
                   placeholder={t('thirdStep.enterPostalCode')}
@@ -164,15 +164,15 @@ export default function OrderInformationStep({
                   onChange={(e) => onChange && onChange('billingZipCode', e.target.value)}
                   onBlur={() => onFieldBlur && onFieldBlur('billingZipCode')}
                   required
-                  className={`w-full h-10 rounded border px-3 ${fieldError('billingZipCode') ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`oi-input ${fieldError('billingZipCode') ? 'oi-input-error' : ''}`}
                 />
                 {fieldError('billingZipCode') && (
-                  <p className="text-sm text-red-500 mt-1">{fieldError('billingZipCode')}</p>
+                  <p className="oi-error">{fieldError('billingZipCode')}</p>
                 )}
               </div>
               <div>
-                <label className="font-medium block mb-2">
-                  {t('thirdStep.city')} <span className="text-red-500">*</span>
+                <label className="oi-label">
+                  {t('thirdStep.city')} <span className="text-red">*</span>
                 </label>
                 <input
                   placeholder={t('thirdStep.enterCity')}
@@ -180,67 +180,67 @@ export default function OrderInformationStep({
                   onChange={(e) => onChange && onChange('billingCity', e.target.value)}
                   onBlur={() => onFieldBlur && onFieldBlur('billingCity')}
                   required
-                  className={`w-full h-10 rounded border px-3 ${fieldError('billingCity') ? 'border-red-500' : 'border-gray-300'}`}
+                  className={`oi-input ${fieldError('billingCity') ? 'oi-input-error' : ''}`}
                 />
                 {fieldError('billingCity') && (
-                  <p className="text-sm text-red-500 mt-1">{fieldError('billingCity')}</p>
+                  <p className="oi-error">{fieldError('billingCity')}</p>
                 )}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-3">{t('thirdStep.pickupAddress')}</h3>
-          <div className="flex items-start space-x-2 mb-4">
+        <div className="oi-card">
+          <h3 className="oi-card-title">{t('thirdStep.pickupAddress')}</h3>
+          <div className="oi-checkbox-row">
             <input
               id="useBillingAddressForPickup"
               type="checkbox"
               checked={orderInfo.useBillingAddressForPickup !== undefined ? orderInfo.useBillingAddressForPickup : true}
               onChange={(e) => onChange && onChange('useBillingAddressForPickup', e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300"
+              className="oi-checkbox"
             />
-            <label htmlFor="useBillingAddressForPickup" className="text-sm cursor-pointer">
+            <label htmlFor="useBillingAddressForPickup" className="oi-checkbox-label">
               {t('thirdStep.sameAsBilling')}
             </label>
           </div>
           {orderInfo.useBillingAddressForPickup === false && (
-            <div className="space-y-4">
+            <div className="oi-section">
               <div>
-                <label className="font-medium block mb-2">{t('thirdStep.companyName')}</label>
+                <label className="oi-label">{t('thirdStep.companyName')}</label>
                 <input
                   placeholder={t('thirdStep.enterCompanyName')}
                   value={orderInfo.pickupCompanyName || ''}
                   onChange={(e) => onChange && onChange('pickupCompanyName', e.target.value)}
-                  className="w-full h-10 rounded border px-3 border-gray-300"
+                  className="oi-input"
                 />
               </div>
               <div>
-                <label className="font-medium block mb-2">{t('thirdStep.streetAddress')}</label>
+                <label className="oi-label">{t('thirdStep.streetAddress')}</label>
                 <input
                   placeholder={t('thirdStep.enterStreetAddress')}
                   value={orderInfo.pickupStreet || ''}
                   onChange={(e) => onChange && onChange('pickupStreet', e.target.value)}
-                  className="w-full h-10 rounded border px-3 border-gray-300"
+                  className="oi-input"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="oi-grid-2">
                 <div>
-                  <label className="font-medium block mb-2">{t('thirdStep.postalCode')}</label>
+                  <label className="oi-label">{t('thirdStep.postalCode')}</label>
                   <input
                     placeholder={t('thirdStep.enterPostalCode')}
                     value={orderInfo.pickupZipCode || ''}
                     onChange={(e) => onChange && onChange('pickupZipCode', e.target.value)}
-                    className="w-full h-10 rounded border px-3 border-gray-300"
+                    className="oi-input"
                   />
                 </div>
                 <div>
-                  <label className="font-medium block mb-2">{t('thirdStep.city')}</label>
+                  <label className="oi-label">{t('thirdStep.city')}</label>
                   <input
                     placeholder={t('thirdStep.enterCity')}
                     value={orderInfo.pickupCity || ''}
                     onChange={(e) => onChange && onChange('pickupCity', e.target.value)}
-                    className="w-full h-10 rounded border px-3 border-gray-300"
+                    className="oi-input"
                   />
                 </div>
               </div>
@@ -248,57 +248,57 @@ export default function OrderInformationStep({
           )}
         </div>
 
-        <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-3">{t('thirdStep.deliveryAddress')}</h3>
-          <div className="flex items-start space-x-2 mb-4">
+        <div className="oi-card">
+          <h3 className="oi-card-title">{t('thirdStep.deliveryAddress')}</h3>
+          <div className="oi-checkbox-row">
             <input
               id="usePickupAddressForDelivery"
               type="checkbox"
               checked={orderInfo.usePickupAddressForDelivery !== undefined ? orderInfo.usePickupAddressForDelivery : true}
               onChange={(e) => onChange && onChange('usePickupAddressForDelivery', e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300"
+              className="oi-checkbox"
             />
-            <label htmlFor="usePickupAddressForDelivery" className="text-sm cursor-pointer">
+            <label htmlFor="usePickupAddressForDelivery" className="oi-checkbox-label">
               {t('thirdStep.sameAsPickup')}
             </label>
           </div>
           {orderInfo.usePickupAddressForDelivery === false && (
-            <div className="space-y-4">
+            <div className="oi-section">
               <div>
-                <label className="font-medium block mb-2">{t('thirdStep.companyName')}</label>
+                <label className="oi-label">{t('thirdStep.companyName')}</label>
                 <input
                   placeholder={t('thirdStep.enterCompanyName')}
                   value={orderInfo.deliveryCompanyName || ''}
                   onChange={(e) => onChange && onChange('deliveryCompanyName', e.target.value)}
-                  className="w-full h-10 rounded border px-3 border-gray-300"
+                  className="oi-input"
                 />
               </div>
               <div>
-                <label className="font-medium block mb-2">{t('thirdStep.streetAddress')}</label>
+                <label className="oi-label">{t('thirdStep.streetAddress')}</label>
                 <input
                   placeholder={t('thirdStep.enterStreetAddress')}
                   value={orderInfo.deliveryStreet || ''}
                   onChange={(e) => onChange && onChange('deliveryStreet', e.target.value)}
-                  className="w-full h-10 rounded border px-3 border-gray-300"
+                  className="oi-input"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="oi-grid-2">
                 <div>
-                  <label className="font-medium block mb-2">{t('thirdStep.postalCode')}</label>
+                  <label className="oi-label">{t('thirdStep.postalCode')}</label>
                   <input
                     placeholder={t('thirdStep.enterPostalCode')}
                     value={orderInfo.deliveryZipCode || ''}
                     onChange={(e) => onChange && onChange('deliveryZipCode', e.target.value)}
-                    className="w-full h-10 rounded border px-3 border-gray-300"
+                    className="oi-input"
                   />
                 </div>
                 <div>
-                  <label className="font-medium block mb-2">{t('thirdStep.city')}</label>
+                  <label className="oi-label">{t('thirdStep.city')}</label>
                   <input
                     placeholder={t('thirdStep.enterCity')}
                     value={orderInfo.deliveryCity || ''}
                     onChange={(e) => onChange && onChange('deliveryCity', e.target.value)}
-                    className="w-full h-10 rounded border px-3 border-gray-300"
+                    className="oi-input"
                   />
                 </div>
               </div>
@@ -307,30 +307,29 @@ export default function OrderInformationStep({
         </div>
 
         {products.some(p => p.type) && total > 0 && (
-          <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg">
-            <h3 className="text-lg font-medium mb-3">{t('thirdStep.summary')}</h3>
+          <div className="oi-card">
+            <h3 className="oi-card-title">{t('thirdStep.summary')}</h3>
             <PriceSummary products={products} />
           </div>
         )}
 
-        <div className="flex items-start space-x-2 mb-6">
+        <div className="oi-checkbox-row">
           <input
             id="termsAccepted"
             type="checkbox"
             checked={termsAccepted}
             onChange={(e) => setTermsAccepted && setTermsAccepted(e.target.checked)}
             onBlur={() => onFieldBlur && onFieldBlur('termsAccepted')}
-            className={`h-4 w-4 rounded border-gray-300 ${fieldError('termsAccepted') ? 'border-red-500' : ''}`}
+            className={`oi-checkbox ${fieldError('termsAccepted') ? 'error' : ''}`}
           />
-          <label htmlFor="termsAccepted" className="text-sm cursor-pointer">
-            {t('thirdStep.acceptTerms')} <span className="text-red-500">*</span>
+          <label htmlFor="termsAccepted" className="oi-checkbox-label">
+            {t('thirdStep.acceptTerms')} <span className="text-red">*</span>
           </label>
         </div>
         {fieldError('termsAccepted') && (
-          <p className="text-sm text-red-500 mt-1 mb-4">{fieldError('termsAccepted')}</p>
+          <p className="oi-error oi-error-spaced">{fieldError('termsAccepted')}</p>
         )}
-
-        <button type="submit" className="w-full rounded-full h-12 bg-[#262E85] hover:bg-[#1e2566]">
+        <button type="submit" className="primary-button">
           {t('thirdStep.order')}
         </button>
       </form>

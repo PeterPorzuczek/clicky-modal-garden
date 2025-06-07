@@ -28,24 +28,24 @@ export default function ProductQuantitySelector({ quantity, onIncrease, onDecrea
     if (quantity < MAX_QUANTITY) onIncrease();
   };
   return (
-    <div className="space-y-2">
-      <div className="flex justify-between items-center">
+    <div className="pqs-container">
+      <div className="pqs-row">
         <label htmlFor="quantity" className="font-medium">
-          {t('firstStep.selectNumberOfProducts')} <span className="text-red-500">*</span>
+          {t('firstStep.selectNumberOfProducts')} <span className="text-red">*</span>
         </label>
       </div>
-      <div className="flex items-center justify-between w-full max-w-md h-14 rounded-lg border border-input overflow-hidden bg-white">
-        <button type="button" className="flex items-center justify-center h-full px-6 cursor-pointer text-gray-500 hover:bg-gray-50" onClick={decrease} disabled={quantity <= 0}>
-          <MinusIcon className="h-5 w-5" />
+      <div className="pqs-control">
+        <button type="button" className="pqs-btn" onClick={decrease} disabled={quantity <= 0}>
+          <MinusIcon className="icon-lg" />
         </button>
-        <span className="text-xl font-medium flex-1 text-center">{quantity}</span>
+        <span className="pqs-value">{quantity}</span>
         <button
           type="button"
-          className="flex items-center justify-center h-full px-6 cursor-pointer text-gray-500 hover:bg-gray-50"
+          className="pqs-btn"
           onClick={increase}
           disabled={quantity >= MAX_QUANTITY}
         >
-          <PlusIcon className="h-5 w-5" />
+          <PlusIcon className="icon-lg" />
         </button>
       </div>
     </div>

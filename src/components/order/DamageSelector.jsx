@@ -20,18 +20,18 @@ export default function DamageSelector({
   };
 
   return (
-    <div className="border border-gray-200 p-3 rounded-md space-y-3 relative">
-      <div className="flex flex-col space-y-3">
+    <div className="damage-selector">
+      <div className="damage-selector-inner">
         <div>
-          <div className="flex items-center mb-1">
-            <label className="text-sm font-medium">
-              Skada {index + 1} <span className="text-red-500">*</span>
+          <div className="damage-label-row">
+            <label className="damage-label">
+              Skada {index + 1} <span className="text-red">*</span>
             </label>
           </div>
           <select
             value={damage}
             onChange={handleDamageChange}
-            className={`w-full h-10 rounded border px-3 pr-10 ${damageError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`damage-select ${damageError ? 'error' : ''}`}
             required
           >
             <option value="">Välj typ av skada</option>
@@ -41,17 +41,17 @@ export default function DamageSelector({
               </option>
             ))}
           </select>
-          {damageError && <p className="text-sm text-red-500 mt-1">{damageError}</p>}
+          {damageError && <p className="damage-error">{damageError}</p>}
         </div>
         {optionOptions.length > 0 && (
           <div>
-            <label className="text-sm font-medium">
-              Alternativ <span className="text-red-500">*</span>
+            <label className="damage-label">
+              Alternativ <span className="text-red">*</span>
             </label>
             <select
               value={option}
               onChange={handleOptionChange}
-              className={`w-full h-10 rounded border px-3 pr-10 ${optionError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`damage-select ${optionError ? 'error' : ''}`}
               required
             >
               <option value="">Välj</option>
@@ -61,7 +61,7 @@ export default function DamageSelector({
                 </option>
               ))}
             </select>
-            {optionError && <p className="text-sm text-red-500 mt-1">{optionError}</p>}
+            {optionError && <p className="damage-error">{optionError}</p>}
           </div>
         )}
       </div>

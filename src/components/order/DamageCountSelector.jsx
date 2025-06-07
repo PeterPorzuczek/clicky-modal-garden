@@ -22,15 +22,20 @@ export default function DamageCountSelector({ count, onChange }) {
   const increment = () => onChange(count + 1);
 
   return (
-    <div className="space-y-2">
-      <label className="font-medium">Antal skador</label>
-      <div className="flex items-center justify-between w-full max-w-xs h-14 rounded-lg border border-input overflow-hidden bg-white">
-        <button type="button" className="flex items-center justify-center h-full px-6 cursor-pointer text-gray-500 hover:bg-gray-50" onClick={decrement} disabled={count <= 0}>
-          <MinusIcon className="h-5 w-5" />
+    <div className="dcs-container">
+      <label className="oi-label">Antal skador</label>
+      <div className="dcs-control">
+        <button
+          type="button"
+          className="dcs-btn"
+          onClick={decrement}
+          disabled={count <= 0}
+        >
+          <MinusIcon className="icon-lg" />
         </button>
-        <span className="text-xl font-medium flex-1 text-center">{count}</span>
-        <button type="button" className="flex items-center justify-center h-full px-6 cursor-pointer text-gray-500 hover:bg-gray-50" onClick={increment}>
-          <PlusIcon className="h-5 w-5" />
+        <span className="dcs-value">{count}</span>
+        <button type="button" className="dcs-btn" onClick={increment}>
+          <PlusIcon className="icon-lg" />
         </button>
       </div>
     </div>

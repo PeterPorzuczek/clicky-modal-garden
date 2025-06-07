@@ -37,9 +37,9 @@ export default function InstructionMessage({ productType, isMarked, isSingleMark
   }
 
   return (
-    <div className="flex items-start gap-3 p-4 my-3 bg-[#F2FCE2] border border-[#e1efd2] rounded-lg">
-      <InfoIcon className="text-blue-800 mt-0.5 flex-shrink-0" size={24} />
-      <p className="text-sm text-gray-700">{message}</p>
+    <div className="instruction-msg">
+      <InfoIcon className="instruction-icon" size={24} />
+      <p className="instruction-text">{message}</p>
     </div>
   );
 }
