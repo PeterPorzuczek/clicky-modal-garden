@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomSelect from '../ui/CustomSelect.jsx';
+import CustomSelect from './ui/CustomSelect.jsx';
 
 export default function DamageSelector({
   index = 0,
