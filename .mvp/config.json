@@ -1934,13 +1934,8 @@
             "se": "Lagning, Tvätt & Uppfräschning (inkl. dålig lukt)",
             "no": "Reparasjon, Vask & Gjenoppretting (inkl. luktfjerning)"
           },
-          "picturesToBeMarked": [
-            "https://i.imgur.com/FpqlbPM.png",
-            "https://i.imgur.com/hkczXk3.png",
-            "https://i.imgur.com/CCrkCn8.png",
-            "https://i.imgur.com/5p3Oo6l.png"
-          ],
-          "markedOnPicture": true,
+          "picturesToBeMarked": [],
+          "markedOnPicture": false,
           "options": [],
           "pricing": {
             "1": 495,
@@ -2139,14 +2134,24 @@
             "no": "Produkt #",
             "en": "Product #"
           },
+          "employee": {
+            "sv": "Tillhör anställd:",
+            "no": "Tilhører ansatt:",
+            "en": "Belongs to employee:"
+          },
+          "department": {
+            "sv": "Avdelning:",
+            "no": "Avdeling:",
+            "en": "Department:"
+          },
           "article_number": {
             "sv": "Artikelnummer:",
             "no": "Artikkelnummer:",
             "en": "Article Number:"
           },
           "repair_id": {
-            "sv": "Lagnings id:",
-            "no": "Reparasjons id:",
+            "sv": "Lagnings-ID:",
+            "no": "Reparasjons-ID:",
             "en": "Repair ID:"
           },
           "damage_1": {

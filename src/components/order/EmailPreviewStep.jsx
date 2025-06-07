@@ -8,46 +8,51 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
   const et = config.emailTemplate || {};
   const l = localize;
 
+  // Create product items using calculated totals but merge with original product data
   const productItemsHtml = productTotals
     .map((p) => {
-      const productTitle = `${t('firstStep.product')} #${p.id} ${p.type || '-'}`;
+      // Find original product to get additional info like employee, artikelNumber, etc.
+      const originalProduct = products.find(prod => prod.id === p.id) || {};
       
-      const damageRows = p.items
-        .filter(item => item.category === 'damages' || !item.category)
-        .map(damage => `
-          <tr>
-            <td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0; color: #333;">${damage.label}</td>
-                            <td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0; color: #333; text-align: center;">${t('secondStep.damage')}</td>
-            <td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0; color: #2D2E87; font-weight: 500; text-align: right;">${damage.price} kr</td>
-          </tr>`)
-        .join('');
-
-      const defectRows = p.items
-        .filter(item => item.category === 'defects')
-        .map(defect => `
-          <tr>
-            <td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0; color: #333;">${defect.label}</td>
-                            <td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0; color: #333; text-align: center;">${t('secondStep.defect')}</td>
-            <td style="padding: 8px 12px; border-bottom: 1px solid #f0f0f0; color: #2D2E87; font-weight: 500; text-align: right;">${defect.price} kr</td>
-          </tr>`)
-        .join('');
-
       return `
-        <tr>
-          <td colspan="3" style="padding: 20px 12px 12px; border-bottom: 2px solid #2D2E87; font-weight: 600; color: #2D2E87; font-size: 16px; background-color: #f8f9fa;">
-            ${productTitle}
-          </td>
-        </tr>
-        ${damageRows}
-        ${defectRows}
-        <tr>
-          <td colspan="2" style="padding: 12px; border-bottom: 2px solid #e0e0e0; font-weight: 600; color: #2D2E87; text-align: right;">
-            ${t('firstStep.subtotal')}
-          </td>
-          <td style="padding: 12px; border-bottom: 2px solid #e0e0e0; font-weight: 600; color: #2D2E87; text-align: right;">
-            ${p.subtotal} kr
-          </td>
-        </tr>`;
+      <tr>
+        <td style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">
+          <div style="font-weight: 600; color: #2D2E87; margin-bottom: 8px; font-size: 16px;">
+            ${t('firstStep.product')} #${p.id} ${p.type || '-'}
+          </div>
+          ${(originalProduct.employee || originalProduct.employeeName) ? `
+          <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
+            <strong>${l(et.sections?.products?.fields?.employee) || 'Tillhör anställd:'}</strong> ${originalProduct.employee || originalProduct.employeeName}
+          </div>` : ''}
+          ${(originalProduct.employeeDepartment || originalProduct.department) ? `
+          <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
+            <strong>${l(et.sections?.products?.fields?.department) || 'Avdelning:'}</strong> ${originalProduct.employeeDepartment || originalProduct.department}
+          </div>` : ''}
+          ${(originalProduct.artikelNumber || originalProduct.articleNumber) ? `
+          <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
+            <strong>${l(et.sections?.products?.fields?.article_number) || 'Artikelnummer:'}</strong> ${originalProduct.artikelNumber || originalProduct.articleNumber}
+          </div>` : ''}
+          ${(originalProduct.lagningsId || originalProduct.repairId) ? `
+          <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
+            <strong>${l(et.sections?.products?.fields?.repair_id) || 'Lagnings-ID:'}</strong> ${originalProduct.lagningsId || originalProduct.repairId}
+          </div>` : ''}
+          <div style="margin-left: 15px;">
+            ${p.items
+              .map(
+                (item) => `
+                  <div style="display: table; width: 100%; margin: 4px 0; padding: 2px 0; font-size: 14px;">
+                    <span style="display: table-cell; color: #333;">${item.label}</span>
+                    <span style="display: table-cell; text-align: right; color: #2D2E87; font-weight: 500;">${item.price} kr</span>
+                  </div>`
+              )
+              .join('')}
+            <div style="display: table; width: 100%; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd; font-weight: 600; color: #2D2E87;">
+              <span style="display: table-cell;">${t('firstStep.subtotal')}</span>
+              <span style="display: table-cell; text-align: right;">${p.subtotal} kr</span>
+            </div>
+          </div>
+        </td>
+      </tr>`;
     })
     .join('');
 
@@ -55,7 +60,7 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
         <div style="display: table; width: 100%;">
-          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.customer_number) || 'Kundnummer'}</span>
+          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.customer_number) || 'Kundnummer:'}</span>
           <span style="display: table-cell; text-align: right; color: #333;">${orderInfo.customerNumber || '-'}</span>
         </div>
       </td>
@@ -63,7 +68,7 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
         <div style="display: table; width: 100%;">
-          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.company_name) || 'Företagsnamn'}</span>
+          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.company_name) || 'Företagsnamn:'}</span>
           <span style="display: table-cell; text-align: right; color: #333;">${orderInfo.companyName || '-'}</span>
         </div>
       </td>
@@ -71,7 +76,7 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
         <div style="display: table; width: 100%;">
-          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.orderer_name) || 'Beställarens namn'}</span>
+          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.orderer_name) || 'Beställarens namn:'}</span>
           <span style="display: table-cell; text-align: right; color: #333;">${orderInfo.ordererName || '-'}</span>
         </div>
       </td>
@@ -79,7 +84,7 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
         <div style="display: table; width: 100%;">
-          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.phone) || 'Telefon'}</span>
+          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.phone) || 'Telefon:'}</span>
           <span style="display: table-cell; text-align: right; color: #333;">${orderInfo.phone || '-'}</span>
         </div>
       </td>
@@ -87,7 +92,7 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
         <div style="display: table; width: 100%;">
-          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.email) || 'E-post'}</span>
+          <span style="display: table-cell; font-weight: 500; color: #666;">${l(et.sections?.order_information?.fields?.email) || 'E-post:'}</span>
           <span style="display: table-cell; text-align: right; color: #333;">${orderInfo.email || '-'}</span>
         </div>
       </td>
@@ -211,22 +216,14 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
 
         <!-- Main Header -->
         <div class="main-header">
-          ${l(et.header, 'Orderbekräftelse')}
+          ${l(et.main_title) || 'Beställning lagning & återställning av arbetskläder'}
         </div>
 
         <!-- Content -->
         <div class="content">
-          <!-- Company Title -->
-          <div style="text-align: center; font-size: 24px; font-weight: 600; color: #2D2E87; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #2D2E87;">
-            ${l(et.main_title, 'Beställning lagning & återställning av arbetskläder')}
-          </div>
-          
           <div class="greeting">
-            ${l(et.intro?.thank_you, 'Tack för din beställning!')}
-          </div>
-          
-          <div style="margin-bottom: 30px; line-height: 1.6; color: #333;">
-            ${l(et.intro?.summary_text, 'Nedan ser du en Summary av din beställning. Vår kundservice kommer inom kort återkomma med ytterligare instruktioner.')}
+            ${l(et.intro?.thank_you) || 'Tack för din beställning!'}<br><br>
+            ${l(et.intro?.summary_text) || 'Nedan ser du en sammanfattning av din beställning. Vår kundservice kommer inom kort återkomma med ytterligare instruktioner.'}
           </div>
 
           <!-- Order Details -->
@@ -358,17 +355,8 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
           <!-- Products -->
           <div class="section">
             <div class="section-title">${l(et.sections?.products?.title) || 'Beställda produkter'}</div>
-            <table class="table" style="border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden;">
-                             <thead>
-                 <tr style="background-color: #2D2E87; color: white;">
-                   <th style="padding: 12px; text-align: left; font-weight: 600; font-size: 14px;">${t('secondStep.typeOfDamage')}</th>
-                   <th style="padding: 12px; text-align: center; font-weight: 600; font-size: 14px;">${t('secondStep.damage')}</th>
-                   <th style="padding: 12px; text-align: right; font-weight: 600; font-size: 14px;">${t('firstStep.total')}</th>
-                 </tr>
-               </thead>
-              <tbody>
-                ${productItemsHtml}
-              </tbody>
+            <table class="table">
+              ${productItemsHtml}
             </table>
 
             <!-- Summary -->
@@ -387,9 +375,9 @@ export function generateEmailHtml(orderInfo = {}, products = []) {
 
         <!-- Footer -->
         <div class="footer">
-          <p>${l(et.footer, 'Tack för att du valde vår tjänst!')}</p>
+          <p>${l(et.footer) || 'Tack för att du valde vår tjänst!'}</p>
           <div class="disclaimer">
-            ${l(et.disclaimer, 'Detta är ett automatiskt meddelande. Vänligen svara inte på detta e-postmeddelande.')}
+            ${l(et.disclaimer) || 'Detta är ett automatiskt meddelande. Vänligen svara inte på detta e-postmeddelande.'}
           </div>
         </div>
       </div>
@@ -440,9 +428,13 @@ export default function EmailPreviewStep({ orderInfo, products, prevStep }) {
       finalProducts = [
         {
           id: 1,
-          type: 'Byxa',
+          type: 'byxa',
+          employee: 'John Andersson',
+          employeeName: 'John Andersson',
+          employeeDepartment: 'Lager',
           artikelNumber: '12025325',
           lagningsId: 'L12906',
+          isEmployeeOwned: true,
           items: [
             { label: 'Hål', price: 120, category: 'damages' },
             { label: 'Hål', price: 120, category: 'damages' },
@@ -452,9 +444,13 @@ export default function EmailPreviewStep({ orderInfo, products, prevStep }) {
         },
         {
           id: 2,
-          type: 'Väst',
+          type: 'väst',
+          employee: 'Anna Svensson',
+          employeeName: 'Anna Svensson',
+          employeeDepartment: 'Administration',
           artikelNumber: '12025325',
           lagningsId: 'L12908',
+          isEmployeeOwned: true,
           items: [
             { label: 'Hål', price: 100, category: 'damages' }
           ],
@@ -549,7 +545,9 @@ export default function EmailPreviewStep({ orderInfo, products, prevStep }) {
           justify-content: space-between;
           gap: 1rem;
           padding: 1rem;
+          background-color: white;
           border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .secondary-button {
