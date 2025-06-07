@@ -17,9 +17,10 @@ export default function ProductTypeSelector({ productType, onTypeChange, onOpenC
     <div className="space-y-2">
       <label className="font-medium">{t('firstStep.selectTypeOfProduct')} <span className="text-red-500">*</span></label>
       <select
-        className={`w-full h-10 rounded border px-3 pr-8 ${error ? 'border-red-500' : ''}`}
+        className={`w-full h-10 rounded border px-3 pr-10 ${error ? 'border-red-500' : ''}`}
         value={productType || ''}
         onChange={handleChange}
+        required
       >
         <option value="" disabled>{t('firstStep.select')}</option>
         {OPTIONS.map(opt => (

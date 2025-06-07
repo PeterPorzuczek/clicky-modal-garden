@@ -44,9 +44,7 @@ export default function MarkerList({
       order: markerSelectionOrder[`damage-${idx}`],
       label: d === 'tear' ? 'Reva' : d,
       pos: damagePositions[idx],
-      markable: damageMarkable[idx],
-    }))
-    .filter((e) => e.markable);
+    }));
 
   const defectEntries = Object.entries(product.otherIssues || {})
     .filter(([, on]) => on)
@@ -57,9 +55,7 @@ export default function MarkerList({
       order: markerSelectionOrder[id],
       label: getDefectLabel(id),
       pos: defectPositions[id],
-      markable: defectMarkable[id],
-    }))
-    .filter((e) => e.markable);
+    }));
 
   const entries = [...damageEntries, ...defectEntries].sort((a, b) => {
     const orderA = a.order ?? Infinity;
@@ -75,7 +71,6 @@ export default function MarkerList({
       <h5 className="text-sm font-medium mb-1">Valda markeringar:</h5>
       <div className="flex flex-wrap gap-2">
         {entries.map((e) => {
-          const markable = !!e.markable;
           const selected =
             (e.type === 'damage' && selectedDamageIndex === e.id) ||
             (e.type === 'defect' && selectedDefectId === e.id);
@@ -89,12 +84,11 @@ export default function MarkerList({
               role="button"
               tabIndex={0}
               onClick={() => {
-                if (!markable) return;
                 e.type === 'damage'
                   ? onSelectDamage && onSelectDamage(e.id)
                   : onSelectDefect && onSelectDefect(e.id);
               }}
-              className={`flex items-center border rounded-full px-3 py-1 text-xs ${markable ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'} ${baseClasses} ${selected ? 'ring-2 ring-blue-500' : ''}`}
+              className={`flex items-center border rounded-full px-3 py-1 text-xs cursor-pointer ${baseClasses} ${selected ? 'ring-2 ring-blue-500' : ''}`}
             >
               <span className="flex items-center">
                 <span

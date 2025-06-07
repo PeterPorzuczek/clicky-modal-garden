@@ -31,7 +31,8 @@ export default function DamageSelector({
           <select
             value={damage}
             onChange={handleDamageChange}
-            className={`w-full h-10 rounded border px-3 pr-8 ${damageError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full h-10 rounded border px-3 pr-10 ${damageError ? 'border-red-500' : 'border-gray-300'}`}
+            required
           >
             <option value="">Välj typ av skada</option>
             {damageOptions.map((opt) => (
@@ -48,7 +49,7 @@ export default function DamageSelector({
             <select
               value={option}
               onChange={handleOptionChange}
-              className={`w-full h-10 rounded border px-3 pr-8 ${optionError ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full h-10 rounded border px-3 pr-10 ${optionError ? 'border-red-500' : 'border-gray-300'}`}
             >
               <option value="">Välj</option>
               {optionOptions.map((opt) => (
