@@ -2161,37 +2161,6 @@
             "no": "Delsum:",
             "en": "Subtotal:"
           }
-        },
-        "damage_types": {
-          "zipper_change": {
-            "sv": "Zipper change",
-            "no": "Glidelås skifte",
-            "en": "Zipper change"
-          },
-          "hole": {
-            "sv": "Hål",
-            "no": "Hull",
-            "en": "Hole"
-          }
-        },
-        "defect_types": {
-          "bad_smell": {
-            "sv": "Bad smell",
-            "no": "Dårlig lukt",
-            "en": "Bad smell"
-          }
-        },
-        "product_types": {
-          "byxa": {
-            "sv": "Byxa",
-            "no": "Bukse",
-            "en": "Trousers"
-          },
-          "vast": {
-            "sv": "Väst",
-            "no": "Vest",
-            "en": "Vest"
-          }
         }
       }
     },
