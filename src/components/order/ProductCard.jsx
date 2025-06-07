@@ -83,12 +83,15 @@ export default function ProductCard({ product, onUpdate }) {
       ([id, active]) =>
         active && product.defectDetails?.[id]?.position !== undefined
     );
-    if ((hasDamageMarks || hasDefectMarks) && !markingOpen) {
+    if (hasDamageMarks || hasDefectMarks) {
       setMarkingOpen(true);
     }
-    // intentionally run only on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    product.damages,
+    product.damageDetails,
+    product.otherIssues,
+    product.defectDetails,
+  ]);
 
   useEffect(() => {
     const dMark = {};
