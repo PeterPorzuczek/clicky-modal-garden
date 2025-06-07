@@ -1,6 +1,7 @@
 import React from 'react';
 import Badge from '../../../ui/Badge.jsx';
 import { getDamageLabel } from '../../../i18n.js';
+import WholeProductList from './WholeProductList.jsx';
 
 export default function GarmentView({
   productType,
@@ -15,6 +16,12 @@ export default function GarmentView({
   defectLabels = {},
   markerSelectionOrder = {},
   onMarkerClick,
+  product,
+  removeDamage,
+  removeDefect,
+  getDamageLabel: getDamageLabelProp,
+  getDefectLabel,
+  isWholeProductMarker,
 }) {
   const containerRef = React.useRef(null);
 
@@ -44,23 +51,23 @@ export default function GarmentView({
   ];
 
   return (
-    <div className="mt-4 border rounded-lg p-2 bg-white">
-      <div className="relative mt-2" ref={containerRef} onClick={handleClick} style={{ cursor: selectedForMarking ? 'crosshair' : 'default' }}>
+    <div className="gv-container">
+      <div className="gv-image-wrapper" ref={containerRef} onClick={handleClick} style={{ cursor: selectedForMarking ? 'crosshair' : 'default' }}>
         {imageUrl ? (
           <img
             src={imageUrl}
             alt={productType}
-            className="w-full h-auto object-contain max-h-[250px]"
+              className="gv-image"
           />
         ) : (
-          <div className="w-full aspect-[4/3] max-h-[250px] flex items-center justify-center bg-gray-100 text-gray-500">
+          <div className="gv-placeholder">
             Ingen bild tillg\u00E4nglig
           </div>
         )}
         {markers.map((m) => (
           <div
             key={m.id}
-            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+            className="gv-marker"
             style={{ left: `${m.pos.x * 100}%`, top: `${m.pos.y * 100}%` }}
             onClick={(e) => {
               e.stopPropagation();
@@ -68,12 +75,12 @@ export default function GarmentView({
             }}
           >
             {m.isDamage ? (
-              <div className="w-6 h-6 -ml-3 -mt-3 rounded-full bg-green-600 border-2 border-white shadow-md flex items-center justify-center text-[10px] text-white font-bold">
+                <div className="gv-marker-circle">
                 {m.order}
               </div>
             ) : (
-              <div className="-translate-x-1/2 -translate-y-1/2">
-                <Badge variant="outline" className="bg-gray-100 border-gray-200 shadow-sm flex items-center px-2 py-1">
+              <div className="gv-badge-wrapper">
+                <Badge variant="outline" className="gv-badge">
                   {m.label}
                 </Badge>
               </div>
@@ -81,6 +88,19 @@ export default function GarmentView({
           </div>
         ))}
       </div>
+      {product && isWholeProductMarker && (
+        <WholeProductList
+          product={product}
+          damagePositions={damagePositions}
+          defectPositions={defectPositions}
+          isWholeProductMarker={isWholeProductMarker}
+          removeMarker={removeDamage}
+          removeDefectMarker={removeDefect}
+          getDamageLabel={getDamageLabelProp}
+          getDefectLabel={getDefectLabel}
+          markerSelectionOrder={markerSelectionOrder}
+        />
+      )}
     </div>
   );
 }

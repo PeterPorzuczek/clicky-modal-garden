@@ -1,5 +1,6 @@
 import React, { useEffect, createContext, useContext } from 'react';
 import { createPortal } from 'react-dom';
+import '../ui.css';
 
 const DialogContext = createContext(null);
 
@@ -15,26 +16,22 @@ export function Dialog({ open, onOpenChange, children }) {
   if (!open) return null;
   return createPortal(
     <DialogContext.Provider value={{ onOpenChange }}>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-        {children}
-      </div>
+      <div className="dialog-overlay">{children}</div>
     </DialogContext.Provider>,
     document.body
   );
 }
 
 export function DialogContent({ children, className = '' }) {
-  return (
-    <div className={`bg-white rounded-lg shadow-lg ${className}`}>{children}</div>
-  );
+  return <div className={`dialog-window ${className}`}>{children}</div>;
 }
 
 export const DialogTitle = ({ children, className = '' }) => (
-  <h2 className={`text-xl font-bold ${className}`}>{children}</h2>
+  <h2 className={`dialog-title ${className}`}>{children}</h2>
 );
 
 export const DialogDescription = ({ children, className = '' }) => (
-  <p className={`text-gray-600 ${className}`}>{children}</p>
+  <p className={`dialog-description ${className}`}>{children}</p>
 );
 
 export const DialogClose = ({ className = '', ...props }) => {
@@ -42,7 +39,7 @@ export const DialogClose = ({ className = '', ...props }) => {
   return (
     <button
       aria-label="Close"
-      className={`text-gray-500 hover:text-gray-900 ${className}`}
+      className={`dialog-close ${className}`}
       onClick={() => ctx?.onOpenChange(false)}
       {...props}
     >

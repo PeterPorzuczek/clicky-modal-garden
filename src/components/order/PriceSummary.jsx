@@ -54,35 +54,35 @@ export default function PriceSummary({ products = [], discount = 0 }) {
     calculateSummary(products, discount);
 
   return (
-    <div className="space-y-4">
+    <div className="price-summary">
       {productTotals.map((p) => (
-        <div key={p.id} className="border border-gray-200 rounded-md p-3 bg-white/0">
-          <div className="font-medium border-b pb-2 mb-2">Produkt #{p.id}: {p.type || '-'}</div>
-          <div className="space-y-1 text-sm">
+        <div key={p.id} className="price-product">
+          <div className="price-product-heading">Produkt #{p.id}: {p.type || '-'}</div>
+          <div className="price-product-items">
             {p.items.map((item, idx) => (
-              <div key={idx} className="flex justify-between">
+              <div key={idx} className="price-item">
                 <span>{item.label}</span>
                 <span>{item.price} kr</span>
               </div>
             ))}
           </div>
-          <div className="flex justify-between font-medium mt-2 pt-2 border-t border-gray-200">
+          <div className="price-subtotal">
             <span>Delsumma</span>
             <span>{p.subtotal} kr</span>
           </div>
         </div>
       ))}
-      <div className="flex justify-between font-medium pt-2 mt-2 border-t border-gray-300">
+      <div className="price-summary-total">
         <span>Delsumma</span>
         <span>{subTotal} kr</span>
       </div>
       {discount > 0 && (
-        <div className="flex justify-between text-green-600 font-medium">
+        <div className="price-discount">
           <span>Rabatt ({discount}%)</span>
           <span>-{discountAmount} kr</span>
         </div>
       )}
-      <div className="flex justify-between font-bold text-lg pt-2 mt-2 border-t border-gray-300">
+      <div className="price-grand-total">
         <span>{t('firstStep.total')}</span>
         <span>{total} kr</span>
       </div>

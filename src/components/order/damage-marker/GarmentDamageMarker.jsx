@@ -4,6 +4,8 @@ import MarkerList from './MarkerList.jsx';
 import MarkerButtons from './MarkerButton.jsx';
 import GarmentView from './GarmentView.jsx';
 import { getDefectLabel, getDamageLabel } from '../../../i18n.js';
+import config from '../../../config.js';
+import t from '../../../i18n.js';
 
 export default function GarmentDamageMarker({
   product,
@@ -131,9 +133,13 @@ export default function GarmentDamageMarker({
   };
 
   return (
-    <div className="mt-3 space-y-3">
+    <div className="gdm-container">
+      <h4 className="gdm-title">{t('secondStep.markDamageBelow')}</h4>
       <InstructionMessage productType={product.type} isMarked={isMarked} isSingleMarkMode={singleMode} />
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="gdm-row">
+        <MarkerButtons onResetAllMarkers={resetAll} />
+      </div>
+      <div className="gdm-white-section">
         <MarkerList
           product={product}
           damagePositions={damagePositions}
@@ -173,29 +179,56 @@ export default function GarmentDamageMarker({
           selectedDamageIndex={selectedDamageIndex}
           selectedDefectId={selectedDefectId}
         />
-        <MarkerButtons onResetAllMarkers={resetAll} />
+        <GarmentView
+          productType={product.type}
+          imageUrl={imageUrl}
+          onMarkPosition={handleMark}
+          disabled={false}
+          maxMarks={product.damages.length}
+          currentMarks={totalMarks}
+          selectedForMarking={selectedDamageIndex !== undefined || selectedDefectId !== undefined}
+          damagePositions={damagePositions}
+          defectPositions={defectPositions}
+          productDamages={product.damages}
+          damageLabels={product.damageLabels || {}}
+          defectLabels={Object.fromEntries(
+            Object.entries(product.otherIssues || {})
+              .filter(([_, on]) => on)
+              .map(([id]) => [id, labelForDefect(id)])
+          )}
+          onMarkerDrag={() => {}}
+          onMarkerClick={handleMarkerClick}
+          markerSelectionOrder={orderMap}
+          product={product}
+          removeDamage={(e, idx) => {
+            e.stopPropagation();
+            setDamagePositions((p) => {
+              const { [idx]: removed, ...rest } = p;
+              return rest;
+            });
+            setOrderMap((m) => {
+              const { [`damage-${idx}`]: removed, ...rest } = m;
+              return rest;
+            });
+            updateDamageDetail && updateDamageDetail(idx, { position: undefined, orderIndex: undefined });
+          }}
+          removeDefect={(e, id) => {
+            e.stopPropagation();
+            setDefectPositions((p) => {
+              const { [id]: removed, ...rest } = p;
+              return rest;
+            });
+            setOrderMap((m) => {
+              const { [id]: removed, ...rest } = m;
+              return rest;
+            });
+            updateDefectDetail && updateDefectDetail(id, { position: undefined, orderIndex: undefined });
+          }}
+          getDamageLabel={labelForDamage}
+          getDefectLabel={labelForDefect}
+          isWholeProductMarker={isWholeMarker}
+        />
       </div>
-      <GarmentView
-        productType={product.type}
-        imageUrl={imageUrl}
-        onMarkPosition={handleMark}
-        disabled={false}
-        maxMarks={product.damages.length}
-        currentMarks={totalMarks}
-        selectedForMarking={selectedDamageIndex !== undefined || selectedDefectId !== undefined}
-        damagePositions={damagePositions}
-        defectPositions={defectPositions}
-        productDamages={product.damages}
-        damageLabels={product.damageLabels || {}}
-        defectLabels={Object.fromEntries(
-          Object.entries(product.otherIssues || {})
-            .filter(([_, on]) => on)
-            .map(([id]) => [id, labelForDefect(id)])
-        )}
-        onMarkerDrag={() => {}}
-        onMarkerClick={handleMarkerClick}
-        markerSelectionOrder={orderMap}
-      />
     </div>
   );
 }

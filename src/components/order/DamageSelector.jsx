@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomSelect from '../ui/CustomSelect.jsx';
 
 export default function DamageSelector({
   index = 0,
@@ -11,57 +12,55 @@ export default function DamageSelector({
   damageError = null,
   optionError = null,
 }) {
-  const handleDamageChange = (e) => {
-    onDamageChange && onDamageChange(e.target.value);
+  const handleDamageChange = (value) => {
+    onDamageChange && onDamageChange(value);
   };
 
-  const handleOptionChange = (e) => {
-    onOptionChange && onOptionChange(e.target.value);
+  const handleOptionChange = (value) => {
+    onOptionChange && onOptionChange(value);
   };
+
+  const damageSelectOptions = damageOptions.map(opt => ({
+    value: opt.id,
+    label: opt.label
+  }));
+
+  const optionSelectOptions = optionOptions.map(opt => ({
+    value: opt.id,
+    label: opt.label
+  }));
 
   return (
-    <div className="border border-gray-200 p-3 rounded-md space-y-3 relative">
-      <div className="flex flex-col space-y-3">
+    <div className="damage-selector">
+      <div className="damage-selector-inner">
         <div>
-          <div className="flex items-center mb-1">
-            <label className="text-sm font-medium">
-              Skada {index + 1} <span className="text-red-500">*</span>
+          <div className="damage-label-row">
+            <label className="damage-label">
+              Skada {index + 1} <span className="text-red">*</span>
             </label>
           </div>
-          <select
+          <CustomSelect
             value={damage}
-            onChange={handleDamageChange}
-            className={`w-full h-10 rounded border px-3 pr-10 ${damageError ? 'border-red-500' : 'border-gray-300'}`}
-            required
-          >
-            <option value="">Välj typ av skada</option>
-            {damageOptions.map((opt) => (
-              <option key={opt.id} value={opt.id}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-          {damageError && <p className="text-sm text-red-500 mt-1">{damageError}</p>}
+            onValueChange={handleDamageChange}
+            placeholder="Välj typ av skada"
+            options={damageSelectOptions}
+            error={!!damageError}
+          />
+          {damageError && <p className="damage-error">{damageError}</p>}
         </div>
         {optionOptions.length > 0 && (
           <div>
-            <label className="text-sm font-medium">
-              Alternativ <span className="text-red-500">*</span>
+            <label className="damage-label">
+              Alternativ <span className="text-red">*</span>
             </label>
-            <select
+            <CustomSelect
               value={option}
-              onChange={handleOptionChange}
-              className={`w-full h-10 rounded border px-3 pr-10 ${optionError ? 'border-red-500' : 'border-gray-300'}`}
-              required
-            >
-              <option value="">Välj</option>
-              {optionOptions.map((opt) => (
-                <option key={opt.id} value={opt.id}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            {optionError && <p className="text-sm text-red-500 mt-1">{optionError}</p>}
+              onValueChange={handleOptionChange}
+              placeholder="Välj"
+              options={optionSelectOptions}
+              error={!!optionError}
+            />
+            {optionError && <p className="damage-error">{optionError}</p>}
           </div>
         )}
       </div>

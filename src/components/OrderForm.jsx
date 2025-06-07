@@ -210,11 +210,11 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
   };
 
   return step === 2 ? (
-    <div ref={containerRef} className="max-h-full overflow-auto">
+    <div ref={containerRef} className="order-form-container">
       <ConfirmationStep resetForm={resetForm} products={products} />
     </div>
   ) : (
-    <div ref={containerRef} className="p-6 max-h-full overflow-auto">
+    <div ref={containerRef} className="order-form-inner">
       {step === 0 && (
         <ProductSelectionStep
           products={products}

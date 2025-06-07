@@ -207,11 +207,11 @@ export default function ProductCard({ product, onUpdate }) {
   };
 
   return (
-    <div className="bg-[hsl(var(--light-purple))] p-4 rounded-lg mb-6">
-      <div className="flex justify-between items-center mb-3">
-        <h3 className="text-lg font-medium">{t('firstStep.product')} #{product.id}</h3>
+    <div className="pc-card">
+      <div className="pc-header">
+        <h3 className="pc-title">{t('firstStep.product')} #{product.id}</h3>
       </div>
-      <div className="space-y-6">
+      <div className="pc-body">
         <ProductTypeSelector
           productType={product.type}
           onTypeChange={(v) => updateField('type', v)}
@@ -224,13 +224,13 @@ export default function ProductCard({ product, onUpdate }) {
           />
         )}
         {product.type && product.damageCount > 0 && (
-          <div className="space-y-4">
+          <div className="pc-damage-list">
             {Array.from({ length: product.damageCount }).map((_, idx) => {
               const selectedDamageId = product.damages?.[idx];
               const selectedDamageConfig = DAMAGE_OPTIONS.find(d => d.id === selectedDamageId);
 
               return (
-                <div key={idx} className="space-y-1">
+                <div key={idx} className="pc-damage-item">
                   <DamageSelector
                     index={idx}
                     damage={selectedDamageId || ''}
@@ -255,13 +255,9 @@ export default function ProductCard({ product, onUpdate }) {
             onToggle={toggleDefect}
           />
         )}
-        <EmployeeOwnershipFields
-          product={product}
-          onUpdate={(field, val) => updateField(field, val)}
-        />
         {(product.damageCount > 0 || Object.values(product.otherIssues || {}).some(Boolean)) &&
           markingOpen && (
-            <div className="relative p-4 bg-white rounded-lg shadow">
+            <div className="pc-marker">
               <GarmentDamageMarker
                 product={product}
                 damageIndex={selectedDamageIndex}
@@ -291,8 +287,12 @@ export default function ProductCard({ product, onUpdate }) {
               />
             </div>
           )}
+        <EmployeeOwnershipFields
+          product={product}
+          onUpdate={(field, val) => updateField(field, val)}
+        />
         {product.markerError && (
-          <p className="text-sm text-red-500 mt-1">{product.markerError}</p>
+          <p className="pc-error">{product.markerError}</p>
         )}
       </div>
     </div>

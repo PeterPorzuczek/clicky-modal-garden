@@ -42,22 +42,22 @@ export default function WholeProductList({
   if (wholeDamages.length === 0 && wholeDefects.length === 0) return null;
 
   return (
-    <div className="mb-2">
-      <h5 className="text-sm font-medium mb-1">Helproduktmarkeringar:</h5>
-      <div className="flex flex-wrap gap-2">
+    <div className="whole-list">
+      <h5 className="whole-title">Helproduktmarkeringar:</h5>
+      <div className="whole-items">
         {wholeDamages.map((index) => {
           const order = markerSelectionOrder[`damage-${index}`] || 0;
           const label = getDamageLabel(index);
           return (
-            <div key={`whole-damage-${index}`} className="flex items-center bg-[#F2FCE2] border border-[#e1efd2] rounded-full px-3 py-1 text-xs">
-              <span className="flex items-center">
-                <span className="inline-block w-5 h-5 bg-green-600 text-white rounded-full mr-2 flex items-center justify-center text-xs font-bold">
+            <div key={`whole-damage-${index}`} className="whole-item">
+              <span className="marker-label">
+                <span className="marker-num marked">
                   {order}
                 </span>
-                <span className="mr-2">{label}</span>
-                <span className="text-xs text-gray-600 mr-2">(hela produkten)</span>
+                <span className="label-text">{label}</span>
+                <span className="marker-whole">(hela produkten)</span>
               </span>
-              <button type="button" onClick={(e) => removeMarker && removeMarker(e, index)} className="ml-1 text-gray-400 hover:text-gray-600 focus:outline-none">
+              <button type="button" onClick={(e) => removeMarker && removeMarker(e, index)} className="marker-remove">
                 <XIcon size={14} />
               </button>
             </div>
@@ -66,15 +66,15 @@ export default function WholeProductList({
         {wholeDefects.map((id) => {
           const order = markerSelectionOrder[id] || 0;
           return (
-            <div key={`whole-defect-${id}`} className="flex items-center bg-[#F2FCE2] border border-[#e1efd2] rounded-full px-3 py-1 text-xs">
-              <span className="flex items-center">
-                <span className="inline-block w-5 h-5 bg-green-600 text-white rounded-full mr-2 flex items-center justify-center text-xs font-bold">
+            <div key={`whole-defect-${id}`} className="whole-item">
+              <span className="marker-label">
+                <span className="marker-num marked">
                   {order}
                 </span>
-                <span className="mr-2">{getDefectLabel(id)}</span>
-                <span className="text-xs text-gray-600 mr-2">(hela produkten)</span>
+                <span className="label-text">{getDefectLabel(id)}</span>
+                <span className="marker-whole">(hela produkten)</span>
               </span>
-              <button type="button" onClick={(e) => removeDefectMarker && removeDefectMarker(e, id)} className="ml-1 text-gray-400 hover:text-gray-600 focus:outline-none">
+              <button type="button" onClick={(e) => removeDefectMarker && removeDefectMarker(e, id)} className="marker-remove">
                 <XIcon size={14} />
               </button>
             </div>

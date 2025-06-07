@@ -75,18 +75,16 @@ export default function MarkerList({
   if (entries.length === 0) return null;
 
   return (
-    <div className="mb-2">
-      <h5 className="text-sm font-medium mb-1">Valda markeringar:</h5>
-      <div className="flex flex-wrap gap-2">
+    <div className="marker-list">
+      <h5 className="marker-list-title">Valda markeringar:</h5>
+      <div className="marker-list-items">
         {entries.map((e) => {
           const markable = !!e.markable;
           const selected =
             (e.type === 'damage' && selectedDamageIndex === e.id) ||
             (e.type === 'defect' && selectedDefectId === e.id);
           const marked = !!e.pos;
-          const baseClasses = marked
-            ? 'bg-[#F2FCE2] border-[#e1efd2]'
-            : 'bg-gray-100 border-gray-300 text-gray-500';
+          const baseClasses = marked ? 'marked' : 'unmarked';
           return (
             <div
               key={e.key}
@@ -98,17 +96,17 @@ export default function MarkerList({
                   ? onSelectDamage && onSelectDamage(e.id)
                   : onSelectDefect && onSelectDefect(e.id);
               }}
-              className={`flex items-center border rounded-full px-3 py-1 text-xs ${markable ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'} ${baseClasses} ${selected ? 'ring-2 ring-blue-500' : ''}`}
+              className={`marker-item ${markable ? 'pointer' : 'disabled'} ${baseClasses} ${selected ? 'selected' : ''}`}
             >
-              <span className="flex items-center">
+              <span className="marker-label">
                 <span
-                  className={`inline-block w-5 h-5 mr-2 flex items-center justify-center text-xs font-bold rounded-full ${marked ? 'bg-green-600 text-white' : 'bg-gray-400 text-white'}`}
+                  className={`marker-num ${marked ? 'marked' : 'unmarked'}`}
                 >
                   {marked ? e.order : ''}
                 </span>
-                <span className="mr-2">{e.label}</span>
+                <span className="label-text">{e.label}</span>
                 {marked && isWholeProductMarker(e.pos) && (
-                  <span className="text-xs text-gray-600 mr-2">(hela produkten)</span>
+                  <span className="marker-whole">(hela produkten)</span>
                 )}
               </span>
               {marked && (
@@ -120,7 +118,7 @@ export default function MarkerList({
                       ? removeDamage && removeDamage(ev, e.id)
                       : removeDefect && removeDefect(ev, e.id);
                   }}
-                  className="ml-1 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  className="marker-remove"
                 >
                   <XIcon size={14} />
                 </button>

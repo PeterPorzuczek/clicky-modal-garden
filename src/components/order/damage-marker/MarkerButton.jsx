@@ -22,13 +22,13 @@ function RotateCcwIcon({ className = '', size = 14 }) {
 
 export default function MarkerButtons({ onResetAllMarkers }) {
   return (
-    <div className="flex flex-wrap gap-2 ml-auto">
+    <div className="marker-buttons">
       <button
         type="button"
-        className="text-sm py-1 px-3 h-auto text-gray-600 border rounded"
+        className="marker-reset"
         onClick={onResetAllMarkers}
       >
-        <RotateCcwIcon className="h-3.5 w-3.5 mr-1" />
+        <RotateCcwIcon className="icon" />
         Rensa alla markeringar
       </button>
     </div>
