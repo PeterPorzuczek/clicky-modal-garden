@@ -65,6 +65,7 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
         const damageErrors = {};
         const damageOptionErrors = {};
         let markerError;
+        const category = config.productCategories.find((c) => c.id === p.type);
         if (p.damageCount <= 0) {
           damageErrors[0] = 'Obligatoriskt';
           valid = false;
@@ -74,7 +75,6 @@ export default function OrderForm({ prefilledData = null, scrollRef }) {
               damageErrors[i] = 'Obligatoriskt';
               valid = false;
             } else {
-              const category = config.productCategories.find((c) => c.id === p.type);
               const damage = category?.damages.find((d) => d.id === p.damages[i]);
               if (damage?.options?.length) {
                 const opt = p.damageDetails?.[`damage-${i}`]?.optionId;
