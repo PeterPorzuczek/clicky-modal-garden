@@ -1,6 +1,6 @@
 import React from 'react';
 import Banner, { usePrefilledCustomerData } from './components/Banner';
-import './index.css';
+import './styles/index.css';
 
 export default function App() {
   const { prefilledData, loadCustomerData, clearPrefilledData } = usePrefilledCustomerData();

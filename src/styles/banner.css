@@ -1,0 +1,116 @@
+.banner-wrapper {
+  width: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.banner {
+  background-color: hsl(var(--navy));
+  color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.2s;
+}
+.banner:hover {
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+}
+
+.banner-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+@media (min-width: 768px) {
+  .banner-title {
+    font-size: 1.875rem;
+  }
+}
+
+.banner-text {
+  color: rgb(229, 229, 229);
+  text-align: center;
+}
+
+.dialog-content {
+  position: relative;
+  width: 700px;
+  max-width: 700px;
+  max-height: 90vh;
+  min-width: 700px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.75rem;
+  background-color: white;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.form-container {
+  flex: 1;
+  overflow: auto;
+}
+
+.dialog-close {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  opacity: 1;
+  background-color: transparent;
+  border: none;
+  color: #6b7280;
+  font-size: 1.25rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.dialog-close:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #d1d5db;
+}
+.dialog-close:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2);
+}
+
+/* Responsive modal - fixed size on larger screens, responsive on smaller ones */
+@media (max-width: 720px) {
+  .dialog-content {
+    width: 95vw;
+    min-width: 320px;
+  }
+}
+
+@media (min-width: 721px) {
+  .dialog-content {
+    width: 700px;
+    min-width: 700px;
+  }
+} 

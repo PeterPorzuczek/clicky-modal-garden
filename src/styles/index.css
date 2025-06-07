@@ -1,0 +1,143 @@
+@import './banner.css';
+@import './order.css';
+@import './ui.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+
+:root {
+  --navy: 220 29% 26%;
+  --light-purple: 250 100% 97%;
+  
+  /* Colors for Badge component */
+  --primary: 220 14.3% 95.9%;
+  --primary-foreground: 220.9 39.3% 11%;
+  --secondary: 210 40% 98%;
+  --secondary-foreground: 222.2 84% 4.9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --foreground: 222.2 84% 4.9%;
+  --ring: 216.4 12.2% 83.9%;
+}
+
+/* Ensure select elements are interactive */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: white;
+  color: #374151;
+  font-size: 1rem;
+  cursor: pointer;
+  pointer-events: auto;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  padding-right: 2.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #e5e7eb;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN2I3MjgwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBvbHlsaW5lIHBvaW50cz0iNiA4IDEwIDEyIDE0IDgiLz48L3N2Zz4=");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+/* Ensure checkboxes are interactive */
+input[type="checkbox"] {
+  cursor: pointer;
+  pointer-events: auto;
+  accent-color: hsl(var(--navy));
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  outline: none;
+}
+
+.app {
+  padding: 1rem;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(243, 244, 246);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-controls {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+.btn-primary {
+  background-color: rgb(37, 99, 235);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: rgb(209, 213, 219);
+}
+
+/* Animation utilities copied from original build */
+@keyframes enter {
+  0% {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0)
+      scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1))
+      rotate(var(--tw-enter-rotate, 0));
+  }
+}
+
+@keyframes exit {
+  to {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0)
+      scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1))
+      rotate(var(--tw-exit-rotate, 0));
+  }
+}
+
+.animate-in {
+  animation-name: enter;
+  animation-duration: 0.15s;
+  --tw-enter-opacity: initial;
+  --tw-enter-scale: initial;
+  --tw-enter-rotate: initial;
+  --tw-enter-translate-x: initial;
+  --tw-enter-translate-y: initial;
+}
+
+.fade-in-0 { --tw-enter-opacity: 0; }
+.fade-in-80 { --tw-enter-opacity: 0.8; }
+.zoom-in-95 { --tw-enter-scale: 0.95; }
+
+.animate-out {
+  animation-name: exit;
+  animation-duration: 0.15s;
+  --tw-exit-opacity: initial;
+  --tw-exit-scale: initial;
+  --tw-exit-rotate: initial;
+  --tw-exit-translate-x: initial;
+  --tw-exit-translate-y: initial;
+}
+
+.fade-out-0 { --tw-exit-opacity: 0; }
+.zoom-out-95 { --tw-exit-scale: 0.95; }
+
+.group[data-state="open"] .group-data-\[state\=open\] {
+  --tw-rotate: 180deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate))
+    skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+} 

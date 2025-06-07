@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose } from './order/ui/Dialog.jsx';
-import '../banner.css';
+import '../styles/banner.css';
 import OrderForm from './OrderForm';
 
 export const DEMO_CUSTOMER = {
