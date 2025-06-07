@@ -1,5 +1,5 @@
 import React from 'react';
-import '../ui.css';
+import '../../ui.css';
 
 const VARIANTS = {
   default: 'badge-default',

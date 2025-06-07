@@ -1,6 +1,6 @@
 import React, { useEffect, createContext, useContext } from 'react';
 import { createPortal } from 'react-dom';
-import '../ui.css';
+import '../../ui.css';
 
 const DialogContext = createContext(null);
 

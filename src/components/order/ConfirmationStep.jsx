@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogClose } from '../../ui/dialog.jsx';
+import { DialogClose } from '../ui/Dialog.jsx';
 
 export default function ConfirmationStep({ resetForm, products = [], discount = 0 }) {
   return (

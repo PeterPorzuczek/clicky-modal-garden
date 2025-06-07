@@ -1,5 +1,5 @@
 import React from 'react';
-import Badge from '../../../ui/Badge.jsx';
+import Badge from '../../ui/Badge.jsx';
 import { getDamageLabel } from '../../../i18n.js';
 import WholeProductList from './WholeProductList.jsx';
 

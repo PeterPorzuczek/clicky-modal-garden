@@ -2,7 +2,7 @@ import React from 'react';
 import ProductQuantitySelector from './ProductQuantitySelector';
 import ProductCard from './ProductCard';
 import PriceSummary, { calculateSummary } from './PriceSummary';
-import { DialogClose } from '../../ui/dialog.jsx';
+import { DialogClose } from '../ui/Dialog.jsx';
 import t from '../../i18n.js';
 
 export default function ProductSelectionStep({
