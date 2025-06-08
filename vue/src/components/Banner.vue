@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
-import Dialog, { DialogClose, DialogContent } from './Dialog.vue'
+import Dialog, { DialogContent, DialogTitle, DialogDescription, DialogClose } from './Dialog.vue'
 import OrderForm from './OrderForm.vue'
-import config from '../setup/config.js'
-import { localize } from '../setup/i18n.js'
+import { setLanguage, getCurrentLanguage } from '../setup/i18n.js'
+import t from '../setup/i18n.js'
 
 const DEMO_CUSTOMER = {
   customerNumber: 'CUS12345',
@@ -23,94 +23,87 @@ const DEMO_CUSTOMER = {
   deliveryCompanyName: '',
   deliveryStreet: '',
   deliveryZipCode: '',
-  deliveryCity: ''
+  deliveryCity: '',
+}
+
+function usePrefilledCustomerData() {
+  const prefilledData = ref(null)
+  const loadCustomerData = () => { prefilledData.value = DEMO_CUSTOMER }
+  const clearPrefilledData = () => { prefilledData.value = null }
+  return { prefilledData, loadCustomerData, clearPrefilledData }
 }
 
 const props = defineProps({
-  texts: Object,
-  prefilledData: Object,
-  languages: { type: Array, default: () => ([
-    { code: 'se', label: 'SE' },
-    { code: 'en', label: 'EN' },
-    { code: 'no', label: 'NO' }
-  ]) },
-  currentLanguage: String
+  prefilledData: { type: Object, default: null },
+  isOpen: { type: Boolean, default: undefined },
+  onOpenChange: { type: Function, default: undefined }
 })
 
-const emit = defineEmits(['change-language'])
-
-const open = ref(false)
-const email = ref('')
+const openInternal = ref(false)
+const currentLanguage = ref(getCurrentLanguage())
+const forceUpdate = ref(0)
 const isPrefillChecked = ref(false)
-const internalPrefilled = ref(null)
+const email = ref('')
+const { prefilledData: internalPrefilledData, loadCustomerData, clearPrefilledData } = usePrefilledCustomerData()
 
-watch(() => props.prefilledData, (val) => {
-  if (isPrefillChecked.value && val && val.email) {
-    email.value = val.email
+const open = computed(() => props.isOpen !== undefined ? props.isOpen : openInternal.value)
+
+// Use external prefilled data if provided, otherwise use internal
+const activePrefilledData = computed(() => 
+  props.prefilledData || (isPrefillChecked.value ? internalPrefilledData.value : null)
+)
+
+// Include banner email in the data passed to OrderForm
+const finalPrefilledData = computed(() => {
+  if (activePrefilledData.value) {
+    return { ...activePrefilledData.value, email: email.value || activePrefilledData.value.email }
   }
+  return email.value ? { email: email.value } : null
 })
 
-function loadCustomerData() {
-  internalPrefilled.value = DEMO_CUSTOMER
+const formContainerRef = ref(null)
+
+const handleStartClick = () => {
+  if (props.isOpen === undefined) openInternal.value = true
+  if (props.onOpenChange) props.onOpenChange(true)
 }
 
-function clearPrefilledData() {
-  internalPrefilled.value = null
+const handleChange = (value) => {
+  if (props.isOpen === undefined) openInternal.value = value
+  if (props.onOpenChange) props.onOpenChange(value)
 }
 
-watch(isPrefillChecked, (val) => {
-  if (val) {
+const handleLanguageChange = (language) => {
+  setLanguage(language)
+  currentLanguage.value = language
+  forceUpdate.value = forceUpdate.value + 1 // Force re-render to update all text
+}
+
+const handlePrefillToggle = (checked) => {
+  isPrefillChecked.value = checked
+  if (checked) {
     loadCustomerData()
-    if (internalPrefilled.value?.email) email.value = internalPrefilled.value.email
+    // Also prefill the banner email from demo customer data
+    if (DEMO_CUSTOMER.email) {
+      email.value = DEMO_CUSTOMER.email
+    }
   } else {
     clearPrefilledData()
-  }
-})
-
-function start() {
-  if (email.value.trim()) {
-    open.value = true
+    email.value = ''
   }
 }
 
-function handleClear() {
+const handleClearData = () => {
   isPrefillChecked.value = false
   email.value = ''
   clearPrefilledData()
 }
 
-const finalPrefilledData = computed(() => {
-  const active = props.prefilledData || (isPrefillChecked.value ? internalPrefilled.value : null)
-  if (active) {
-    return { ...active, email: email.value || active.email }
-  }
-  return email.value ? { email: email.value } : null
-})
-
-function mapSection(section, lang) {
-  const result = {}
-  for (const [k, v] of Object.entries(section)) {
-    result[k] = localize(v, lang)
-  }
-  return result
-}
-
-const orderFormTexts = computed(() => {
-  const lang = props.currentLanguage
-  const t = config.texts
-  return {
-    validation: mapSection(t.validation, lang),
-    firstStep: mapSection(t.firstStep, lang),
-    secondStep: mapSection(t.secondStep, lang),
-    thirdStep: mapSection(t.thirdStep, lang),
-    fourthStep: mapSection(t.fourthStep, lang),
-    fifthStep: mapSection(t.fifthStep, lang)
-  }
-})
-
-function changeLanguage(code) {
-  emit('change-language', code)
-}
+const languages = [
+  { code: 'se', label: 'SE' },
+  { code: 'en', label: 'EN' },
+  { code: 'no', label: 'NO' }
+]
 </script>
 
 <template>
@@ -119,62 +112,91 @@ function changeLanguage(code) {
       <div class="banner-content">
         <div class="banner-controls">
           <div class="language-selector">
-            <span class="language-label">{{ texts.language }}</span>
+            <span class="language-label">{{ t('trigger.language') }}</span>
             <div class="language-options">
               <button
-                v-for="lang in props.languages"
+                v-for="lang in languages"
                 :key="lang.code"
                 class="language-option"
-                :class="{ active: props.currentLanguage === lang.code }"
-                @click.stop="changeLanguage(lang.code)"
+                :class="{ active: currentLanguage === lang.code }"
+                @click.stop="handleLanguageChange(lang.code)"
               >
                 {{ lang.label }}
               </button>
             </div>
           </div>
+          
           <div class="app-controls-section">
             <div class="control-group">
               <label class="checkbox-label">
-                <input type="checkbox" v-model="isPrefillChecked" />
-                {{ texts.prefillCustomer }}
+                <input 
+                  type="checkbox" 
+                  :checked="isPrefillChecked"
+                  @change="handlePrefillToggle($event.target.checked)"
+                />
+                {{ t('trigger.prefillCustomer') }}
               </label>
             </div>
-            <button class="btn-secondary" @click="handleClear">
-              {{ texts.clearData }}
+            <button class="btn-secondary" @click="handleClearData">
+              {{ t('trigger.clearData') }}
             </button>
           </div>
         </div>
         <div class="banner-header">
           <div class="banner-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
             </svg>
           </div>
           <div>
-            <h2 class="banner-title">{{ texts.priamry }}</h2>
-            <p class="banner-text">{{ texts.secondary }}</p>
+            <h2 class="banner-title">{{ t('trigger.priamry') }}</h2>
+            <p class="banner-text">{{ t('trigger.secondary') }}</p>
           </div>
         </div>
+        
         <div class="email-input-section">
-          <label class="email-label" for="banner-email">{{ texts.emailLabel }}</label>
-          <input id="banner-email" type="email" class="email-input" v-model="email" :placeholder="texts.enterEmail" required />
+          <label class="email-label" for="banner-email">
+            {{ t('trigger.emailLabel') }}
+          </label>
+          <input
+            id="banner-email"
+            type="email"
+            class="email-input"
+            v-model="email"
+            :placeholder="t('trigger.enterEmail')"
+            required
+          />
         </div>
-        <button class="banner-cta" @click="start" :disabled="!email.trim()">
+        
+        <button 
+          class="banner-cta" 
+          @click="handleStartClick"
+          :disabled="!email.trim()"
+        >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 12l2 2 4-4" />
-            <circle cx="12" cy="12" r="9" />
+            <path d="M9 12l2 2 4-4"/>
+            <circle cx="12" cy="12" r="9"/>
           </svg>
-          {{ texts.clickToStart }}
+          {{ t('trigger.clickToStart') }}
         </button>
       </div>
     </div>
-    <Dialog :open="open" @update:open="open = $event">
+    
+    <Dialog :open="open" @update:open="handleChange">
       <DialogContent class="dialog-content">
-        <div class="form-container">
-          <OrderForm :prefilled-data="finalPrefilledData" :texts="orderFormTexts" />
+        <DialogTitle class="sr-only">{{ t('trigger.priamry') }}</DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ t('firstStep.instruction') }}
+        </DialogDescription>
+        <div class="form-container" ref="formContainerRef">
+          <OrderForm :prefilled-data="finalPrefilledData" :scroll-ref="formContainerRef" />
         </div>
         <DialogClose class="dialog-close" />
       </DialogContent>
     </Dialog>
   </div>
 </template>
+
+<style>
+@import '../styles/banner.css';
+</style>

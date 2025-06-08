@@ -15,7 +15,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import emailjs from '@emailjs/browser'
-import { calculateSummary } from './PriceSummary.vue'
+import { calculateSummary } from './priceSummaryUtils.js'
 import { localize } from '../../setup/i18n.js'
 import config from '../../setup/config.js'
 

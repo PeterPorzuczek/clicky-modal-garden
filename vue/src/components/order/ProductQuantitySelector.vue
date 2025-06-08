@@ -1,17 +1,19 @@
 <script setup>
+import t from '../../setup/i18n.js'
+
 const props = defineProps({
-  quantity: { type: Number, default: 0 },
-  texts: { type: Object, default: () => ({}) }
+  quantity: { type: Number, default: 0 }
 })
+
 const emit = defineEmits(['increase', 'decrease'])
 
 const MAX_QUANTITY = 20
 
-function decrease() {
+const decrease = () => {
   if (props.quantity > 0) emit('decrease')
 }
 
-function increase() {
+const increase = () => {
   if (props.quantity < MAX_QUANTITY) emit('increase')
 }
 </script>
@@ -19,8 +21,8 @@ function increase() {
 <template>
   <div class="pqs-container">
     <div class="pqs-row">
-      <label class="font-medium">
-        {{ props.texts.selectNumberOfProducts }} <span class="text-red">*</span>
+      <label for="quantity" class="font-medium">
+        {{ t('firstStep.selectNumberOfProducts') }} <span class="text-red">*</span>
       </label>
     </div>
     <div class="pqs-control">
