@@ -16,7 +16,7 @@
 import { ref, watch, computed } from 'vue'
 import emailjs from '@emailjs/browser'
 import { calculateSummary } from './PriceSummary.vue'
-import t, { localize } from '../../setup/i18n.js'
+import { localize } from '../../setup/i18n.js'
 
 const props = defineProps({
   orderInfo: { type: Object, default: () => ({}) },
