@@ -2,6 +2,8 @@
 import { ref, computed, watch } from 'vue'
 import Dialog, { DialogClose } from './Dialog.vue'
 import OrderForm from './OrderForm.vue'
+import config from '../setup/config.js'
+import { localize } from '../setup/i18n.js'
 
 const DEMO_CUSTOMER = {
   customerNumber: 'CUS12345',
@@ -85,6 +87,27 @@ const finalPrefilledData = computed(() => {
   return email.value ? { email: email.value } : null
 })
 
+function mapSection(section, lang) {
+  const result = {}
+  for (const [k, v] of Object.entries(section)) {
+    result[k] = localize(v, lang)
+  }
+  return result
+}
+
+const orderFormTexts = computed(() => {
+  const lang = props.currentLanguage
+  const t = config.texts
+  return {
+    validation: mapSection(t.validation, lang),
+    firstStep: mapSection(t.firstStep, lang),
+    secondStep: mapSection(t.secondStep, lang),
+    thirdStep: mapSection(t.thirdStep, lang),
+    fourthStep: mapSection(t.fourthStep, lang),
+    fifthStep: mapSection(t.fifthStep, lang)
+  }
+})
+
 function changeLanguage(code) {
   emit('change-language', code)
 }
@@ -148,7 +171,7 @@ function changeLanguage(code) {
     <Dialog v-if="open" @close="open = false">
       <div class="dialog-content">
         <div class="form-container">
-          <OrderForm :prefilled-data="finalPrefilledData" />
+          <OrderForm :prefilled-data="finalPrefilledData" :texts="orderFormTexts" />
         </div>
         <DialogClose class="dialog-close" />
       </div>

@@ -4,7 +4,6 @@ import ProductSelectionStep from './order/ProductSelectionStep.vue'
 import OrderInformationStep from './order/OrderInformationStep.vue'
 import ConfirmationStep from './order/ConfirmationStep.vue'
 import EmailPreviewStep from './order/EmailPreviewStep.vue'
-import t from '../setup/i18n.js'
 
 function createEmptyProduct(id) {
   return {
@@ -28,7 +27,8 @@ function createEmptyProduct(id) {
 }
 
 const props = defineProps({
-  prefilledData: Object
+  prefilledData: Object,
+  texts: Object
 })
 
 const step = ref(0)
@@ -42,32 +42,21 @@ const discount = ref(0)
 const completeOrderData = ref(null)
 
 const productSelectionTexts = computed(() => ({
-  title: t('firstStep.title'),
-  instruction: t('firstStep.instruction'),
-  reminder: t('firstStep.reminder'),
-  selectNumberOfProducts: t('firstStep.selectNumberOfProducts'),
-  next: t('firstStep.next'),
-  summary: t('firstStep.summary'),
-  product: t('firstStep.product'),
-  subtotal: t('firstStep.subtotal'),
-  discount: t('firstStep.discount'),
-  total: t('firstStep.total'),
-  selectTypeOfProduct: t('firstStep.selectTypeOfProduct'),
-  select: t('firstStep.select'),
-  numberOfDamages: t('secondStep.numberOfDamages'),
-  otherErrorsAndDefects: t('secondStep.otherErrorsAndDefects'),
-  belongsToEmployee: t('secondStep.belongsToEmployee'),
-  employeeName: t('secondStep.employeeName'),
-  department: t('secondStep.department'),
-  markDamageBelow: t('secondStep.markDamageBelow'),
-  markAllDamagesInfo: t('secondStep.markAllDamagesInfo'),
-  clickToMarkDamage: t('secondStep.clickToMarkDamage'),
-  changeMarkingInfo: t('secondStep.changeMarkingInfo'),
-  clearAllMarkers: t('secondStep.clearAllMarkers'),
-  selectedMarkers: t('secondStep.selectedMarkers'),
-  wholeProductMarkers: t('secondStep.wholeProductMarkers'),
-  wholeProduct: t('secondStep.wholeProduct'),
-  noImageAvailable: t('secondStep.noImageAvailable')
+  ...(props.texts.firstStep || {}),
+  numberOfDamages: props.texts.secondStep?.numberOfDamages,
+  otherErrorsAndDefects: props.texts.secondStep?.otherErrorsAndDefects,
+  belongsToEmployee: props.texts.secondStep?.belongsToEmployee,
+  employeeName: props.texts.secondStep?.employeeName,
+  department: props.texts.secondStep?.department,
+  markDamageBelow: props.texts.secondStep?.markDamageBelow,
+  markAllDamagesInfo: props.texts.secondStep?.markAllDamagesInfo,
+  clickToMarkDamage: props.texts.secondStep?.clickToMarkDamage,
+  changeMarkingInfo: props.texts.secondStep?.changeMarkingInfo,
+  clearAllMarkers: props.texts.secondStep?.clearAllMarkers,
+  selectedMarkers: props.texts.secondStep?.selectedMarkers,
+  wholeProductMarkers: props.texts.secondStep?.wholeProductMarkers,
+  wholeProduct: props.texts.secondStep?.wholeProduct,
+  noImageAvailable: props.texts.secondStep?.noImageAvailable
 }))
 
 function handleUpdateOrderInfo(val) {
@@ -83,56 +72,19 @@ function setTerms(val) {
 }
 
 const orderInfoTexts = computed(() => ({
-  title: t('thirdStep.title'),
-  back: t('thirdStep.back'),
-  orderInformation: t('thirdStep.orderInformation'),
-  customerNumber: t('thirdStep.customerNumber'),
-  enterCustomerNumber: t('thirdStep.enterCustomerNumber'),
-  companyName: t('thirdStep.companyName'),
-  enterCompanyName: t('thirdStep.enterCompanyName'),
-  ordererName: t('thirdStep.ordererName'),
-  enterOrdererName: t('thirdStep.enterOrdererName'),
-  phone: t('thirdStep.phone'),
-  enterPhone: t('thirdStep.enterPhone'),
-  email: t('thirdStep.email'),
-  enterEmail: t('thirdStep.enterEmail'),
-  billingAddress: t('thirdStep.billingAddress'),
-  streetAddress: t('thirdStep.streetAddress'),
-  enterStreetAddress: t('thirdStep.enterStreetAddress'),
-  postalCode: t('thirdStep.postalCode'),
-  enterPostalCode: t('thirdStep.enterPostalCode'),
-  city: t('thirdStep.city'),
-  enterCity: t('thirdStep.enterCity'),
-  pickupAddress: t('thirdStep.pickupAddress'),
-  deliveryAddress: t('thirdStep.deliveryAddress'),
-  sameAsPickup: t('thirdStep.sameAsPickup'),
-  sameAsBilling: t('thirdStep.sameAsBilling'),
-  summary: t('thirdStep.summary'),
-  acceptTerms: t('thirdStep.acceptTerms'),
-  terms: t('thirdStep.terms'),
-  order: t('thirdStep.order')
+  ...(props.texts.thirdStep || {})
 }))
 
-const confirmationTexts = computed(() => ({
-  thankYouTitle: t('fourthStep.thankYouTitle'),
-  orderReceivedMsg: t('fourthStep.orderReceivedMsg'),
-  discountMsg: t('fourthStep.discountMsg').replace('{discount}', discount.value),
-  instructionsTitle: t('fourthStep.instructionsTitle'),
-  step1: t('fourthStep.step1'),
-  step2: t('fourthStep.step2'),
-  step3: t('fourthStep.step3'),
-  step4: t('fourthStep.step4'),
-  step5: t('fourthStep.step5'),
-  step6: t('fourthStep.step6'),
-  additionalOrder: t('fourthStep.additionalOrder'),
-  previewEmail: t('fourthStep.previewEmail'),
-  close: t('fourthStep.close')
-}))
+const confirmationTexts = computed(() => {
+  const base = props.texts.fourthStep || {}
+  return {
+    ...base,
+    discountMsg: (base.discountMsg || '').replace('{discount}', discount.value)
+  }
+})
 
 const emailPreviewTexts = computed(() => ({
-  back: t('fifthStep.back'),
-  sendEmail: t('fifthStep.sendEmail'),
-  productWithMarkedDamages: t('fifthStep.productWithMarkedDamages'),
+  ...(props.texts.fifthStep || {}),
   product: productSelectionTexts.value.product,
   subtotal: productSelectionTexts.value.subtotal,
   total: productSelectionTexts.value.total
@@ -220,26 +172,26 @@ async function validateProducts() {
     let markerError
     if (!p.type) valid = false
     if (p.damageCount <= 0) {
-      damageErrors[0] = t('validation.required')
+      damageErrors[0] = props.texts.validation?.required
       valid = false
     } else {
       for (let i = 0; i < p.damageCount; i++) {
         if (!p.damages?.[i]) {
-          damageErrors[i] = t('validation.required')
+          damageErrors[i] = props.texts.validation?.required
           valid = false
         } else {
           const dmg = cat?.damages.find(d => d.id === p.damages[i])
           if (dmg?.options?.length) {
             const opt = p.damageDetails?.[`damage-${i}`]?.optionId
             if (!opt) {
-              damageOptionErrors[i] = t('validation.required')
+              damageOptionErrors[i] = props.texts.validation?.required
               valid = false
             }
           }
           if (dmg?.markedOnPicture) {
             const pos = p.damageDetails?.[`damage-${i}`]?.position
             if (!pos) {
-              markerError = t('validation.required')
+              markerError = props.texts.validation?.required
               valid = false
             }
           }
@@ -254,7 +206,7 @@ async function validateProducts() {
           if (def?.markedOnPicture) {
             const pos = p.defectDetails?.[id]?.position
             if (!pos) {
-              markerError = t('validation.required')
+              markerError = props.texts.validation?.required
               valid = false
             }
           }
@@ -264,7 +216,7 @@ async function validateProducts() {
 
     return {
       ...p,
-      typeError: p.type ? undefined : t('validation.required'),
+      typeError: p.type ? undefined : props.texts.validation?.required,
       damageErrors,
       damageOptionErrors,
       markerError
@@ -284,8 +236,8 @@ async function validateProducts() {
 function validateOrderInfo() {
   const required = ['companyName','ordererName','phone','email','billingCompanyName','billingStreet','billingZipCode','billingCity']
   const errors = {}
-  required.forEach((k) => { if (!orderInfo.value[k]) errors[k] = t('validation.required') })
-  if (!termsAccepted.value) errors.termsAccepted = t('validation.mustAccept')
+  required.forEach((k) => { if (!orderInfo.value[k]) errors[k] = props.texts.validation?.required })
+  if (!termsAccepted.value) errors.termsAccepted = props.texts.validation?.mustAccept
   validationErrors.value = errors
   return Object.keys(errors).length === 0
 }
