@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   modelValue: [String, Number],
@@ -16,7 +16,11 @@ const highlightedIndex = ref(-1)
 const selectRef = ref(null)
 const listRef = ref(null)
 
-const selectedOption = computed(() => props.options.find(opt => opt.value === props.modelValue))
+const selectedOption = ref(null)
+
+watch([() => props.modelValue, () => props.options], ([newValue, newOptions]) => {
+  selectedOption.value = newOptions.find(opt => opt.value === newValue)
+}, { immediate: true, deep: true })
 
 function handleClickOutside(event) {
   if (selectRef.value && !selectRef.value.contains(event.target)) {
@@ -25,12 +29,8 @@ function handleClickOutside(event) {
   }
 }
 
-watch(isOpen, (isCurrentlyOpen) => {
-  if (isCurrentlyOpen) {
-    document.addEventListener('mousedown', handleClickOutside)
-  } else {
-    document.removeEventListener('mousedown', handleClickOutside)
-  }
+onMounted(() => {
+  document.addEventListener('mousedown', handleClickOutside)
 })
 
 onBeforeUnmount(() => {
@@ -38,48 +38,48 @@ onBeforeUnmount(() => {
 })
 
 watch(highlightedIndex, (newIndex) => {
-    if (isOpen.value && newIndex >= 0 && listRef.value) {
-        const highlightedElement = listRef.value.children[newIndex];
-        if(highlightedElement) {
-            highlightedElement.scrollIntoView({ block: 'nearest' });
-        }
+  if (isOpen.value && newIndex >= 0 && listRef.value) {
+    const highlightedElement = listRef.value.children[newIndex];
+    if(highlightedElement) {
+      highlightedElement.scrollIntoView({ block: 'nearest' });
     }
+  }
 });
 
 function onKeyDown(event) {
-    if (props.disabled) return;
+  if (props.disabled) return;
 
-    switch (event.key) {
-      case 'Enter':
-      case ' ':
-        event.preventDefault();
-        if (isOpen.value && highlightedIndex.value >= 0) {
-          handleOptionClick(props.options[highlightedIndex.value].value);
-        } else {
-          isOpen.value = true;
-        }
-        break;
-      case 'ArrowDown':
-        event.preventDefault();
-        if (!isOpen.value) {
-          isOpen.value = true;
-        } else {
-          highlightedIndex.value = (highlightedIndex.value + 1) % props.options.length;
-        }
-        break;
-      case 'ArrowUp':
-        event.preventDefault();
-        if (!isOpen.value) {
-          isOpen.value = true;
-        } else {
-          highlightedIndex.value = (highlightedIndex.value - 1 + props.options.length) % props.options.length;
-        }
-        break;
-      case 'Escape':
-        isOpen.value = false;
-        highlightedIndex.value = -1;
-        break;
-    }
+  switch (event.key) {
+    case 'Enter':
+    case ' ':
+      event.preventDefault();
+      if (isOpen.value && highlightedIndex.value >= 0) {
+        handleOptionClick(props.options[highlightedIndex.value].value);
+      } else {
+        isOpen.value = true;
+      }
+      break;
+    case 'ArrowDown':
+      event.preventDefault();
+      if (!isOpen.value) {
+        isOpen.value = true;
+      } else {
+        highlightedIndex.value = (highlightedIndex.value + 1) % props.options.length;
+      }
+      break;
+    case 'ArrowUp':
+      event.preventDefault();
+      if (!isOpen.value) {
+        isOpen.value = true;
+      } else {
+        highlightedIndex.value = (highlightedIndex.value - 1 + props.options.length) % props.options.length;
+      }
+      break;
+    case 'Escape':
+      isOpen.value = false;
+      highlightedIndex.value = -1;
+      break;
+  }
 }
 
 function handleOptionClick(val) {
