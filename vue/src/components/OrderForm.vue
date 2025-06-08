@@ -120,37 +120,191 @@ function resetForm() {
 
 async function captureMarkedAreas(product) {
   if (!product.images?.front) return {}
+
   return new Promise((resolve) => {
     const img = new Image()
     img.onload = () => {
+      console.log('DEBUG IMAGE CAPTURE:')
+      console.log('Natural image size:', img.width, 'x', img.height)
+
+      const imageEls = document.querySelectorAll('.gv-image')
+      let actualDisplayWidth = img.width
+      let actualDisplayHeight = img.height
+
+      if (imageEls.length > 0) {
+        const first = imageEls[0]
+        const rect = first.getBoundingClientRect()
+        const computed = window.getComputedStyle(first)
+        console.log('Displayed image size:', rect.width, 'x', rect.height)
+        console.log('CSS max-height:', computed.maxHeight)
+        console.log('CSS object-fit:', computed.objectFit)
+        actualDisplayWidth = rect.width
+        actualDisplayHeight = rect.height
+      }
+
+      if (product.damageDetails) {
+        Object.entries(product.damageDetails).forEach(([key, detail]) => {
+          if (detail.position) {
+            console.log(`Damage ${key} position:`, detail.position)
+            console.log(
+              'Calculated canvas position:',
+              detail.position.x * img.width,
+              detail.position.y * img.height
+            )
+          }
+        })
+      }
+
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
       const maxHeight = 250
-      let scale = 1
+      let displayWidth, displayHeight, scaleFactor
+
       if (img.height > maxHeight) {
-        scale = maxHeight / img.height
+        scaleFactor = maxHeight / img.height
+        displayHeight = maxHeight
+        displayWidth = img.width * scaleFactor
+      } else {
+        displayWidth = img.width
+        displayHeight = img.height
+        scaleFactor = 1
       }
+
       canvas.width = img.width
       canvas.height = img.height
       ctx.drawImage(img, 0, 0)
-      ;(product.damageDetails ? Object.entries(product.damageDetails) : []).forEach(([k, d]) => {
-        if (d.position && d.position.view !== 'whole') {
-          const x = d.position.x * img.width
-          const y = d.position.y * img.height
-          const r = 15.6 / scale
+
+      const markers = []
+      const damageMarkers = []
+      const defectMarkers = []
+
+      if (product.damageDetails) {
+        Object.entries(product.damageDetails).forEach(([damageKey, detail]) => {
+          if (detail.position && detail.position.view !== 'whole') {
+            const damageIndex = damageKey.replace('damage-', '')
+            const scaleX = img.width / actualDisplayWidth
+            const scaleY = img.height / actualDisplayHeight
+            damageMarkers.push({
+              x: detail.position.x * actualDisplayWidth * scaleX,
+              y: detail.position.y * actualDisplayHeight * scaleY,
+              type: 'damage',
+              label: (detail.orderIndex || parseInt(damageIndex) + 1).toString(),
+              order: detail.orderIndex || parseInt(damageIndex) + 1,
+              id: `damage-${damageIndex}`
+            })
+          }
+        })
+      }
+
+      if (product.defectDetails) {
+        Object.entries(product.defectDetails).forEach(([defectId, detail]) => {
+          if (detail.position && detail.position.view !== 'whole') {
+            const scaleX = img.width / actualDisplayWidth
+            const scaleY = img.height / actualDisplayHeight
+            defectMarkers.push({
+              x: detail.position.x * actualDisplayWidth * scaleX,
+              y: detail.position.y * actualDisplayHeight * scaleY,
+              type: 'defect',
+              label: defectId.replace('_', ' '),
+              order: detail.orderIndex || 999,
+              id: `defect-${defectId}`
+            })
+          }
+        })
+      }
+
+      damageMarkers.sort((a, b) => a.order - b.order)
+      defectMarkers.sort((a, b) => a.order - b.order)
+      markers.push(...damageMarkers, ...defectMarkers)
+
+      markers.forEach(marker => {
+        if (marker.type === 'damage') {
+          const radius = 15.6 / scaleFactor
+          const fontSize = Math.max(16 / scaleFactor, 16)
+
           ctx.fillStyle = '#16a34a'
           ctx.beginPath()
-          ctx.arc(x, y, r, 0, 2 * Math.PI)
+          ctx.arc(marker.x, marker.y, radius, 0, 2 * Math.PI)
           ctx.fill()
+
+          ctx.strokeStyle = '#FFFFFF'
+          ctx.lineWidth = 2 / scaleFactor
+          ctx.stroke()
+
           ctx.fillStyle = '#FFFFFF'
-          ctx.font = `bold ${Math.max(16 / scale, 16)}px Arial`
+          ctx.font = `bold ${fontSize}px Arial`
           ctx.textAlign = 'center'
           ctx.textBaseline = 'middle'
-          ctx.fillText(d.orderIndex || k.replace('damage-', ''), x, y)
+          ctx.fillText(marker.label, marker.x, marker.y)
+        } else {
+          const fontSize = Math.max(12 / scaleFactor, 12)
+          ctx.font = `bold ${fontSize}px Arial`
+          const textWidth = ctx.measureText(marker.label).width + (16 / scaleFactor)
+          const rectHeight = 20 / scaleFactor
+
+          ctx.fillStyle = '#0066CC'
+          ctx.fillRect(marker.x - textWidth/2, marker.y - rectHeight/2, textWidth, rectHeight)
+
+          ctx.fillStyle = '#FFFFFF'
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          ctx.fillText(marker.label, marker.x, marker.y)
         }
       })
-      const compressed = canvas.toDataURL('image/jpeg', 0.7)
-      resolve({ markedImage: compressed })
+
+      const optimizeImage = (sourceCanvas) => {
+        const maxWidth = 400
+        const maxHeight = 300
+
+        let finalWidth = sourceCanvas.width
+        let finalHeight = sourceCanvas.height
+
+        if (finalWidth > maxWidth || finalHeight > maxHeight) {
+          const widthRatio = maxWidth / finalWidth
+          const heightRatio = maxHeight / finalHeight
+          const ratio = Math.min(widthRatio, heightRatio)
+
+          finalWidth = Math.floor(finalWidth * ratio)
+          finalHeight = Math.floor(finalHeight * ratio)
+        }
+
+        const optimizedCanvas = document.createElement('canvas')
+        const optimizedCtx = optimizedCanvas.getContext('2d')
+        optimizedCanvas.width = finalWidth
+        optimizedCanvas.height = finalHeight
+
+        optimizedCtx.imageSmoothingEnabled = true
+        optimizedCtx.imageSmoothingQuality = 'high'
+
+        optimizedCtx.drawImage(sourceCanvas, 0, 0, finalWidth, finalHeight)
+
+        const imageData = optimizedCtx.getImageData(0, 0, finalWidth, finalHeight)
+        const data = imageData.data
+        for (let i = 0; i < data.length; i += 4) {
+          const gray = Math.round(data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114)
+          data[i] = gray
+          data[i + 1] = gray
+          data[i + 2] = gray
+        }
+        optimizedCtx.putImageData(imageData, 0, 0)
+
+        const pixelCount = finalWidth * finalHeight
+        let quality
+        if (pixelCount > 80000) {
+          quality = 0.6
+        } else if (pixelCount > 40000) {
+          quality = 0.7
+        } else {
+          quality = 0.8
+        }
+
+        console.log(`Image optimization: ${finalWidth}x${finalHeight} (${pixelCount} pixels) -> JPEG quality: ${Math.round(quality * 100)}%`)
+
+        return optimizedCanvas.toDataURL('image/jpeg', quality)
+      }
+
+      const compressedImage = optimizeImage(canvas)
+      resolve({ markedImage: compressedImage })
     }
     img.crossOrigin = 'anonymous'
     img.src = product.images.front
@@ -248,8 +402,6 @@ async function nextStep() {
     if (ok) step.value = 1
   } else if (step.value === 1) {
     if (validateOrderInfo()) step.value = 2
-  } else if (step.value === 2) {
-    step.value = 3
   }
 }
 
@@ -265,8 +417,8 @@ function prevStep() {
       :products="products"
       :quantity="quantity"
       :texts="productSelectionTexts"
-      @update:products="val => products = val"
-      @update:quantity="val => quantity = val"
+      @update:products="val => (products.value = val)"
+      @update:quantity="val => (quantity.value = val)"
       @next="nextStep"
     />
     <OrderInformationStep
@@ -290,15 +442,15 @@ function prevStep() {
       :discount="discount"
       :texts="confirmationTexts"
       @reset="resetForm"
-      @preview="data => { completeOrderData = data; step = 3 }"
-      @close="step = 0"
+      @preview="data => { completeOrderData.value = data; step.value = 3 }"
+      @close="step.value = 0"
     />
     <EmailPreviewStep
       v-else-if="step === 3"
       :order-info="completeOrderData?.orderInfo"
       :products="completeOrderData?.products"
       :texts="emailPreviewTexts"
-      @back="step = 2"
+      @back="step.value = 2"
     />
     <div v-else>Further steps not yet ported</div>
   </div>

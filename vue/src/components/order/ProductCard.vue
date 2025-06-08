@@ -25,15 +25,24 @@ const prevType = ref(props.product.type)
 const category = computed(() => config.productCategories.find(c => c.id === props.product.type))
 
 const DAMAGE_OPTIONS = computed(() =>
-  category.value ? category.value.damages.map(d => ({
-    id: d.id,
-    label: localize(d.name),
-    options: (d.options || []).map(o => ({ id: o.id, label: localize(o.name) }))
-  })) : []
+  category.value
+    ? category.value.damages.map(d => ({
+        value: d.id,
+        label: localize(d.name),
+        markedOnPicture: d.markedOnPicture,
+        options: (d.options || []).map(o => ({ value: o.id, label: localize(o.name) }))
+      }))
+    : []
 )
 
 const DEFECT_OPTIONS = computed(() =>
-  category.value ? category.value.defects.map(d => ({ id: d.id, label: localize(d.name) })) : []
+  category.value
+    ? category.value.defects.map(d => ({
+        value: d.id,
+        label: localize(d.name),
+        markedOnPicture: d.markedOnPicture
+      }))
+    : []
 )
 
 watch(() => props.product.type, (newVal) => {
@@ -48,6 +57,7 @@ watch(() => props.product.type, (newVal) => {
     updateField('images', null)
     updateField('damageErrors', {})
     updateField('damageOptionErrors', {})
+    updateField('markerError', undefined)
     selectedDamageIndex.value = undefined
     selectedDefectId.value = undefined
     markingOpen.value = false
@@ -58,13 +68,13 @@ watch(() => props.product.type, (newVal) => {
 watch([() => props.product.damages, category], ([dmg, cat]) => {
   const dMark = {}
   (dmg || []).forEach((id, idx) => {
-    const cfg = DAMAGE_OPTIONS.value.find(o => o.id === id)
+    const cfg = DAMAGE_OPTIONS.value.find(o => o.value === id)
     dMark[idx] = !!cfg?.markedOnPicture
   })
   damageMarkable.value = dMark
 
   const defMark = {}
-  DEFECT_OPTIONS.value.forEach(opt => { defMark[opt.id] = !!opt.markedOnPicture })
+  DEFECT_OPTIONS.value.forEach(opt => { defMark[opt.value] = !!opt.markedOnPicture })
   defectMarkable.value = defMark
 })
 
@@ -117,7 +127,7 @@ function updateDamageType(idx, val) {
 
   const damageLabels = { ...(props.product.damageLabels || {}) }
   if (val) {
-    const dmgOpt = DAMAGE_OPTIONS.value.find(d => d.id === val)
+    const dmgOpt = DAMAGE_OPTIONS.value.find(d => d.value === val)
     if (dmgOpt) damageLabels[idx] = dmgOpt.label
     else delete damageLabels[idx]
   } else {
@@ -159,7 +169,7 @@ function toggleDefect(pid, id) {
 
   const labels = { ...(props.product.defectLabels || {}) }
   if (issues[id]) {
-    const defectObj = DEFECT_OPTIONS.value.find(d => d.id === id)
+    const defectObj = DEFECT_OPTIONS.value.find(d => d.value === id)
     if (defectObj) labels[id] = defectObj.label
   } else {
     delete labels[id]
@@ -167,7 +177,7 @@ function toggleDefect(pid, id) {
   updateField('defectLabels', labels)
 
   if (issues[id]) {
-    const defectObj = DEFECT_OPTIONS.value.find(d => d.id === id)
+    const defectObj = DEFECT_OPTIONS.value.find(d => d.value === id)
     if (defectObj?.markedOnPicture) {
       selectedDamageIndex.value = undefined
       selectedDefectId.value = id
@@ -192,7 +202,7 @@ function toggleDefect(pid, id) {
             :damage="props.product.damages?.[idx-1] || ''"
             :option="props.product.damageDetails?.[`damage-${idx-1}`]?.optionId || ''"
             :damage-options="DAMAGE_OPTIONS"
-            :option-options="DAMAGE_OPTIONS.find(d => d.id === props.product.damages?.[idx-1])?.options || []"
+            :option-options="DAMAGE_OPTIONS.find(d => d.value === props.product.damages?.[idx-1])?.options || []"
             :damage-error="props.product.damageErrors?.[idx-1]"
             :option-error="props.product.damageOptionErrors?.[idx-1]"
             @update:damage="val => updateDamageType(idx-1, val)"
