@@ -211,7 +211,8 @@
 
 <script setup>
 import { reactive, computed, watch } from 'vue'
-import PriceSummary, { calculateSummary } from './PriceSummary.vue'
+import PriceSummary from './PriceSummary.vue'
+import { calculateSummary } from './priceSummaryUtils.js'
 import { DialogClose } from '../Dialog.vue'
 
 const props = defineProps({

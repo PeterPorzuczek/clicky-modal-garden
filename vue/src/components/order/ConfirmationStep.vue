@@ -32,7 +32,7 @@
 <script setup>
 import { computed, inject } from 'vue'
 import { DialogClose } from '../Dialog.vue'
-import { calculateSummary } from './PriceSummary.vue'
+import { calculateSummary } from './priceSummaryUtils.js'
 
 const props = defineProps({
   products: { type: Array, default: () => [] },

@@ -5,6 +5,7 @@ import MarkerList from './MarkerList.vue'
 import MarkerButtons from './MarkerButton.vue'
 import GarmentView from './GarmentView.vue'
 import { getDefectLabel, getDamageLabel } from '../../../setup/i18n.js'
+import t from '../../../setup/i18n.js'
 
 const props = defineProps({
   product: Object,
@@ -12,19 +13,23 @@ const props = defineProps({
   defectId: String,
   updateDamageDetail: Function,
   updateDefectDetail: Function,
-  selectedDamageIndex: Number,
-  selectedDefectId: String,
   onSelectDamage: Function,
   onSelectDefect: Function,
   damageMarkable: { type: Object, default: () => ({}) },
-  defectMarkable: { type: Object, default: () => ({}) },
-  texts: Object
+  defectMarkable: { type: Object, default: () => ({}) }
 })
+
+// const emit = defineEmits([])
 
 const damagePositions = ref({})
 const defectPositions = ref({})
 const orderMap = ref({})
 const nextOrder = ref(1)
+
+const labelForDefect = (id) =>
+  props.product.defectLabels?.[id] || getDefectLabel(props.product.type, id)
+const labelForDamage = (idx) =>
+  props.product.damageLabels?.[idx] || getDamageLabel(props.product.type, props.product.damages[idx])
 
 watch(() => props.product, (p) => {
   const dPos = {}
@@ -62,14 +67,14 @@ function handleMark(x,y,view){
     damagePositions.value = { ...damagePositions.value, [props.damageIndex]: pos }
     const orderKey = `damage-${props.damageIndex}`
     if(!orderMap.value[orderKey]){ orderMap.value = { ...orderMap.value, [orderKey]: nextOrder.value }; nextOrder.value++ }
-    props.updateDamageDetail && props.updateDamageDetail(props.damageIndex,{ position: pos, orderIndex: orderMap.value[orderKey] })
+    props.updateDamageDetail && props.updateDamageDetail(props.damageIndex, { position: pos, orderIndex: orderMap.value[orderKey] })
     return
   }
   if(props.defectId && props.defectMarkable[props.defectId]){
     const pos={x,y,view}
     defectPositions.value = { ...defectPositions.value, [props.defectId]: pos }
     if(!orderMap.value[props.defectId]){ orderMap.value = { ...orderMap.value, [props.defectId]: nextOrder.value }; nextOrder.value++ }
-    props.updateDefectDetail && props.updateDefectDetail(props.defectId,{ position: pos, orderIndex: orderMap.value[props.defectId] })
+    props.updateDefectDetail && props.updateDefectDetail(props.defectId, { position: pos, orderIndex: orderMap.value[props.defectId] })
   }
 }
 
@@ -82,8 +87,8 @@ function resetAll(){
   defectPositions.value={}
   orderMap.value={}
   nextOrder.value=1
-  props.product.damages.forEach((_,idx)=>{ props.updateDamageDetail && props.updateDamageDetail(idx,{ position: undefined, orderIndex: undefined }) })
-  Object.entries(props.product.otherIssues||{}).forEach(([id,on])=>{ if(on) props.updateDefectDetail && props.updateDefectDetail(id,{ position: undefined, orderIndex: undefined }) })
+  props.product.damages.forEach((_,idx)=>{ props.updateDamageDetail && props.updateDamageDetail(idx, { position: undefined, orderIndex: undefined }) })
+  Object.entries(props.product.otherIssues||{}).forEach(([id,on])=>{ if(on) props.updateDefectDetail && props.updateDefectDetail(id, { position: undefined, orderIndex: undefined }) })
 }
 
 function isWholeMarker(pos){ return pos && pos.view==='whole' }
@@ -100,10 +105,10 @@ function handleMarkerClick(type,id){
 
 <template>
   <div class="gdm-container">
-    <h4 class="gdm-title">{{ props.texts.markDamageBelow }}</h4>
-    <InstructionMessage :product-type="props.product.type" :is-marked="isMarked" :is-single-mark-mode="singleMode" :texts="props.texts" />
+    <h4 class="gdm-title">{{ t('secondStep.markDamageBelow') }}</h4>
+    <InstructionMessage :product-type="props.product.type" :is-marked="isMarked" :is-single-mark-mode="singleMode" />
     <div class="gdm-row">
-      <MarkerButtons :on-reset-all-markers="resetAll" :texts="props.texts" />
+      <MarkerButtons @reset-all-markers="resetAll" />
     </div>
     <div class="gdm-white-section">
       <MarkerList
@@ -113,39 +118,37 @@ function handleMarkerClick(type,id){
         :is-whole-product-marker="isWholeMarker"
         :damage-markable="props.damageMarkable"
         :defect-markable="props.defectMarkable"
-        :get-damage-label="id => props.product.damageLabels?.[id] || getDamageLabel(props.product.type, props.product.damages[id])"
-        :get-defect-label="id => props.product.defectLabels?.[id] || getDefectLabel(props.product.type, id)"
+        :get-damage-label="labelForDamage"
+        :get-defect-label="labelForDefect"
         :marker-selection-order="orderMap"
-        :on-select-damage="props.onSelectDamage"
-        :on-select-defect="props.onSelectDefect"
-        :texts="props.texts"
-        :selected-damage-index="props.selectedDamageIndex"
-        :selected-defect-id="props.selectedDefectId"
-        :remove-damage="idx => { delete damagePositions.value[idx]; delete orderMap.value[`damage-${idx}`]; props.updateDamageDetail && props.updateDamageDetail(idx,{ position: undefined, orderIndex: undefined }) }"
-        :remove-defect="id => { delete defectPositions.value[id]; delete orderMap.value[id]; props.updateDefectDetail && props.updateDefectDetail(id,{ position: undefined, orderIndex: undefined }) }"
+        @select-damage="props.onSelectDamage"
+        @select-defect="props.onSelectDefect"
+        :selected-damage-index="props.damageIndex"
+        :selected-defect-id="props.defectId"
+        @remove-damage="(idx) => { delete damagePositions.value[idx]; delete orderMap.value[`damage-${idx}`]; props.updateDamageDetail && props.updateDamageDetail(idx, { position: undefined, orderIndex: undefined }) }"
+        @remove-defect="(id) => { delete defectPositions.value[id]; delete orderMap.value[id]; props.updateDefectDetail && props.updateDefectDetail(id, { position: undefined, orderIndex: undefined }) }"
       />
       <GarmentView
         :product-type="props.product.type"
         :image-url="imageUrl"
-        :on-mark-position="handleMark"
+        @mark-position="handleMark"
         :disabled="false"
         :max-marks="props.product.damages.length"
         :current-marks="totalMarks"
-        :selected-for-marking="props.selectedDamageIndex !== undefined || props.selectedDefectId !== undefined"
+        :selected-for-marking="props.damageIndex !== undefined || props.defectId !== undefined"
         :damage-positions="damagePositions"
         :defect-positions="defectPositions"
         :product-damages="props.product.damages"
         :damage-labels="props.product.damageLabels || {}"
         :defect-labels="Object.fromEntries(Object.entries(props.product.otherIssues || {}).filter(([id,on])=>on).map(([id]) => [id, props.product.defectLabels?.[id] || getDefectLabel(props.product.type, id)]))"
-        :on-marker-click="handleMarkerClick"
+        @marker-click="handleMarkerClick"
         :marker-selection-order="orderMap"
         :product="props.product"
-        :remove-damage="(e,idx)=>{ e && e.stopPropagation && e.stopPropagation(); delete damagePositions.value[idx]; delete orderMap.value[`damage-${idx}`]; props.updateDamageDetail && props.updateDamageDetail(idx,{ position: undefined, orderIndex: undefined }) }"
-        :remove-defect="(e,id)=>{ e && e.stopPropagation && e.stopPropagation(); delete defectPositions.value[id]; delete orderMap.value[id]; props.updateDefectDetail && props.updateDefectDetail(id,{ position: undefined, orderIndex: undefined }) }"
-        :get-damage-label="(idx)=>props.product.damageLabels?.[idx] || getDamageLabel(props.product.type, props.product.damages[idx])"
-        :get-defect-label="id => props.product.defectLabels?.[id] || getDefectLabel(props.product.type,id)"
+        @remove-damage="(e,idx)=>{ e && e.stopPropagation && e.stopPropagation(); delete damagePositions.value[idx]; delete orderMap.value[`damage-${idx}`]; props.updateDamageDetail && props.updateDamageDetail(idx, { position: undefined, orderIndex: undefined }) }"
+        @remove-defect="(e,id)=>{ e && e.stopPropagation && e.stopPropagation(); delete defectPositions.value[id]; delete orderMap.value[id]; props.updateDefectDetail && props.updateDefectDetail(id, { position: undefined, orderIndex: undefined }) }"
+        :get-damage-label="labelForDamage"
+        :get-defect-label="labelForDefect"
         :is-whole-product-marker="isWholeMarker"
-        :texts="props.texts"
       />
     </div>
   </div>

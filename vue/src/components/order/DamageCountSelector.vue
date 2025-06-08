@@ -1,20 +1,19 @@
 <script setup>
+import t from '../../setup/i18n.js'
+
 const props = defineProps({
-  count: { type: Number, default: 0 },
-  label: String
+  count: { type: Number, default: 0 }
 })
+
 const emit = defineEmits(['update:count'])
-function decrement() {
-  emit('update:count', Math.max(0, props.count - 1))
-}
-function increment() {
-  emit('update:count', props.count + 1)
-}
+
+const decrement = () => emit('update:count', Math.max(0, props.count - 1))
+const increment = () => emit('update:count', props.count + 1)
 </script>
 
 <template>
   <div class="dcs-container">
-    <label class="oi-label">{{ props.label }}</label>
+    <label class="oi-label">{{ t('secondStep.numberOfDamages') }}</label>
     <div class="dcs-control">
       <button
         type="button"
