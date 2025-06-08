@@ -68,6 +68,37 @@ watch([() => props.product.damages, category], ([dmg, cat]) => {
   defectMarkable.value = defMark
 })
 
+// Preserve selected damages when damageCount changes
+watch(() => props.product.damageCount, (newVal) => {
+  const current = props.product.damages || []
+  if (current.length !== newVal) {
+    const arr = Array.from({ length: newVal }).map((_, i) => current[i] || '')
+    updateField('damages', arr)
+
+    const labels = { ...(props.product.damageLabels || {}) }
+    for (let i = newVal; i < current.length; i++) {
+      delete labels[i]
+    }
+    updateField('damageLabels', labels)
+  }
+})
+
+// Set default images when type selected and none exist
+watch([() => props.product.type, category, () => props.product.images], ([type, cat, imgs]) => {
+  if (type && cat && !imgs) {
+    const first = cat.damages.find(d => d.picturesToBeMarked && d.picturesToBeMarked.length)
+    if (first) {
+      const pics = first.picturesToBeMarked
+      updateField('images', {
+        front: pics[0] || null,
+        back: pics[1] || pics[0] || null,
+        left: pics[2] || pics[0] || null,
+        right: pics[3] || pics[0] || null
+      })
+    }
+  }
+})
+
 watch([() => props.product.damages, () => props.product.damageDetails, () => props.product.otherIssues, () => props.product.defectDetails], () => {
   const hasDamageMarks = (props.product.damages || []).some((_, idx) => props.product.damageDetails?.[`damage-${idx}`]?.position)
   const hasDefectMarks = Object.entries(props.product.otherIssues || {}).some(([id,on]) => on && props.product.defectDetails?.[id]?.position !== undefined)
@@ -76,6 +107,73 @@ watch([() => props.product.damages, () => props.product.damageDetails, () => pro
 
 function updateField(field, value) {
   emit('update', props.product.id, field, value)
+}
+
+function updateDamageType(idx, val) {
+  const arr = [...(props.product.damages || [])]
+  while (arr.length <= idx) arr.push('')
+  arr[idx] = val
+  updateField('damages', arr)
+
+  const damageLabels = { ...(props.product.damageLabels || {}) }
+  if (val) {
+    const dmgOpt = DAMAGE_OPTIONS.value.find(d => d.id === val)
+    if (dmgOpt) damageLabels[idx] = dmgOpt.label
+    else delete damageLabels[idx]
+  } else {
+    delete damageLabels[idx]
+  }
+  updateField('damageLabels', damageLabels)
+
+  const details = { ...(props.product.damageDetails || {}) }
+  details[`damage-${idx}`] = { optionId: '' }
+  updateField('damageDetails', details)
+
+  const damageCfg = category.value?.damages.find(d => d.id === val)
+  if (damageCfg?.picturesToBeMarked?.length) {
+    const pics = damageCfg.picturesToBeMarked
+    updateField('images', {
+      front: pics[0] || null,
+      back: pics[1] || pics[0] || null,
+      left: pics[2] || pics[0] || null,
+      right: pics[3] || pics[0] || null
+    })
+  }
+  if (damageCfg?.markedOnPicture) {
+    selectedDefectId.value = undefined
+    selectedDamageIndex.value = idx
+    markingOpen.value = true
+  }
+}
+
+function updateDamageDetail(idx, detail) {
+  const details = { ...(props.product.damageDetails || {}) }
+  details[`damage-${idx}`] = { ...(details[`damage-${idx}`] || {}), ...detail }
+  updateField('damageDetails', details)
+}
+
+function toggleDefect(pid, id) {
+  const issues = { ...(props.product.otherIssues || {}) }
+  issues[id] = !issues[id]
+  updateField('otherIssues', issues)
+
+  const labels = { ...(props.product.defectLabels || {}) }
+  if (issues[id]) {
+    const defectObj = DEFECT_OPTIONS.value.find(d => d.id === id)
+    if (defectObj) labels[id] = defectObj.label
+  } else {
+    delete labels[id]
+  }
+  updateField('defectLabels', labels)
+
+  if (issues[id]) {
+    const defectObj = DEFECT_OPTIONS.value.find(d => d.id === id)
+    if (defectObj?.markedOnPicture) {
+      selectedDamageIndex.value = undefined
+      selectedDefectId.value = id
+      markingOpen.value = true
+    }
+  }
 }
 </script>
 
@@ -97,29 +195,8 @@ function updateField(field, value) {
             :option-options="DAMAGE_OPTIONS.find(d => d.id === props.product.damages?.[idx-1])?.options || []"
             :damage-error="props.product.damageErrors?.[idx-1]"
             :option-error="props.product.damageOptionErrors?.[idx-1]"
-            @update:damage="val => {
-              const arr = [...(props.product.damages || [])]
-              while (arr.length <= idx-1) arr.push('')
-              arr[idx-1] = val
-              updateField('damages', arr)
-
-              const damageCfg = category.value?.damages.find(d => d.id === val)
-              if(damageCfg?.options?.length) {
-                const details = { ...(props.product.damageDetails || {}) }
-                details[`damage-${idx-1}`] = { optionId: '' }
-                updateField('damageDetails', details)
-              }
-              if(damageCfg?.markedOnPicture){
-                selectedDefectId.value = undefined
-                selectedDamageIndex.value = idx-1
-                markingOpen.value = true
-              }
-            }"
-            @update:option="val => {
-              const details = { ...(props.product.damageDetails || {}) }
-              details[`damage-${idx-1}`] = { ...(details[`damage-${idx-1}`] || {}), optionId: val }
-              updateField('damageDetails', details)
-            }"
+            @update:damage="val => updateDamageType(idx-1, val)"
+            @update:option="val => updateDamageDetail(idx-1, { optionId: val })"
             :texts="props.texts"
           />
         </div>
@@ -130,17 +207,7 @@ function updateField(field, value) {
         :issues="DEFECT_OPTIONS"
         :selected="props.product.otherIssues || {}"
         :title="props.texts.otherErrorsAndDefects"
-        @toggle="(pid, id) => {
-          const issues = { ...(props.product.otherIssues || {}) }
-          issues[id] = !issues[id]
-          updateField('otherIssues', issues)
-          const defectObj = DEFECT_OPTIONS.value.find(d => d.id === id)
-          if(issues[id] && defectObj?.markedOnPicture){
-            selectedDamageIndex.value = undefined
-            selectedDefectId.value = id
-            markingOpen.value = true
-          }
-        }"
+        @toggle="(pid, id) => toggleDefect(pid, id)"
       />
       <div v-if="(props.product.damageCount > 0 || Object.values(props.product.otherIssues || {}).some(Boolean)) && markingOpen" class="pc-marker">
         <GarmentDamageMarker
@@ -148,8 +215,12 @@ function updateField(field, value) {
           :texts="props.texts"
           :damage-index="selectedDamageIndex"
           :defect-id="selectedDefectId"
-          :update-damage-detail="(idx, detail) => { const details = { ...(props.product.damageDetails || {}) }; details[`damage-${idx}`] = { ...(details[`damage-${idx}`] || {}), ...detail }; updateField('damageDetails', details) }"
-          :update-defect-detail="(id, detail) => { const details = { ...(props.product.defectDetails || {}) }; details[id] = { ...(details[id] || {}), ...detail }; updateField('defectDetails', details) }"
+          :update-damage-detail="(idx, detail) => updateDamageDetail(idx, detail)"
+          :update-defect-detail="(id, detail) => {
+            const details = { ...(props.product.defectDetails || {}) }
+            details[id] = { ...(details[id] || {}), ...detail }
+            updateField('defectDetails', details)
+          }"
           :on-select-damage="idx => { if(damageMarkable.value[idx]) { selectedDefectId.value = undefined; selectedDamageIndex.value = idx; markingOpen.value = true } }"
           :on-select-defect="id => { if(defectMarkable.value[id]) { selectedDamageIndex.value = undefined; selectedDefectId.value = id; markingOpen.value = true } }"
           :damage-markable="damageMarkable"

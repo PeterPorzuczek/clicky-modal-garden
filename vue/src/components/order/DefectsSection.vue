@@ -3,7 +3,8 @@ const props = defineProps({
   productId: [String, Number],
   issues: { type: Array, default: () => [] },
   selected: { type: Object, default: () => ({}) },
-  title: String
+  title: String,
+  error: String
 })
 const emit = defineEmits(['toggle'])
 function toggle(id) {
@@ -16,7 +17,7 @@ function toggle(id) {
     <div class="defects-header">
       <h4 class="defects-title">{{ props.title }}</h4>
     </div>
-    <div class="defects-wrapper">
+    <div :class="props.error ? 'defects-wrapper error' : 'defects-wrapper'">
       <div class="defects-list">
         <div v-for="issue in props.issues" :key="issue.id" class="defect-item">
           <input :id="`issue-${props.productId}-${issue.id}`" type="checkbox" :checked="props.selected[issue.id]" @change="toggle(issue.id)">
@@ -24,6 +25,7 @@ function toggle(id) {
         </div>
       </div>
     </div>
+    <p v-if="props.error" class="defect-error">{{ props.error }}</p>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
-import Dialog, { DialogClose } from './Dialog.vue'
+import Dialog, { DialogClose, DialogContent } from './Dialog.vue'
 import OrderForm from './OrderForm.vue'
 import config from '../setup/config.js'
 import { localize } from '../setup/i18n.js'
@@ -168,13 +168,13 @@ function changeLanguage(code) {
         </button>
       </div>
     </div>
-    <Dialog v-if="open" @close="open = false">
-      <div class="dialog-content">
+    <Dialog :open="open" @update:open="open = $event">
+      <DialogContent class="dialog-content">
         <div class="form-container">
           <OrderForm :prefilled-data="finalPrefilledData" :texts="orderFormTexts" />
         </div>
         <DialogClose class="dialog-close" />
-      </div>
+      </DialogContent>
     </Dialog>
   </div>
 </template>
