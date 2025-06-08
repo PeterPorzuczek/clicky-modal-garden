@@ -62,7 +62,12 @@ const total = computed(() => calculateSummary(props.products).total)
       </div>
       <p>{{ props.texts.instruction }}</p>
       <p class="ps-reminder">{{ props.texts.reminder }}</p>
-      <ProductQuantitySelector :quantity="props.quantity" @increase="addProduct" @decrease="removeProduct" />
+      <ProductQuantitySelector
+        :quantity="props.quantity"
+        :texts="props.texts"
+        @increase="addProduct"
+        @decrease="removeProduct"
+      />
     </div>
     <ProductCard v-for="p in props.products" :key="p.id" :product="p" :texts="props.texts" @update="updateProduct" />
     <div v-if="props.products.some(p => p.type) && total > 0" class="summary-card">

@@ -45,6 +45,7 @@ const productSelectionTexts = computed(() => ({
   title: t('firstStep.title'),
   instruction: t('firstStep.instruction'),
   reminder: t('firstStep.reminder'),
+  selectNumberOfProducts: t('firstStep.selectNumberOfProducts'),
   next: t('firstStep.next'),
   summary: t('firstStep.summary'),
   product: t('firstStep.product'),
