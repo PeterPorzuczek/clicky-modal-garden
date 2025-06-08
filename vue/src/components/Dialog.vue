@@ -25,9 +25,11 @@ export const DialogClose = {
 </script>
 
 <template>
-  <div class="dialog-overlay" @click.self="emit('close')">
-    <div class="dialog-window">
-      <slot></slot>
+  <teleport to="body">
+    <div class="dialog-overlay" @click.self="emit('close')">
+      <div class="dialog-window">
+        <slot></slot>
+      </div>
     </div>
-  </div>
+  </teleport>
 </template>
