@@ -7,16 +7,33 @@ export function calculateSummary(products = [], discount = 0) {
   const productTotals = products.map(p => {
     const category = config.productCategories.find(c => c.id === p.type)
     let subtotal = 0
-    const items = []
-    if (category) {
+    let items = []
+
+    if (p.items && Array.isArray(p.items)) {
+      items = p.items.map(item => ({
+        ...item,
+        category: item.category || 'damages'
+      }))
+      subtotal = items.reduce((sum, it) => sum + (it.price || 0), 0)
+    } else if (category) {
       p.damages?.forEach((damageId, idx) => {
         const damage = category.damages.find(d => d.id === damageId)
         if (damage) {
           const optId = p.damageDetails?.[`damage-${idx}`]?.optionId
           const option = optId ? damage.options.find(o => o.id === optId) : damage
-          const price = getPrice(option.pricing, products.length)
-          subtotal += price
-          items.push({ label: localize(damage.name), price })
+          if (option) {
+            const price = getPrice(option.pricing, products.length)
+            subtotal += price
+
+            let label
+            if (optId && option !== damage) {
+              label = `${localize(damage.name)} - ${localize(option.name)}`
+            } else {
+              label = localize(damage.name)
+            }
+
+            items.push({ label, price, category: 'damages' })
+          }
         }
       })
       Object.entries(p.otherIssues || {}).forEach(([id, active]) => {
@@ -25,12 +42,13 @@ export function calculateSummary(products = [], discount = 0) {
           if (defect) {
             const price = getPrice(defect.pricing, products.length)
             subtotal += price
-            items.push({ label: localize(defect.name), price })
+            items.push({ label: localize(defect.name), price, category: 'defects' })
           }
         }
       })
     }
-    return { id: p.id, type: localize(category?.name) || p.type, subtotal, items }
+
+    return { id: p.id, type: localize(category?.name) || p.type, subtotal: p.subtotal || subtotal, items }
   })
   const subTotal = productTotals.reduce((s, p) => s + p.subtotal, 0)
   const discountAmount = Math.round(subTotal * (discount / 100))
