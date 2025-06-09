@@ -8,8 +8,8 @@ import { computed } from 'vue'
 import t from '../../setup/i18n.js'
 
 const props = defineProps({
-  products: Array,
-  quantity: Number
+  products: { type: Array, default: () => [] },
+  quantity: { type: Number, default: 0 }
 })
 
 const emit = defineEmits(['update:products', 'update:quantity', 'next-step'])
