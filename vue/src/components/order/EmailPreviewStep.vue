@@ -420,11 +420,9 @@ async function handleSendEmail() {
     reply_to: destination
   }
   try {
-    const res = await emailjs.send('service_om94h1p','template_jv1wx1q',templateParams)
-    console.log('Email sent', res)
+    await emailjs.send('service_om94h1p','template_jv1wx1q',templateParams)
     alert(`Email confirmation sent successfully to ${destination}!`)
   } catch (err) {
-    console.error('Error sending email', err)
     alert('Failed to send email. Please try again or contact support.')
   }
 }

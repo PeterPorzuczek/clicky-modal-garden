@@ -80,7 +80,6 @@ const validateProducts = async () => {
   productTotals.forEach((productTotal, index) => {
     if (productTotal.subtotal === 0) {
       valid = false
-      console.error(`Product ${index + 1} has 0 cost - missing required selections`)
     }
   })
   
@@ -93,14 +92,12 @@ const validateProducts = async () => {
       const damageId = product.damages?.[i]
       if (!damageId) {
         valid = false
-        console.error(`Product ${productIndex + 1}: No damage type selected for damage ${i + 1}`)
         continue
       }
       
       const damage = category.damages.find(d => d.id === damageId)
       if (!damage) {
         valid = false
-        console.error(`Product ${productIndex + 1}: Invalid damage type ${damageId}`)
         continue
       }
       
@@ -109,7 +106,6 @@ const validateProducts = async () => {
         const selectedOption = product.damageDetails?.[`damage-${i}`]?.optionId
         if (!selectedOption) {
           valid = false
-          console.error(`Product ${productIndex + 1}: Missing option for damage ${i + 1} (${damage.name?.en || damageId})`)
         }
       }
       
@@ -118,7 +114,6 @@ const validateProducts = async () => {
         const position = product.damageDetails?.[`damage-${i}`]?.position
         if (!position) {
           valid = false
-          console.error(`Product ${productIndex + 1}: Missing marker for damage ${i + 1} (${damage.name?.en || damageId})`)
         }
       }
     }
@@ -140,7 +135,6 @@ const validateProducts = async () => {
         if (!p.damages?.[i]) {
           damageErrors[i] = t('validation.required')
           valid = false
-          console.error(`Product ${p.id}: Missing damage selection for damage ${i + 1}`)
         } else {
           const damage = category?.damages.find((d) => d.id === p.damages[i])
           if (damage?.options?.length > 0) {
@@ -148,7 +142,6 @@ const validateProducts = async () => {
             if (!opt) {
               damageOptionErrors[i] = t('validation.required')
               valid = false
-              console.error(`Product ${p.id}: Missing damage option for damage ${i + 1} (${damage.name?.en || damage.id})`)
             }
           }
           if (damage?.markedOnPicture) {
@@ -156,7 +149,6 @@ const validateProducts = async () => {
             if (!pos) {
               markerError = t('validation.required')
               valid = false
-              console.error(`Product ${p.id}: Missing marker position for damage ${i + 1}`)
             }
           }
         }
@@ -234,9 +226,6 @@ const captureMarkedAreas = async (product) => {
   return new Promise((resolve) => {
     const img = new Image()
     img.onload = () => {
-      // Debug: log image dimensions and positions
-      console.log('DEBUG IMAGE CAPTURE:')
-      console.log('Natural image size:', img.width, 'x', img.height)
       
       // Find the actual image element in DOM to get its displayed size
       const imageElements = document.querySelectorAll('.gv-image')
@@ -248,26 +237,10 @@ const captureMarkedAreas = async (product) => {
         const computedStyle = window.getComputedStyle(firstImage)
         const displayedRect = firstImage.getBoundingClientRect()
         
-        console.log('Displayed image size:', displayedRect.width, 'x', displayedRect.height)
-        console.log('CSS max-height:', computedStyle.maxHeight)
-        console.log('CSS object-fit:', computedStyle.objectFit)
-        
         actualDisplayWidth = displayedRect.width
         actualDisplayHeight = displayedRect.height
       }
       
-      // Debug marker positions
-      if (product.damageDetails) {
-        Object.entries(product.damageDetails).forEach(([key, detail]) => {
-          if (detail.position) {
-            console.log(`Damage ${key} position:`, detail.position)
-            console.log(`Calculated canvas position:`, 
-              detail.position.x * img.width, 
-              detail.position.y * img.height
-            )
-          }
-        })
-      }
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
       
@@ -440,8 +413,6 @@ const captureMarkedAreas = async (product) => {
         } else {                        // Small images
           quality = 0.8                // 80% quality
         }
-        
-        console.log(`Image optimization: ${finalWidth}x${finalHeight} (${pixelCount} pixels) -> JPEG quality: ${Math.round(quality * 100)}%`)
         
         return optimizedCanvas.toDataURL('image/jpeg', quality)
       }
