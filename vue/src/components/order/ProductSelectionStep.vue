@@ -59,7 +59,8 @@ const updateProduct = (id, field, value) => {
   emit('update:products', updated)
 }
 
-const { total } = computed(() => calculateSummary(props.products))
+const summary = computed(() => calculateSummary(props.products))
+const total = computed(() => summary.value.total)
 </script>
 
 <template>

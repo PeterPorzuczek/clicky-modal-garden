@@ -479,7 +479,7 @@ const handleOrderInfoChange = (field, value) => {
     <EmailPreviewStep
       :order-info="completeOrderData?.orderInfo"
       :products="completeOrderData?.products"
-      @prev-step="() => step = 2"
+      @prev-step="() => (step.value = 2)"
     />
   </div>
   <div v-else-if="step === 2" ref="internalRef" class="order-form-container">
@@ -488,8 +488,8 @@ const handleOrderInfoChange = (field, value) => {
       :products="products"
       :order-info="orderInfo"
       @preview="(orderData) => {
-        completeOrderData = orderData;
-        step = 3;
+        completeOrderData.value = orderData;
+        step.value = 3;
       }"
     />
   </div>
@@ -498,8 +498,8 @@ const handleOrderInfoChange = (field, value) => {
       v-if="step === 0"
       :products="products"
       :quantity="quantity"
-      @update:products="(val) => products = val"
-      @update:quantity="(val) => quantity = val"
+      @update:products="(val) => (products.value = val)"
+      @update:quantity="(val) => (quantity.value = val)"
       @next-step="nextStep"
     />
     <OrderInformationStep
@@ -507,7 +507,7 @@ const handleOrderInfoChange = (field, value) => {
       :order-info="orderInfo"
       :products="products"
       :terms-accepted="termsAccepted"
-      @update:terms-accepted="(val) => termsAccepted = val"
+      @update:terms-accepted="(val) => (termsAccepted.value = val)"
       @change="handleOrderInfoChange"
       @field-blur="onFieldBlur"
       @prev-step="prevStep"
