@@ -467,10 +467,8 @@ const handleOrderInfoChange = (field, value) => {
   <div v-else ref="internalRef" class="order-form-inner">
     <ProductSelectionStep
       v-if="step === 0"
-      :products="products.value"
-      :quantity="quantity.value"
-      @update:products="(val) => (products.value = val)"
-      @update:quantity="(val) => (quantity.value = val)"
+      v-model:products="products"
+      v-model:quantity="quantity"
       @next-step="nextStep"
     />
     <OrderInformationStep
