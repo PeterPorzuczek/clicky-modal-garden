@@ -477,16 +477,16 @@ const handleOrderInfoChange = (field, value) => {
 <template>
   <div v-if="step === 3" ref="internalRef" class="order-form-container">
     <EmailPreviewStep
-      :order-info="completeOrderData?.orderInfo"
-      :products="completeOrderData?.products"
+      :order-info="completeOrderData.value?.orderInfo"
+      :products="completeOrderData.value?.products"
       @prev-step="() => (step.value = 2)"
     />
   </div>
   <div v-else-if="step === 2" ref="internalRef" class="order-form-container">
     <ConfirmationStep
       :reset-form="resetForm"
-      :products="products"
-      :order-info="orderInfo"
+      :products="products.value"
+      :order-info="orderInfo.value"
       @preview="(orderData) => {
         completeOrderData.value = orderData;
         step.value = 3;
@@ -496,17 +496,17 @@ const handleOrderInfoChange = (field, value) => {
   <div v-else ref="internalRef" class="order-form-inner">
     <ProductSelectionStep
       v-if="step === 0"
-      :products="products"
-      :quantity="quantity"
+      :products="products.value"
+      :quantity="quantity.value"
       @update:products="(val) => (products.value = val)"
       @update:quantity="(val) => (quantity.value = val)"
       @next-step="nextStep"
     />
     <OrderInformationStep
       v-if="step === 1"
-      :order-info="orderInfo"
-      :products="products"
-      :terms-accepted="termsAccepted"
+      :order-info="orderInfo.value"
+      :products="products.value"
+      :terms-accepted="termsAccepted.value"
       @update:terms-accepted="(val) => (termsAccepted.value = val)"
       @change="handleOrderInfoChange"
       @field-blur="onFieldBlur"
