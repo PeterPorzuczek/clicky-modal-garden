@@ -73,7 +73,7 @@ watch(() => props.product.type, (newType, oldType) => {
     markingOpen.value = false
   }
   prevType.value = newType
-})
+}, { immediate: true })
 
 // This watch correctly preserves user selections when damageCount changes.
 watch(() => props.product.damageCount, (newCount) => {
@@ -90,7 +90,7 @@ watch(() => props.product.damageCount, (newCount) => {
     }
     updateField('damageLabels', newDamageLabels)
   }
-})
+}, { immediate: true })
 
 // Ensure default images are only set if none are saved for this product.
 watch([() => props.product.type, category, () => props.product.images], ([type, cat, images]) => {
@@ -108,7 +108,7 @@ watch([() => props.product.type, category, () => props.product.images], ([type, 
       })
     }
   }
-})
+}, { immediate: true })
 
 // When returning to this step, reopen the marker editor if there are
 // existing markings stored in the product details so they remain editable.
@@ -128,7 +128,7 @@ watch([
   if (hasDamageMarks || hasDefectMarks) {
     markingOpen.value = true
   }
-})
+}, { immediate: true })
 
 watch([() => props.product.damages, category], ([damages, cat]) => {
   const dMark = {}
@@ -143,7 +143,7 @@ watch([() => props.product.damages, category], ([damages, cat]) => {
     defMark[opt.id] = !!opt.markedOnPicture
   })
   defectMarkable.value = defMark
-})
+}, { immediate: true })
 
 function updateDamageType(idx, val) {
   const newDamages = [...(props.product.damages || [])]
