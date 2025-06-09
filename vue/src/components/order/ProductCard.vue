@@ -75,7 +75,8 @@ watch(
       markingOpen.value = false
     }
     prevType.value = newType
-  }
+  },
+  { immediate: true }
 )
 
 // This watch correctly preserves user selections when damageCount changes.
@@ -95,7 +96,8 @@ watch(
     }
     updateField('damageLabels', newDamageLabels)
   }
-  }
+  },
+  { immediate: true }
 )
 
 // Ensure default images are only set if none are saved for this product.
@@ -116,7 +118,8 @@ watch(
         })
       }
     }
-  }
+  },
+  { immediate: true }
 )
 
 // When returning to this step, reopen the marker editor if there are
@@ -138,7 +141,8 @@ watch([
     if (hasDamageMarks || hasDefectMarks) {
       markingOpen.value = true
     }
-  }
+  },
+  { immediate: true }
 )
 
 watch(
@@ -156,7 +160,8 @@ watch(
       defMark[opt.id] = !!opt.markedOnPicture
     })
     defectMarkable.value = defMark
-  }
+  },
+  { immediate: true }
 )
 
 function updateDamageType(idx, val) {
