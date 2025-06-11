@@ -8,9 +8,11 @@ const props = defineProps({
   discount: { type: Number, default: 0 }
 })
 
-const { productTotals, subTotal, discountAmount, total } = computed(() => 
-  calculateSummary(props.products, props.discount)
-)
+const summary = computed(() => calculateSummary(props.products, props.discount))
+const productTotals = computed(() => summary.value.productTotals)
+const subTotal = computed(() => summary.value.subTotal)
+const discountAmount = computed(() => summary.value.discountAmount)
+const total = computed(() => summary.value.total)
 </script>
 
 <template>

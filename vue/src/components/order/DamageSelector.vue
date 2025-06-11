@@ -45,7 +45,7 @@ const optionSelectOptions = computed(() => props.optionOptions.map(opt => ({
         </div>
         <CustomSelect
           :model-value="props.damage"
-          @update:model-value="handleDamageChange"
+          @update:modelValue="handleDamageChange"
           :placeholder="t('secondStep.typeOfDamage')"
           :options="damageSelectOptions"
           :error="!!props.damageError"
@@ -58,7 +58,7 @@ const optionSelectOptions = computed(() => props.optionOptions.map(opt => ({
         </label>
         <CustomSelect
           :model-value="props.option"
-          @update:model-value="handleOptionChange"
+          @update:modelValue="handleOptionChange"
           :placeholder="t('firstStep.select')"
           :options="optionSelectOptions"
           :error="!!props.optionError"

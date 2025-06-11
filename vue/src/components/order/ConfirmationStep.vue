@@ -113,7 +113,6 @@ const completeOrderData = computed(() => {
       language: 'sv'
     }
   }
-  console.log('Complete Order Data for API:', orderData)
   return orderData
 })
 </script>

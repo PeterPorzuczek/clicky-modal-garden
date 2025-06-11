@@ -22,12 +22,12 @@ const OPTIONS = config.productCategories.map((cat) => ({
     <label class="pts-label">
       {{ t('firstStep.selectTypeOfProduct') }} <span class="text-red">*</span>
     </label>
-    <CustomSelect 
-      :model-value="props.productType" 
-      @update:model-value="val => emit('update', val)" 
-      :placeholder="t('firstStep.select')" 
-      :options="OPTIONS" 
-      :error="!!props.error" 
+    <CustomSelect
+      :model-value="props.productType"
+      @update:modelValue="val => emit('update', val)"
+      :placeholder="t('firstStep.select')"
+      :options="OPTIONS"
+      :error="!!props.error"
     />
     <p v-if="props.error" class="pts-error">{{ props.error }}</p>
   </div>

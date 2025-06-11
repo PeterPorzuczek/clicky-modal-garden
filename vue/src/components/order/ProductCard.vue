@@ -55,34 +55,40 @@ const updateField = (field, value) => {
 }
 
 // Reset related data when the product category changes
-watch(() => props.product.type, (newType, oldType) => {
-  if (prevType.value && prevType.value !== newType) {
-    updateField('damageCount', 0)
-    updateField('damages', [])
-    updateField('damageDetails', {})
-    updateField('damageLabels', {})
-    updateField('otherIssues', {})
-    updateField('defectDetails', {})
-    updateField('defectLabels', {})
-    updateField('images', null)
-    updateField('damageErrors', {})
-    updateField('damageOptionErrors', {})
-    updateField('markerError', undefined)
-    selectedDamageIndex.value = undefined
-    selectedDefectId.value = undefined
-    markingOpen.value = false
-  }
-  prevType.value = newType
-})
+watch(
+  () => props.product.type,
+  (newType, oldType) => {
+    if (prevType.value && prevType.value !== newType) {
+      updateField('damageCount', 0)
+      updateField('damages', [])
+      updateField('damageDetails', {})
+      updateField('damageLabels', {})
+      updateField('otherIssues', {})
+      updateField('defectDetails', {})
+      updateField('defectLabels', {})
+      updateField('images', null)
+      updateField('damageErrors', {})
+      updateField('damageOptionErrors', {})
+      updateField('markerError', undefined)
+      selectedDamageIndex.value = undefined
+      selectedDefectId.value = undefined
+      markingOpen.value = false
+    }
+    prevType.value = newType
+  },
+  { immediate: true }
+)
 
 // This watch correctly preserves user selections when damageCount changes.
-watch(() => props.product.damageCount, (newCount) => {
-  const currentDamages = props.product.damages || []
-  if (currentDamages.length !== newCount) {
-    const newDamages = Array.from({ length: newCount }).map(
-      (_, i) => currentDamages[i] || ''
-    )
-    updateField('damages', newDamages)
+watch(
+  () => props.product.damageCount,
+  (newCount) => {
+    const currentDamages = props.product.damages || []
+    if (currentDamages.length !== newCount) {
+      const newDamages = Array.from({ length: newCount }).map(
+        (_, i) => currentDamages[i] || ''
+      )
+      updateField('damages', newDamages)
 
     const newDamageLabels = { ...(props.product.damageLabels || {}) }
     for (let i = newCount; i < currentDamages.length; i++) {
@@ -90,25 +96,31 @@ watch(() => props.product.damageCount, (newCount) => {
     }
     updateField('damageLabels', newDamageLabels)
   }
-})
+  },
+  { immediate: true }
+)
 
 // Ensure default images are only set if none are saved for this product.
-watch([() => props.product.type, category, () => props.product.images], ([type, cat, images]) => {
-  if (type && cat && !images) {
-    const firstDamageWithImages = cat.damages.find(
-      (d) => d.picturesToBeMarked && d.picturesToBeMarked.length > 0
-    )
-    if (firstDamageWithImages) {
-      const pics = firstDamageWithImages.picturesToBeMarked
-      updateField('images', {
-        front: pics[0] || null,
-        back: pics[1] || pics[0] || null,
-        left: pics[2] || pics[0] || null,
-        right: pics[3] || pics[0] || null,
-      })
+watch(
+  [() => props.product.type, category, () => props.product.images],
+  ([type, cat, images]) => {
+    if (type && cat && !images) {
+      const firstDamageWithImages = cat.damages.find(
+        (d) => d.picturesToBeMarked && d.picturesToBeMarked.length > 0
+      )
+      if (firstDamageWithImages) {
+        const pics = firstDamageWithImages.picturesToBeMarked
+        updateField('images', {
+          front: pics[0] || null,
+          back: pics[1] || pics[0] || null,
+          left: pics[2] || pics[0] || null,
+          right: pics[3] || pics[0] || null,
+        })
+      }
     }
-  }
-})
+  },
+  { immediate: true }
+)
 
 // When returning to this step, reopen the marker editor if there are
 // existing markings stored in the product details so they remain editable.
@@ -117,33 +129,40 @@ watch([
   () => props.product.damageDetails,
   () => props.product.otherIssues,
   () => props.product.defectDetails,
-], ([damages, damageDetails, otherIssues, defectDetails]) => {
-  const hasDamageMarks = damages?.some(
-    (_, idx) => damageDetails?.[`damage-${idx}`]?.position
-  )
-  const hasDefectMarks = Object.entries(otherIssues || {}).some(
-    ([id, active]) =>
-      active && defectDetails?.[id]?.position !== undefined
-  )
-  if (hasDamageMarks || hasDefectMarks) {
-    markingOpen.value = true
-  }
-})
+],
+  ([damages, damageDetails, otherIssues, defectDetails]) => {
+    const hasDamageMarks = damages?.some(
+      (_, idx) => damageDetails?.[`damage-${idx}`]?.position
+    )
+    const hasDefectMarks = Object.entries(otherIssues || {}).some(
+      ([id, active]) =>
+        active && defectDetails?.[id]?.position !== undefined
+    )
+    if (hasDamageMarks || hasDefectMarks) {
+      markingOpen.value = true
+    }
+  },
+  { immediate: true }
+)
 
-watch([() => props.product.damages, category], ([damages, cat]) => {
-  const dMark = {}
-  damages.forEach((id, idx) => {
-    const cfg = DAMAGE_OPTIONS.value.find((o) => o.id === id)
-    dMark[idx] = !!cfg?.markedOnPicture
-  })
-  damageMarkable.value = dMark
+watch(
+  [() => props.product.damages, category],
+  ([damages, cat]) => {
+    const dMark = {}
+    damages.forEach((id, idx) => {
+      const cfg = DAMAGE_OPTIONS.value.find((o) => o.id === id)
+      dMark[idx] = !!cfg?.markedOnPicture
+    })
+    damageMarkable.value = dMark
 
-  const defMark = {}
-  DEFECT_OPTIONS.value.forEach((opt) => {
-    defMark[opt.id] = !!opt.markedOnPicture
-  })
-  defectMarkable.value = defMark
-})
+    const defMark = {}
+    DEFECT_OPTIONS.value.forEach((opt) => {
+      defMark[opt.id] = !!opt.markedOnPicture
+    })
+    defectMarkable.value = defMark
+  },
+  { immediate: true }
+)
 
 function updateDamageType(idx, val) {
   const newDamages = [...(props.product.damages || [])]

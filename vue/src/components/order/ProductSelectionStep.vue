@@ -8,8 +8,8 @@ import { computed } from 'vue'
 import t from '../../setup/i18n.js'
 
 const props = defineProps({
-  products: Array,
-  quantity: Number
+  products: { type: Array, default: () => [] },
+  quantity: { type: Number, default: 0 }
 })
 
 const emit = defineEmits(['update:products', 'update:quantity', 'next-step'])
@@ -59,7 +59,8 @@ const updateProduct = (id, field, value) => {
   emit('update:products', updated)
 }
 
-const { total } = computed(() => calculateSummary(props.products))
+const summary = computed(() => calculateSummary(props.products))
+const total = computed(() => summary.value.total)
 </script>
 
 <template>
